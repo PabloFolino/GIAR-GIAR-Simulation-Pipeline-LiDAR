@@ -1,0 +1,31 @@
+{
+    "project": {
+        "name": "GIAR Low Cost 3D LiDAR",
+        "version": "1.0"
+    },
+
+    "paths": {
+        "stl_directory": "../STL",
+        "input_ditectory": "../CAD",
+        "output_directory": "../Models",
+        "output_model": "GIAR_Low_Cost_3D_LiDAR.ttm"
+    },
+
+    "cad": {
+        "software": "Rhino",
+        "version": "8",
+        "units": "millimeter",
+        "up_axis": "Z",
+        "forward_axis": "Y"
+    },
+
+    "simulation": {
+        "software": "CoppeliaSim",
+        "units": "meter"
+    },
+
+    "physics": {
+        "engine": "Bullet",
+        "gravity": -9.81
+    }
+}
