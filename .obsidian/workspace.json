@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "b2a67b73c4da0681",
+        "id": "b1c07fb8c4fd5983",
         "type": "tabs",
         "children": [
           {
-            "id": "08907fe5a19f8367",
+            "id": "ebc482cba87d3e56",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "README.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
               "title": "README"
@@ -24,11 +24,11 @@
         ]
       },
       {
-        "id": "1169ca9084c28b46",
+        "id": "434b9a7a08433af7",
         "type": "tabs",
         "children": [
           {
-            "id": "39601f392d6f65e0",
+            "id": "8bba4121ccb65d76",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -203,12 +203,21 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "08907fe5a19f8367",
+  "active": "8bba4121ccb65d76",
   "lastOpenFiles": [
-    "Software/CAD/LIDAR_completo_ver22.3dm",
-    "Software/Models/LIDAR_completo_ver22.3dm",
-    "Figures/Structure_proyect.png",
-    "Figures",
-    "Nueva carpeta"
+    "Documentations/GSPL-SPEC-002.md",
+    "README.md",
+    "Sin título.md",
+    "Sin nombre",
+    "Documentations",
+    "Software/Database/1_assembly.json",
+    "Software/Database/1_model_database.json",
+    "Software/CAD/LIDAR_completo_ver23.3dm.rhl",
+    "Software/GSPL-01_Rhino_Extractor_ver2.py",
+    "Software/GSPL-01_Rhino_Extractor copy.py",
+    "Software/requirements.txt",
+    "Software/Readme.txt",
+    "Software/Logs/GSPL-01.log",
+    "Figures/Structure_proyect.png"
   ]
 }

@@ -5,9 +5,17 @@
     },
 
     "paths": {
-        "stl_directory": "../STL",
-        "input_ditectory": "../CAD",
-        "output_directory": "../Models",
+        "stl_directory": "STL",
+        "input_directory": "CAD",
+        "output_directory": "Models",
+        "database_directory":"Database",
+        "log_directory": "Logs"
+    },
+
+    "files": {
+        "input_file_3dm":"LIDAR_completo_ver23.3dm",
+        "model_database": "1_model_database.json",
+        "assembly":"1_assembly.json",
         "output_model": "GIAR_Low_Cost_3D_LiDAR.ttm"
     },
 
