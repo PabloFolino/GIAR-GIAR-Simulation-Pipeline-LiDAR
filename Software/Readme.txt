@@ -9,6 +9,7 @@
     pip install scipy
     pip install pyyaml
     pip install lxml
+    pip install openpyxl
     pip freeze > requirements.txt
 
 3- Para salir del entorno virtual: deactivate

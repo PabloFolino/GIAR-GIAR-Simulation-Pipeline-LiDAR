@@ -16,6 +16,7 @@
         "input_file_3dm":"LIDAR_completo_ver23.3dm",
         "model_database": "1_model_database.json",
         "assembly":"1_assembly.json",
+        "assembly_table":"1_assembly_table.xlsx",
         "output_model": "GIAR_Low_Cost_3D_LiDAR.ttm"
     },
 
