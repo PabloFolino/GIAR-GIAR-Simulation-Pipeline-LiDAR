@@ -35,8 +35,7 @@
               "title": "GSPL-SPEC-001"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "4b67a92c47456898",
@@ -55,8 +54,23 @@
               "icon": "lucide-file",
               "title": "GSPL-SPEC-001"
             }
+          },
+          {
+            "id": "b9befff4c95bf9aa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -129,7 +143,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentation/GSPL-SPEC-001.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +153,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de GSPL-SPEC-001"
+              "title": "Enlaces entrantes de README"
             }
           },
           {
@@ -148,12 +162,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentation/GSPL-SPEC-001.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes de GSPL-SPEC-001"
+              "title": "Enlaces salientes de README"
             }
           },
           {
@@ -191,13 +205,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentation/GSPL-SPEC-001.md",
+                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de GSPL-SPEC-001"
+              "title": "Esquema de README"
             }
           }
         ]
@@ -218,22 +232,25 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "1154f4c7f0175a23",
+  "active": "ebc482cba87d3e56",
   "lastOpenFiles": [
+    "Software/Database/lu346006yr596.tmp",
+    "Software/Database/2_assembly_table.xlsx",
+    "Software/Database/2_assembly_database.json",
+    "Software/Logs/2_assembly_report.md",
+    "Software/Database/2_assembly_report.md",
+    "Software/Logs/GSPL-02_Assembly_Builder.log",
+    "Software/GSPL-02_Assembly_Builder.py",
     "Documentation/GSPL-SPEC-001.md",
     "README.md",
+    "Software/Database/lu346006yr58x.tmp",
+    "Software/Database/lu346006yr58r.tmp",
+    "Software/Database/1_assembly_table_old.xlsx",
+    "Software/1_assembly_table_old.xlsx",
+    "Software/1_assembly_table.xlsx",
+    "Software/Database/lu346006yr58k.tmp",
     "Documentation/GSPL-SPEC-002.md",
-    "Software/Database/1_assembly_table.xlsx",
-    "Software/requirements.tx",
-    "Software/GSPL-01_Rhino_Extractor_ver3.py",
-    "Software/GSPL-01_Rhino_Extractor_ver2 copy.py",
     "Sin título.md",
-    "Sin nombre",
-    "Documentation",
-    "Software/Database/1_assembly.json",
-    "Software/Database/1_model_database.json",
-    "Software/CAD/LIDAR_completo_ver23.3dm.rhl",
-    "Software/GSPL-01_Rhino_Extractor_ver2.py",
     "Figures/Structure_proyect.png"
   ]
 }

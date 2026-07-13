@@ -225,6 +225,19 @@ For a complete description of the engineering workflow and both assembly files s
 ## 📘 Engineering Specification
 
 **[GSPL-SPEC-002 – Engineering Assembly Specification](Documentation/GSPL-SPEC-002.md)**
+## 5.1 Important consideration
+On the components tab, keep the following in mind:
+
+| Visual | Simulation | Result |
+|:------:|:----------:|--------|
+| **TRUE** | **TRUE** | The component is included in both the visual model and the simulation model. A Shape object is generated and participates in the simulation. |
+| **TRUE** | **FALSE** | The component is included only in the visual model. It is visible but does not participate in the simulation. |
+| **FALSE** | **TRUE** | The component is included only in the simulation model. It participates in the simulation but has no visible geometry. |
+| **FALSE** | **FALSE** | The component is excluded from the generated assembly and is not included in `2_assembly_database.json`. |
+
+And on the Objects tab, note that "Enabled" controls whether the component or object participates in the pipeline.
+If a component has **Visual**:Enable, **Simulation**:Enable, and **Enable**: FALSE, the component is not included in "2_assembly_database.json", and no associated simulation objects are generated.
+
 
 ---
 
@@ -236,16 +249,16 @@ It is responsible for interpreting engineering decisions and converting them int
 
 |   ID    | Task | Status | Comments |
 | :-----: | ------------------------------------------------------------ | :----: | -------------------------------------------------------------- |
-| Ver 0.1 | Read `config.json` | ⬜ | |
-| Ver 0.2 | Load `1_model_database.json` | ⬜ | |
-| Ver 0.3 | Read `1_assembly_table.xlsx` | ⬜ | |
+| Ver 0.1 | Read `config.json` | ✔ | |
+| Ver 0.2 | Load `1_model_database.json` | ✔ | |
+| Ver 0.3 | Read `1_assembly_table.xlsx` | ✔ | |
 | Ver 0.4 | Validate Components worksheet | ⬜ | |
 | Ver 0.5 | Validate Objects worksheet | ⬜ | |
 | Ver 0.6 | Resolve Parent IDs automatically | ⬜ | |
 | Ver 0.7 | Build the assembly hierarchy | ⬜ | |
 | Ver 0.8 | Validate engineering rules | ⬜ | Based on GSPL-SPEC-002 |
 | Ver 0.9 | Update `1_assembly.json` | ⬜ | |
-| Ver 1.0 | Generate `2_assembly_database.json` | ⬜ | Stable release |
+| Ver 1.0 | Generate `2_assembly_database.json` | ✔ | Stable release |
 
 ***
 

@@ -17,6 +17,9 @@
         "model_database": "1_model_database.json",
         "assembly":"1_assembly.json",
         "assembly_table":"1_assembly_table.xlsx",
+        "assembly_table_output": "2_assembly_table.xlsx",
+        "assembly_database": "2_assembly_database.json",
+        "assembly_report": "2_assembly_report.md",
         "output_model": "GIAR_Low_Cost_3D_LiDAR.ttm"
     },
 
