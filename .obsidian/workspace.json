@@ -36,7 +36,8 @@
               "title": "GSPL-SPEC-001"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "4b67a92c47456898",
@@ -234,10 +235,10 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "ebc482cba87d3e56",
+  "active": "1154f4c7f0175a23",
   "lastOpenFiles": [
-    "Documentation/GSPL-SPEC-001.md",
     "README.md",
+    "Documentation/GSPL-SPEC-001.md",
     "Software/Database/1_assembly_table.xlsx",
     "Software/Database/1_assembly_table_old.xlsx",
     "Software/GSPL-01_Rhino_Extractor_ver1.py",
