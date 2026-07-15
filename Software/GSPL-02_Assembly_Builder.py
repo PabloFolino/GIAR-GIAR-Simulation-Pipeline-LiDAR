@@ -270,6 +270,7 @@ class AssemblyBuilder:
         # --------------------------------------------------
 
         self.update_component_check()
+        self.update_object_check()
 
         # --------------------------------------------------
         # Generate Engineering Output
@@ -620,8 +621,15 @@ class AssemblyBuilder:
 
                 "motor": self.objects_sheet.cell(row=row, column=22).value,
 
-                "notes": self.objects_sheet.cell(row=row, column=23).value
+                "notes": self.objects_sheet.cell(row=row, column=23).value,
 
+                # --------------------------------------------------
+                # GSPL Internal Fields
+                # --------------------------------------------------
+
+                "check": None,
+
+                "messages": []
             }
 
             self.objects.setdefault(component_id, []).append(obj)
@@ -702,20 +710,11 @@ class AssemblyBuilder:
 
             if component["id"] is None:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                    component_name="",
                         code=AuditCode.ASM001.value,
-
                         severity="ERROR",
-
-                        component="",
-
                         message="Missing Component ID."
-
-                    )
-
                 )
 
             # --------------------------------------------------
@@ -724,21 +723,12 @@ class AssemblyBuilder:
 
             if not component["name"]:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM002.value,
-
-                        severity="ERROR",
-
+                self.register_component_audit(
                         component="",
-
+                        code=AuditCode.ASM002.value,
+                        severity="ERROR",
                         message="Missing Component Name."
-
-                    )
-
-                )
+               )
 
             # --------------------------------------------------
             # ASM-003
@@ -748,20 +738,11 @@ class AssemblyBuilder:
 
             elif component["name"] not in self.model_components_by_name:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                        component_name=component["name"],
                         code=AuditCode.ASM003.value,
-
                         severity="ERROR",
-
-                        component=component["name"],
-
                         message="Component not found in Model Database."
-
-                    )
-
                 )
 
             # --------------------------------------------------
@@ -770,20 +751,11 @@ class AssemblyBuilder:
 
             if component["name"] in names:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                        component_name=component["name"],
                         code=AuditCode.ASM004.value,
-
                         severity="ERROR",
-
-                        component=component["name"],
-
                         message="Duplicated Component Name."
-
-                    )
-
                 )
 
             names.add(component["name"])
@@ -794,20 +766,11 @@ class AssemblyBuilder:
 
             if component["id"] in ids:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                    component_name=component["name"],
                         code=AuditCode.ASM005.value,
-
                         severity="ERROR",
-
-                        component=component["name"],
-
                         message="Duplicated Component ID."
-
-                    )
-
                 )
 
             ids.add(component["id"])
@@ -844,20 +807,11 @@ class AssemblyBuilder:
 
             if component_id not in self.components:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                    component_name=str(component_id),
                         code=AuditCode.ASM010.value,
-
                         severity="ERROR",
-
-                        component=str(component_id),
-
                         message="Unknown Component ID."
-
-                    )
-
                 )
 
                 continue
@@ -866,40 +820,21 @@ class AssemblyBuilder:
 
                 if not obj["object_name"]:
 
-                    self.audit_messages.append(
-
-                        AuditMessage(
-
+                    self.register_component_audit(
+                            component_name=obj["component_name"],
                             code=AuditCode.ASM011.value,
-
                             severity="ERROR",
-
-                            component=obj["component_name"],
-
                             message="Missing Object Name."
-
-                        )
-
                     )
 
                 if obj["object_type"] not in valid_types:
 
-                    self.audit_messages.append(
-
-                        AuditMessage(
-
+                    self.register_component_audit(
+                            component_name=obj["component_name"],
                             code=AuditCode.ASM012.value,
-
                             severity="ERROR",
-
-                            component=obj["component_name"],
-
                             object_name=obj["object_name"],
-
                             message=f"Unsupported Object Type '{obj['object_type']}'."
-
-                        )
-
                     )
 
         self.logger.info("Validation Finished")
@@ -943,20 +878,11 @@ class AssemblyBuilder:
 
             if parent_name not in self.model_components_by_name:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                        component_name=component_name,
                         code=AuditCode.ASM020.value,
-
                         severity="ERROR",
-
-                        component=component_name,
-
                         message=f"Unknown parent component '{parent_name}'."
-
-                    )
-
                 )
 
                 component["parent_id"] = None
@@ -976,20 +902,11 @@ class AssemblyBuilder:
 
             if parent["id"] == component["id"]:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                        component_name=component_name,
                         code=AuditCode.ASM021.value,
-
                         severity="ERROR",
-
-                        component=component_name,
-
                         message="Component cannot be parent of itself."
-
-                    )
-
                 )
 
                 component["parent_id"] = None
@@ -1003,20 +920,11 @@ class AssemblyBuilder:
 
             if not parent["enabled"]:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                        component_name=component_name,
                         code=AuditCode.ASM023.value,
-
                         severity="WARNING",
-
-                        component=component_name,
-
                         message=f"Parent component '{parent_name}' is disabled."
-
-                    )
-
                 )
 
             # --------------------------------------------------
@@ -1035,13 +943,6 @@ class AssemblyBuilder:
         )
 
     # -------------------------------------------------------------------------
-    # Update Assembly JSON
-    # -------------------------------------------------------------------------
-    def update_assembly_json(self):
-
-        pass
-
-    # -------------------------------------------------------------------------
     # Build Assembly Database
     # -------------------------------------------------------------------------
     def build_assembly_database(self):
@@ -1050,128 +951,281 @@ class AssemblyBuilder:
         self.logger.info("========================================================")
         self.logger.info(" Building Assembly Database")
         self.logger.info("========================================================")
-     
+
         from datetime import datetime
+
         now = datetime.now()
+
+        exported = 0
+        skipped = 0
+
         # --------------------------------------------------
         # Create Database Header
         # --------------------------------------------------
+
         self.assembly_database = {
+
             "format_version": "1.0",
+
             "generated_by": "GSPL-02_Assembly_Builder",
+
             "generator_version": self.VERSION,
+
             "generated": {
+
                 "date": now.strftime("%Y-%m-%d"),
+
                 "time": now.strftime("%H:%M:%S")
+
             },
+
             "project": self.config["project"]["name"],
+
             "root": None,
+
             "statistics": {},
+
             "components": []
+
         }
 
-        updated = 0
+        # --------------------------------------------------
+        # Process Components
+        # --------------------------------------------------
 
-        # --------------------------------------------------
-        # Update Components
-        # --------------------------------------------------
         for assembly_component in self.assembly_json["components"]:
+
             name = assembly_component["name"]
+
+            # --------------------------------------------------
             # Component must exist in Engineering Table
+            # --------------------------------------------------
+
             if name not in self.components_by_name:
+
+                self.logger.warning(
+                    "Component '%s' not found in Engineering Table.",
+                    name
+                )
+
+                skipped += 1
+
                 continue
+
             engineering = self.components_by_name[name]
-            # Deep copy preserves all geometry information
+
+            # --------------------------------------------------
+            # Export only validated components
+            # --------------------------------------------------
+
+            check = engineering.get("check", "ERROR")
+
+            if check not in ("OK", "WARNING"):
+
+                self.logger.info(
+                    "Skipping %-30s [%s]",
+                    name,
+                    check
+                )
+
+                skipped += 1
+
+                continue
+
+            # --------------------------------------------------
+            # Copy Component
+            # --------------------------------------------------
+
             component = copy.deepcopy(assembly_component)
 
             # --------------------------------------------------
             # Engineering Parameters
             # --------------------------------------------------
+
             component["parent"] = engineering.get("parent_id")
+
             component["enabled"] = engineering.get("enabled", True)
+
             component["visual"] = engineering.get("visual", True)
-            component["simulation"] = engineering.get("simulation", True)            
-            component["description"] = engineering.get("description") or ""
-            component["reviewed"] = engineering.get("reviewed", False)
-            component["status"] = engineering.get("status", "NEW")
-                # --------------------------------------------------
+
+            component["simulation"] = engineering.get("simulation", True)
+
+            component["description"] = engineering.get(
+                "description",
+                ""
+            )
+
+            component["reviewed"] = engineering.get(
+                "reviewed",
+                False
+            )
+
+            component["status"] = engineering.get(
+                "status",
+                "NEW"
+            )
+
+            # --------------------------------------------------
+            # Validation Information
+            # --------------------------------------------------
+
+            component["check"] = engineering.get(
+                "check",
+                "OK"
+            )
+
+            component["messages"] = copy.deepcopy(
+                engineering.get("messages", [])
+            )
+
+            # --------------------------------------------------
             # Engineering Type
             # --------------------------------------------------
+
             component["type"] = engineering.get(
+
                 "type",
+
                 component.get("type", "Mechanical")
+
             )
 
             # --------------------------------------------------
             # Model Selection
             # --------------------------------------------------
+
             models = []
-            if engineering["visual"]:
+
+            if engineering.get("visual", True):
+
                 models.append("visual")
-            if engineering["simulation"]:
+
+            if engineering.get("simulation", True):
+
                 models.append("simulation")
+
             component["models"] = models
+
+            # --------------------------------------------------
+            # Store Component
+            # --------------------------------------------------
+
             self.assembly_database["components"].append(component)
 
-            updated += 1
+            exported += 1
 
         # --------------------------------------------------
         # Root Component
         # --------------------------------------------------
-        root_id = None
-        for component in self.assembly_database["components"]:
-            if component["parent"] is None:
-                root_id = component["id"]
-                break
-        self.assembly_database["root"] = root_id
-        self.logger.info("Root Component : %s", root_id)
 
-        self.logger.info("OK")
-        self.logger.info(
-            "Components Processed : %d",
-            updated
-        )
+        root_id = None
+
+        for component in self.assembly_database["components"]:
+
+            if component["parent"] is None:
+
+                root_id = component["id"]
+
+                break
+
+        self.assembly_database["root"] = root_id
+
         # --------------------------------------------------
         # Statistics
         # --------------------------------------------------
+
         statistics = {
+
             "components": 0,
+
             "mechanical": 0,
+
             "electronic": 0,
+
             "sensor": 0,
+
             "actuator": 0,
+
             "enabled": 0,
+
             "disabled": 0,
+
             "visual": 0,
-            "simulation": 0
+
+            "simulation": 0,
+
+            "exported": exported,
+
+            "skipped": skipped
+
         }
+
         for component in self.assembly_database["components"]:
+
             statistics["components"] += 1
+
             ctype = component["type"]
+
             if ctype == "Mechanical":
+
                 statistics["mechanical"] += 1
+
             elif ctype == "Electronic":
+
                 statistics["electronic"] += 1
+
             elif ctype == "Sensor":
+
                 statistics["sensor"] += 1
+
             elif ctype == "Actuator":
+
                 statistics["actuator"] += 1
+
             if component["enabled"]:
+
                 statistics["enabled"] += 1
+
             else:
+
                 statistics["disabled"] += 1
+
             if component["visual"]:
+
                 statistics["visual"] += 1
+
             if component["simulation"]:
+
                 statistics["simulation"] += 1
+
         self.assembly_database["statistics"] = statistics
 
-    # -------------------------------------------------------------------------
-    # Save Assembly JSON
-    # -------------------------------------------------------------------------
-    def save_assembly_json(self):
+        # --------------------------------------------------
+        # Log Summary
+        # --------------------------------------------------
 
-        pass
+        self.logger.info("OK")
+
+        self.logger.info(
+            "Root Component       : %s",
+            root_id
+        )
+
+        self.logger.info(
+            "Exported Components  : %d",
+            exported
+        )
+
+        self.logger.info(
+            "Skipped Components   : %d",
+            skipped
+        )
+
+        self.logger.info(
+            "Database Components  : %d",
+            len(self.assembly_database["components"])
+        )
+
 
     # -------------------------------------------------------------------------
     # Save Assembly Database
@@ -1377,39 +1431,21 @@ class AssemblyBuilder:
 
         if len(roots) == 0:
 
-            self.audit_messages.append(
-
-                AuditMessage(
-
-                    code=AuditCode.ASM030.value,
-
-                    severity="ERROR",
-
-                    component="",
-
-                    message="No Root Component found."
-
-                )
-
+            self.register_component_audit(
+                component_name="",
+                code=AuditCode.ASM030.value,
+                severity="ERROR",
+                message="No Root Component found."
             )
 
             return
 
-        self.audit_messages.append(
-
-            AuditMessage(
-
+        self.register_component_audit(
+                component_name="",
                 code=AuditCode.ASM030.value,
-
                 severity="ERROR",
-
-                component="",
-
                 message=f"{len(roots)} Root Components detected."
-
             )
-
-        )
 
     # -------------------------------------------------------------------------
     # ASM-031
@@ -1427,19 +1463,11 @@ class AssemblyBuilder:
 
             if parent not in self.model_components_by_name:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM031.value,
-
-                        severity="ERROR",
-
-                        component=component["name"],
-
-                        message=f"Parent '{parent}' does not exist."
-
-                    )
+                self.register_component_audit(
+                    component_name=component["name"],
+                    code=AuditCode.ASM031.value,
+                    severity="ERROR",
+                    message=f"Parent '{parent}' does not exist."
 
                 )
 
@@ -1457,20 +1485,11 @@ class AssemblyBuilder:
 
             if name in names:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM032.value,
-
-                        severity="ERROR",
-
-                        component=name,
-
-                        message="Duplicate Component Name."
-
-                    )
-
+                self.register_component_audit(
+                    component_name=name,
+                    code=AuditCode.ASM032.value,
+                    severity="ERROR",
+                    message="Duplicate Component Name."
                 )
 
             names.add(name)
@@ -1489,20 +1508,11 @@ class AssemblyBuilder:
 
             if cid in ids:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM033.value,
-
-                        severity="ERROR",
-
-                        component=component["name"],
-
-                        message=f"Duplicate Component ID ({cid})."
-
-                    )
-
+                self.register_component_audit(
+                    component_name=component["name"],
+                    code=AuditCode.ASM033.value,
+                    severity="ERROR",
+                    message=f"Duplicate Component ID ({cid})."
                 )
 
             ids.add(cid)
@@ -1517,20 +1527,11 @@ class AssemblyBuilder:
 
             if component_id not in self.components:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM034.value,
-
-                        severity="ERROR",
-
-                        component="",
-
-                        message=f"Objects reference unknown Component ID {component_id}."
-
-                    )
-
+                self.register_component_audit(
+                    component_name="",
+                    code=AuditCode.ASM034.value,
+                    severity="ERROR",
+                    message=f"Objects reference unknown Component ID {component_id}."
                 )
 
     # -------------------------------------------------------------------------
@@ -1543,20 +1544,11 @@ class AssemblyBuilder:
 
             if component["id"] not in self.objects:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM035.value,
-
-                        severity="WARNING",
-
-                        component=component["name"],
-
-                        message="Component has no objects."
-
-                    )
-
+                self.register_component_audit(
+                    component_name=component["name"],
+                    code=AuditCode.ASM035.value,
+                    severity="WARNING",
+                    message="Component has no objects."
                 )
 
     # -------------------------------------------------------------------------
@@ -1569,20 +1561,11 @@ class AssemblyBuilder:
 
             if component.get("bounding_box") is None:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM036.value,
-
-                        severity="WARNING",
-
-                        component=component["name"],
-
-                        message="Bounding Box not defined."
-
-                    )
-
+                self.register_component_audit(
+                    component_name=component["name"],
+                    code=AuditCode.ASM036.value,
+                    severity="WARNING",
+                    message="Bounding Box not defined."
                 )
 
     # -------------------------------------------------------------------------
@@ -1595,20 +1578,11 @@ class AssemblyBuilder:
 
             if component.get("frame") is None:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                    component_name=component["name"],
                         code=AuditCode.ASM037.value,
-
                         severity="WARNING",
-
-                        component=component["name"],
-
                         message="Frame not defined."
-
-                    )
-
                 )
 
     # -------------------------------------------------------------------------
@@ -1621,21 +1595,90 @@ class AssemblyBuilder:
 
             if "models" not in component:
 
-                self.audit_messages.append(
-
-                    AuditMessage(
-
+                self.register_component_audit(
+                    component_name=component["name"],
                         code=AuditCode.ASM038.value,
-
                         severity="WARNING",
-
-                        component=component["name"],
-
                         message="Models section missing."
-
-                    )
-
                 )
+
+    # -------------------------------------------------------------------------
+    # Register Object Audit
+    # -------------------------------------------------------------------------
+    def register_object_audit(
+        self,
+        obj,
+        code,
+        severity,
+        message
+    ):
+
+        # --------------------------------------------------
+        # Global Audit List
+        # --------------------------------------------------
+
+        self.register_component_audit(
+                component_name=obj["component_name"],
+                code=code,
+                severity=severity,
+                object_name=obj["object_name"],
+                message=message
+        )
+
+        # --------------------------------------------------
+        # Object Messages
+        # --------------------------------------------------
+
+        obj["messages"].append({
+
+            "code": code,
+
+            "severity": severity,
+
+            "message": message
+
+        })
+
+        # --------------------------------------------------
+        # Object Check
+        # --------------------------------------------------
+
+        if severity == "ERROR":
+
+            obj["check"] = "ERROR"
+
+        elif severity == "WARNING":
+
+            if obj["check"] != "ERROR":
+
+                obj["check"] = "WARNING"
+
+    # -------------------------------------------------------------------------
+    # Update Object Check
+    # -------------------------------------------------------------------------
+    def update_object_check(self):
+
+        for objects in self.objects.values():
+
+            for obj in objects:
+
+                if not obj["enabled"]:
+
+                    obj["check"] = "DISABLED"
+
+                    obj["messages"].append({
+
+                        "code": "OBJ-000",
+
+                        "severity": "INFO",
+
+                        "message": "Object disabled by engineer."
+
+                    })
+
+                elif obj["check"] is None:
+
+                    obj["check"] = "OK"
 
     # -------------------------------------------------------------------------
     # Update Component Check
@@ -1756,31 +1799,6 @@ class AssemblyBuilder:
         self.logger.info("OK")
 
     # -------------------------------------------------------------------------
-    # Prepare Components Sheet
-    # -------------------------------------------------------------------------
-    def prepare_components_sheet(self):
-
-        ws = self.components_sheet
-
-        last_column = ws.max_column
-
-        self.col_check = last_column + 1
-
-        self.col_message = last_column + 2
-
-        ws.cell(row=1, column=self.col_check).value = "Check"
-
-        ws.cell(row=1, column=self.col_message).value = "Message"
-
-        ws.column_dimensions[
-            get_column_letter(self.col_check)
-        ].width = 18
-
-        ws.column_dimensions[
-            get_column_letter(self.col_message)
-        ].width = 60
-
-    # -------------------------------------------------------------------------
     # Update Components Worksheet
     # -------------------------------------------------------------------------
     def update_components_sheet(self):
@@ -1898,23 +1916,6 @@ class AssemblyBuilder:
         self.logger.info("OK")
 
     # -------------------------------------------------------------------------
-    # Component Messages
-    # -------------------------------------------------------------------------
-    def get_component_messages(self, component):
-
-        lines = []
-
-        for msg in component["messages"]:
-
-            lines.append(
-
-                f'{msg["code"]}: {msg["message"]}'
-
-            )
-
-        return "\n".join(lines)
-
-    # -------------------------------------------------------------------------
     # Save Assembly Table
     # -------------------------------------------------------------------------
     def save_assembly_table(self):
@@ -1924,12 +1925,6 @@ class AssemblyBuilder:
         )
         self.workbook.save(filename)
         self.logger.info("Assembly Table saved.")
-
-    # -------------------------------------------------------------------------
-    # Generate Assembly Table
-    # -------------------------------------------------------------------------
-    def generate_assembly_table(self):
-        self.copy_assembly_table()
 
     # -------------------------------------------------------------------------
     # Prepare Components Sheet
@@ -2007,6 +2002,329 @@ class AssemblyBuilder:
 
         self.logger.info("OK")
 
+
+    # -------------------------------------------------------------------------
+    # Funciones de planilla de cálculo
+    # -------------------------------------------------------------------------
+ 
+    # -------------------------------------------------------------------------
+    # Write Check and Messages
+    # -------------------------------------------------------------------------
+    def write_check_and_messages(
+        self,
+        worksheet,
+        row,
+        check_column,
+        message_column,
+        check,
+        messages
+    ):
+        """
+        Writes the GSPL Check and Message columns into a worksheet.
+        """
+
+        # --------------------------------------------------
+        # Check
+        # --------------------------------------------------
+
+        check_cell = worksheet.cell(
+            row=row,
+            column=check_column
+        )
+
+        check_cell.value = check
+
+        if check in self.check_styles:
+            check_cell.fill = self.check_styles[check]
+
+        check_cell.font = Font(bold=True)
+
+        check_cell.alignment = Alignment(
+            horizontal="center",
+            vertical="center"
+        )
+
+        # --------------------------------------------------
+        # Messages
+        # --------------------------------------------------
+
+        text = []
+
+        for msg in messages:
+
+            if isinstance(msg, dict):
+
+                text.append(
+                    f'{msg["code"]}: {msg["message"]}'
+                )
+
+            else:
+
+                text.append(str(msg))
+
+        message_cell = worksheet.cell(
+            row=row,
+            column=message_column
+        )
+
+        message_cell.value = "\n".join(text)
+
+        message_cell.alignment = Alignment(
+            wrap_text=True,
+            vertical="top"
+        )
+
+        # --------------------------------------------------
+        # Row Height
+        # --------------------------------------------------
+
+        lines = max(1, len(text))
+
+        worksheet.row_dimensions[row].height = max(
+            20,
+            lines * 18
+        )
+
+    # -------------------------------------------------------------------------
+    # Prepare Objects Sheet
+    # -------------------------------------------------------------------------
+    def prepare_objects_sheet(self):
+
+        self.logger.info("")
+        self.logger.info("Preparing Objects worksheet...")
+
+        ws = self.objects_sheet
+
+        # --------------------------------------------------
+        # Find "Notes" column
+        # --------------------------------------------------
+
+        notes_col = None
+
+        for col in range(1, ws.max_column + 1):
+
+            value = ws.cell(row=1, column=col).value
+
+            if value == "Notes":
+
+                notes_col = col
+                break
+
+        if notes_col is None:
+
+            raise RuntimeError(
+                "Column 'Notes' not found in Objects worksheet."
+            )
+
+        # --------------------------------------------------
+        # Insert GSPL Columns
+        # --------------------------------------------------
+
+        ws.insert_cols(notes_col + 1, amount=2)
+
+        self.obj_col_check = notes_col + 1
+        self.obj_col_message = notes_col + 2
+
+        # --------------------------------------------------
+        # Headers
+        # --------------------------------------------------
+
+        ws.cell(
+            row=1,
+            column=self.obj_col_check
+        ).value = "Check"
+
+        ws.cell(
+            row=1,
+            column=self.obj_col_message
+        ).value = "Message"
+
+        # --------------------------------------------------
+        # Column Width
+        # --------------------------------------------------
+
+        ws.column_dimensions[
+            get_column_letter(self.obj_col_check)
+        ].width = 16
+
+        ws.column_dimensions[
+            get_column_letter(self.obj_col_message)
+        ].width = 70
+
+        self.logger.info(
+            "Check Column   : %s",
+            get_column_letter(self.obj_col_check)
+        )
+
+        self.logger.info(
+            "Message Column : %s",
+            get_column_letter(self.obj_col_message)
+        )
+
+        self.logger.info("OK")
+ 
+    # -------------------------------------------------------------------------
+    # Update Objects Worksheet
+    # -------------------------------------------------------------------------
+    def update_objects_sheet(self):
+
+        self.logger.info("")
+        self.logger.info("========================================================")
+        self.logger.info(" Updating Objects Worksheet")
+        self.logger.info("========================================================")
+
+        ws = self.objects_sheet
+
+        updated = 0
+
+        # --------------------------------------------------
+        # Objects
+        # --------------------------------------------------
+
+        for row in range(2, ws.max_row + 1):
+
+            component_id = ws.cell(row=row, column=1).value
+
+            object_name = ws.cell(row=row, column=3).value
+
+            if component_id not in self.objects:
+                continue
+
+            obj = None
+
+            for candidate in self.objects[component_id]:
+
+                if candidate["object_name"] == object_name:
+
+                    obj = candidate
+                    break
+
+            if obj is None:
+                continue
+
+            # --------------------------------------------------
+            # Check
+            # --------------------------------------------------
+
+            check = obj.get("check", "")
+
+            cell = ws.cell(
+                row=row,
+                column=self.obj_col_check
+            )
+
+            cell.value = check
+
+            if check in self.check_styles:
+
+                cell.fill = self.check_styles[check]
+
+            cell.font = Font(bold=True)
+
+            cell.alignment = Alignment(
+                horizontal="center",
+                vertical="center"
+            )
+
+            # --------------------------------------------------
+            # Message
+            # --------------------------------------------------
+
+            messages = []
+
+            for msg in obj.get("messages", []):
+
+                messages.append(
+
+                    f'{msg["code"]}: {msg["message"]}'
+
+                )
+
+            message_cell = ws.cell(
+                row=row,
+                column=self.obj_col_message
+            )
+
+            message_cell.value = "\n".join(messages)
+
+            message_cell.alignment = Alignment(
+                wrap_text=True,
+                vertical="top"
+            )
+
+            # --------------------------------------------------
+            # Row Height
+            # --------------------------------------------------
+
+            lines = max(1, len(messages))
+
+            ws.row_dimensions[row].height = max(
+                20,
+                lines * 18
+            )
+
+            updated += 1
+
+        # --------------------------------------------------
+        # Auto Filter
+        # --------------------------------------------------
+
+        ws.auto_filter.ref = (
+            f"A1:{get_column_letter(ws.max_column)}{ws.max_row}"
+        )
+
+        # --------------------------------------------------
+        # Freeze Header
+        # --------------------------------------------------
+
+        ws.freeze_panes = "A2"
+
+        self.logger.info(
+            "Objects Updated : %d",
+            updated
+        )
+
+        self.logger.info("OK")
+
+    # -------------------------------------------------------------------------
+    # Generate Assembly Table
+    # -------------------------------------------------------------------------
+    def generate_assembly_table(self):
+        self.logger.info("")
+        self.logger.info("========================================================")
+        self.logger.info(" Generating Assembly Table")
+        self.logger.info("========================================================")
+
+        # --------------------------------------------------
+        # Copy Engineering Table
+        # --------------------------------------------------
+
+        self.copy_assembly_table()
+
+        # --------------------------------------------------
+        # Prepare Worksheets
+        # --------------------------------------------------
+
+        self.prepare_components_sheet()
+
+        self.prepare_objects_sheet()
+
+        # --------------------------------------------------
+        # Update Engineering Information
+        # --------------------------------------------------
+
+        self.update_components_sheet()
+
+        self.update_objects_sheet()
+
+        # --------------------------------------------------
+        # Save Workbook
+        # --------------------------------------------------
+
+        self.save_assembly_table()
+
+        self.logger.info("Assembly Table successfully generated.")
+
     # -------------------------------------------------------------------------
     # Generate Report
     # -------------------------------------------------------------------------
@@ -2078,118 +2396,6 @@ class AssemblyBuilder:
         self.logger.info("OK")
 
     # -------------------------------------------------------------------------
-    # Resolve Parent IDs
-    # -------------------------------------------------------------------------
-    def resolve_parent_ids(self):
-
-        self.logger.info("")
-        self.logger.info("========================================================")
-        self.logger.info(" Resolving Parent IDs")
-        self.logger.info("========================================================")
-
-        resolved = 0
-
-        for component in self.components.values():
-
-            parent_name = component["parent_name"]
-
-            # --------------------------------------------------
-            # Root Component
-            # --------------------------------------------------
-
-            if not parent_name:
-
-                component["parent_id"] = None
-
-                continue
-
-            # --------------------------------------------------
-            # ASM-020
-            # --------------------------------------------------
-
-            if parent_name not in self.model_components_by_name:
-
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM020.value,
-
-                        severity="ERROR",
-
-                        component=component["name"],
-
-                        message=f"Unknown parent component '{parent_name}'."
-
-                    )
-
-                )
-
-                continue
-
-            parent = self.model_components_by_name[parent_name]
-
-            # --------------------------------------------------
-            # ASM-021
-            # --------------------------------------------------
-
-            if parent["id"] == component["id"]:
-
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM021.value,
-
-                        severity="ERROR",
-
-                        component=component["name"],
-
-                        message="Component cannot be parent of itself."
-
-                    )
-
-                )
-
-                continue
-
-            # --------------------------------------------------
-            # ASM-023
-            # --------------------------------------------------
-
-            if not parent.get("enabled", True):
-
-                self.audit_messages.append(
-
-                    AuditMessage(
-
-                        code=AuditCode.ASM023.value,
-
-                        severity="WARNING",
-
-                        component=component["name"],
-
-                        message=f"Parent component '{parent_name}' is disabled."
-
-                    )
-
-                )
-
-            component["parent_id"] = parent["id"]
-
-            resolved += 1
-
-        self.logger.info("OK")
-
-        self.logger.info(
-
-            "Resolved Parent IDs : %d",
-
-            resolved
-
-        )
-
-    # -------------------------------------------------------------------------
     # Finish
     # -------------------------------------------------------------------------
     def finish(self):
@@ -2218,7 +2424,6 @@ def main():
     builder = AssemblyBuilder()
 
     builder.run()
-
 
 if __name__ == "__main__":
 

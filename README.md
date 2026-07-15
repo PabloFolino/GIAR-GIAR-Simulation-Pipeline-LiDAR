@@ -182,13 +182,20 @@ The Rhino Extractor is responsible for reading the CAD model, auditing the proje
 
 # 5. Engineering Assembly Definition
 
-The GSPL automatically generates two complementary assembly files:
+The GSPL automatically generates three complementary assembly files:
 
 - `1_assembly.json`
 - `1_assembly_table.xlsx`
+- `1_model_database.json`
 
-Although both files describe the same engineering assembly, they have completely different purposes.
+Although both files describe the same engineering assembly, they have completely different purposes. Every CAD component receives an initial **Component Frame**, automatically located at the center of its Bounding Box..
 
+```
+The files automatically computes:
+									• Bounding Box
+									• Component Frame
+									• Engineering Properties
+```
 ### `1_assembly.json`
 
 This file is an **internal pipeline database**.
@@ -197,11 +204,10 @@ It contains the hierarchical representation of the assembly and is automatically
 
 Under normal conditions it **should not be edited manually**.
 
----
 
 ### `1_assembly_table.xlsx`
 
-This workbook is the **official engineering interface** of the GSPL.
+This workbook is the **official engineering interface** of the GSPL. 
 
 The simulation engineer uses this spreadsheet to define:
 
@@ -220,9 +226,13 @@ During the execution of **GSPL-02**, the Engineering Assembly Table is automatic
 
 This separation allows engineers to work using a familiar spreadsheet environment while the GSPL internally maintains a deterministic JSON representation.
 
-For a complete description of the engineering workflow and both assembly files see:
+### `1_model_database.json`
+
+Is the authoritative geometric database of the pipeline. All geometric information extracted from Rhino is stored here and reused by subsequent GSPL stages.
 
 ## 📘 Engineering Specification
+
+For a complete description of the engineering workflow and both assembly files see:
 
 **[GSPL-SPEC-002 – Engineering Assembly Specification](Documentation/GSPL-SPEC-002.md)**
 ## 5.1 Important consideration
@@ -243,7 +253,7 @@ If a component has **Visual**:Enable, **Simulation**:Enable, and **Enable**: FAL
 
 # 6. Versiones de GSPL-02_Assembly_Builder.py
 
-The Assembly Builder transforms the Engineering Assembly Table into a validated assembly database.
+The Assembly Builder transforms the Engineering Assembly Table into a validates and enriches the engineering information provided by the engineer while preserving the CAD geometry extracted by GSPL-01.
 
 It is responsible for interpreting engineering decisions and converting them into the internal representation used by the remaining stages of the pipeline.
 

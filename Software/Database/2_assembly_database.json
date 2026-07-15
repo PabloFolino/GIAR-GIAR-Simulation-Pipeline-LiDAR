@@ -3,31 +3,35 @@
     "generated_by": "GSPL-02_Assembly_Builder",
     "generator_version": "0.1.0",
     "generated": {
-        "date": "2026-07-12",
-        "time": "22:10:56"
+        "date": "2026-07-14",
+        "time": "08:22:35"
     },
     "project": "GIAR Low Cost 3D LiDAR",
-    "root": 2,
+    "root": 1,
     "statistics": {
         "components": 32,
-        "mechanical": 15,
-        "electronic": 12,
-        "sensor": 3,
-        "actuator": 2,
+        "mechanical": 0,
+        "electronic": 0,
+        "sensor": 0,
+        "actuator": 0,
         "enabled": 32,
         "disabled": 0,
-        "visual": 14,
-        "simulation": 9
+        "visual": 32,
+        "simulation": 0,
+        "exported": 32,
+        "skipped": 0
     },
     "components": [
         {
             "id": 1,
             "name": "Anillo_deslizante",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     0.0,
@@ -61,7 +65,9 @@
                     39.1
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -79,24 +85,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 2,
             "name": "Apoya_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
             "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     18.809974,
                     0.0,
@@ -131,8 +144,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -151,24 +163,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 3,
             "name": "Base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 2,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.5,
                     0.0,
@@ -203,8 +222,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -223,24 +241,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 4,
             "name": "Cabezal_giratorio",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 24,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     -0.0,
@@ -275,8 +300,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -295,24 +319,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 5,
             "name": "Cierre_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     58.353849,
                     -0.010907,
@@ -346,7 +377,9 @@
                     18.000453
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -364,24 +397,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 6,
             "name": "Conector_imantado_apoya_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 2,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.501179,
                     -0.0,
@@ -415,7 +455,9 @@
                     5.9
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -433,24 +475,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 7,
             "name": "Conector_imantado_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.501179,
                     0.0,
@@ -484,7 +533,9 @@
                     6.55
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -502,24 +553,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 8,
             "name": "ESP_32",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.697369,
                     -0.055266,
@@ -553,7 +611,9 @@
                     10.484587
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -571,24 +631,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 9,
             "name": "Hall_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.005,
                     23.443114,
@@ -623,7 +690,7 @@
                 ]
             },
             "models": [
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -642,24 +709,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
-            "simulation": true,
+            "visual": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Sensor"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 10,
             "name": "Hall_lidar",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     5.431214,
                     -18.395145,
@@ -694,7 +768,7 @@
                 ]
             },
             "models": [
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -713,24 +787,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
-            "simulation": true,
+            "visual": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Sensor"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 11,
             "name": "Iman_hall_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 29,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     17.977858,
@@ -765,7 +846,7 @@
                 ]
             },
             "models": [
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -784,24 +865,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
-            "simulation": true,
+            "visual": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 12,
             "name": "Imanes_apoya_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 2,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.500986,
                     0.00493,
@@ -835,7 +923,9 @@
                     3.003458
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -853,24 +943,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 13,
             "name": "Imanes_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.500986,
                     0.00493,
@@ -904,7 +1001,9 @@
                     3.003458
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -922,24 +1021,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 14,
             "name": "Led_apoya_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 2,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     -38.967771,
                     -1e-06,
@@ -993,7 +1099,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1001,16 +1110,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 15,
             "name": "Led_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     -38.967771,
                     -1e-06,
@@ -1064,7 +1177,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1072,16 +1188,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 16,
             "name": "LIDAR",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 20,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     -1.991429,
                     0.519943,
@@ -1116,8 +1236,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -1136,24 +1255,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Sensor"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 17,
             "name": "Micromotor",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     -0.002523,
                     33.741568,
@@ -1207,7 +1333,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1215,16 +1344,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 18,
             "name": "NEMA17",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     51.00774,
                     0.0,
@@ -1278,7 +1411,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1286,16 +1422,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 19,
             "name": "Polea_GT2_20D",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     55.86,
                     0.0,
@@ -1349,7 +1489,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1357,16 +1500,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 20,
             "name": "Porta_lidar",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 25,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     0.25104,
@@ -1420,7 +1567,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1428,16 +1578,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 21,
             "name": "Power_12V",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     57.497389,
                     37.343751,
@@ -1471,7 +1625,9 @@
                     28.0
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -1489,24 +1645,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 22,
             "name": "Power_5V_A",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     57.462661,
                     -37.338641,
@@ -1540,7 +1703,9 @@
                     28.0
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -1558,24 +1723,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 23,
             "name": "Reset_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     76.26786,
                     26.002344,
@@ -1629,7 +1801,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -1637,16 +1812,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 24,
             "name": "Ruleman_60082RSC3",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 29,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     0.0,
@@ -1681,8 +1860,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -1701,24 +1879,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Actuator"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 25,
             "name": "Rulemanes_696",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.0,
                     -0.000708,
@@ -1753,8 +1938,7 @@
                 ]
             },
             "models": [
-                "visual",
-                "simulation"
+                "visual"
             ],
             "objects": [
                 {
@@ -1773,24 +1957,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
             "visual": true,
-            "simulation": true,
+            "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Actuator"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 26,
             "name": "Sujeta_NEMA17",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     52.524403,
                     -0.006494,
@@ -1824,7 +2015,9 @@
                     18.828077
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -1842,24 +2035,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 27,
             "name": "Sujeta_Ruleman",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     0.16639,
                     -0.996736,
@@ -1893,7 +2093,9 @@
                     2.4
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -1911,24 +2113,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 28,
             "name": "Sujeta_TMC_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     10.934724,
                     -34.529524,
@@ -1962,7 +2171,9 @@
                     13.394502
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -1980,24 +2191,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 29,
             "name": "Tapa_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     17.5,
                     0.0,
@@ -2051,7 +2269,10 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
@@ -2059,16 +2280,20 @@
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 30,
             "name": "TMC_2208_XY",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     10.934724,
                     -34.529524,
@@ -2102,7 +2327,9 @@
                     24.296
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -2120,24 +2347,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 31,
             "name": "TMC_2208_Z",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 4,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     -23.870001,
                     0.206657,
@@ -2171,7 +2405,9 @@
                     24.296
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -2189,24 +2425,31 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Electronic"
+            "check": "OK",
+            "messages": [],
+            "type": null
         },
         {
             "id": 32,
             "name": "Tornillos_base",
-            "description": "",
+            "description": null,
             "notes": "",
             "enabled": true,
-            "parent": 3,
+            "parent": null,
             "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
                 "position": [
                     14.996655,
                     -0.0,
@@ -2240,7 +2483,9 @@
                     8.0
                 ]
             },
-            "models": [],
+            "models": [
+                "visual"
+            ],
             "objects": [
                 {
                     "type": "shape",
@@ -2258,15 +2503,20 @@
                     "properties": {
                         "dynamic": false,
                         "respondable": false,
-                        "visible": true
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false
                     }
                 }
             ],
-            "visual": false,
+            "visual": true,
             "simulation": false,
             "reviewed": false,
             "status": "NEW",
-            "type": "Mechanical"
+            "check": "OK",
+            "messages": [],
+            "type": null
         }
     ]
 }

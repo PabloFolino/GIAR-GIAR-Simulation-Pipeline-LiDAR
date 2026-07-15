@@ -6,6 +6,7 @@
       {
         "id": "b1c07fb8c4fd5983",
         "type": "tabs",
+        "dimension": 60.38415366146459,
         "children": [
           {
             "id": "ebc482cba87d3e56",
@@ -40,6 +41,7 @@
       {
         "id": "4b67a92c47456898",
         "type": "tabs",
+        "dimension": 39.61584633853541,
         "children": [
           {
             "id": "a186ef1a099f1dac",
@@ -69,8 +71,7 @@
               "title": "README"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -102,7 +103,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "file:",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -123,7 +124,8 @@
               "title": "Marcadores"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -234,6 +236,12 @@
   },
   "active": "ebc482cba87d3e56",
   "lastOpenFiles": [
+    "Documentation/GSPL-SPEC-001.md",
+    "README.md",
+    "Software/Database/1_assembly_table.xlsx",
+    "Software/Database/1_assembly_table_old.xlsx",
+    "Software/GSPL-01_Rhino_Extractor_ver1.py",
+    "Software/GSPL-01_Rhino_Extractor copy.py",
     "Software/Database/lu346006yr596.tmp",
     "Software/Database/2_assembly_table.xlsx",
     "Software/Database/2_assembly_database.json",
@@ -241,14 +249,7 @@
     "Software/Database/2_assembly_report.md",
     "Software/Logs/GSPL-02_Assembly_Builder.log",
     "Software/GSPL-02_Assembly_Builder.py",
-    "Documentation/GSPL-SPEC-001.md",
-    "README.md",
     "Software/Database/lu346006yr58x.tmp",
-    "Software/Database/lu346006yr58r.tmp",
-    "Software/Database/1_assembly_table_old.xlsx",
-    "Software/1_assembly_table_old.xlsx",
-    "Software/1_assembly_table.xlsx",
-    "Software/Database/lu346006yr58k.tmp",
     "Documentation/GSPL-SPEC-002.md",
     "Sin título.md",
     "Figures/Structure_proyect.png"

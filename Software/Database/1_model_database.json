@@ -10,19 +10,59 @@
     "components": [
         {
             "id": 1,
-            "uuid": "d18e67c0-6a32-4b86-82b0-25af56263f1f",
+            "uuid": "37b2b37a-88bd-4351-bff9-e14ea4fc786a",
             "name": "Anillo_deslizante",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.0,
+                    16.471754
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -14.4,
+                    -14.4,
+                    -3.078246
+                ],
+                "max": [
+                    14.4,
+                    14.4,
+                    36.021754
+                ],
+                "center": [
+                    0.0,
+                    0.0,
+                    16.471754
+                ],
+                "size": [
+                    28.8,
+                    28.8,
+                    39.1
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -124,19 +164,59 @@
         },
         {
             "id": 2,
-            "uuid": "29ca11fb-4c25-4dde-b421-f92ca7b087fa",
+            "uuid": "f415c5e8-0284-4924-a84b-664079002dcd",
             "name": "Apoya_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    18.809974,
+                    0.0,
+                    -45.770978
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -45.269223,
+                    -50.0,
+                    -61.514778
+                ],
+                "max": [
+                    82.88917,
+                    50.0,
+                    -30.027178
+                ],
+                "center": [
+                    18.809974,
+                    0.0,
+                    -45.770978
+                ],
+                "size": [
+                    128.158393,
+                    100.0,
+                    31.4876
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -153,19 +233,59 @@
         },
         {
             "id": 3,
-            "uuid": "0f1ee1f0-ed1b-4285-8b3b-5869c7a560b1",
+            "uuid": "ff8ee30d-31b7-40ab-a64f-2e0d721c2941",
             "name": "Base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.5,
+                    0.0,
+                    -28.682394
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -57.5,
+                    -60.0,
+                    -45.737687
+                ],
+                "max": [
+                    92.5,
+                    60.0,
+                    -11.627102
+                ],
+                "center": [
+                    17.5,
+                    0.0,
+                    -28.682394
+                ],
+                "size": [
+                    150.0,
+                    120.0,
+                    34.110584
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -182,19 +302,59 @@
         },
         {
             "id": 4,
-            "uuid": "5c5be91c-5e19-40e6-8155-e1090fd2aaa8",
+            "uuid": "a1f97f42-1456-48bb-b5e8-460f88357fde",
             "name": "Cabezal_giratorio",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    -0.0,
+                    35.914016
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -66.870964,
+                    -66.870964,
+                    8.298032
+                ],
+                "max": [
+                    66.870964,
+                    66.870964,
+                    63.53
+                ],
+                "center": [
+                    0.0,
+                    -0.0,
+                    35.914016
+                ],
+                "size": [
+                    133.741929,
+                    133.741929,
+                    55.231968
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -221,19 +381,59 @@
         },
         {
             "id": 5,
-            "uuid": "1069319f-d98d-489e-bc35-de7e9bd02be1",
+            "uuid": "9c6eab63-b8e6-4df3-9574-e8b9819963b9",
             "name": "Cierre_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    58.353849,
+                    -0.010907,
+                    -35.017178
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    33.193677,
+                    -12.550415,
+                    -44.017404
+                ],
+                "max": [
+                    83.514022,
+                    12.528601,
+                    -26.016951
+                ],
+                "center": [
+                    58.353849,
+                    -0.010907,
+                    -35.017178
+                ],
+                "size": [
+                    50.320346,
+                    25.079016,
+                    18.000453
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -255,19 +455,59 @@
         },
         {
             "id": 6,
-            "uuid": "64f1c8a3-3a44-4e49-b306-6615bf0b85c4",
+            "uuid": "fa9e1707-54b5-4286-97c6-b2a81f21fc2c",
             "name": "Conector_imantado_apoya_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.501179,
+                    -0.0,
+                    -47.37
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    15.501179,
+                    -12.22,
+                    -50.32
+                ],
+                "max": [
+                    19.501179,
+                    12.22,
+                    -44.42
+                ],
+                "center": [
+                    17.501179,
+                    -0.0,
+                    -47.37
+                ],
+                "size": [
+                    4.0,
+                    24.44,
+                    5.9
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -339,19 +579,59 @@
         },
         {
             "id": 7,
-            "uuid": "4f2bc6fd-b7f3-4ca6-b354-fc1ec5bbb33b",
+            "uuid": "ddc90601-adab-48f9-8d16-184030863af6",
             "name": "Conector_imantado_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.501179,
+                    0.0,
+                    -42.881053
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    15.501179,
+                    -12.22,
+                    -46.156053
+                ],
+                "max": [
+                    19.501179,
+                    12.22,
+                    -39.606053
+                ],
+                "center": [
+                    17.501179,
+                    0.0,
+                    -42.881053
+                ],
+                "size": [
+                    4.0,
+                    24.44,
+                    6.55
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -443,19 +723,59 @@
         },
         {
             "id": 8,
-            "uuid": "2156e0e7-84a9-459f-8284-746d6abdd84d",
+            "uuid": "da897f75-abda-4edf-bd9d-d6e5b863b824",
             "name": "ESP_32",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.697369,
+                    -0.055266,
+                    38.13461
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -7.072631,
+                    -12.755266,
+                    32.892317
+                ],
+                "max": [
+                    42.467369,
+                    12.644734,
+                    43.376904
+                ],
+                "center": [
+                    17.697369,
+                    -0.055266,
+                    38.13461
+                ],
+                "size": [
+                    49.54,
+                    25.4,
+                    10.484587
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -907,19 +1227,59 @@
         },
         {
             "id": 9,
-            "uuid": "4a80f675-eccc-48f0-a1bb-5b5a47a3f036",
+            "uuid": "9a77d556-774c-476f-a215-072f73ef6cef",
             "name": "Hall_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.005,
+                    23.443114,
+                    29.479356
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -2.160005,
+                    16.150393,
+                    28.654041
+                ],
+                "max": [
+                    2.170005,
+                    30.735836,
+                    30.30467
+                ],
+                "center": [
+                    0.005,
+                    23.443114,
+                    29.479356
+                ],
+                "size": [
+                    4.33001,
+                    14.585443,
+                    1.65063
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -936,19 +1296,59 @@
         },
         {
             "id": 10,
-            "uuid": "0c08d64a-b61d-4be7-be26-6addb84a3b62",
+            "uuid": "f01acb72-f00a-41ac-acd4-de2975fd15e5",
             "name": "Hall_lidar",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    5.431214,
+                    -18.395145,
+                    64.450338
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -1.861507,
+                    -20.56015,
+                    62.675325
+                ],
+                "max": [
+                    12.723936,
+                    -16.23014,
+                    66.225351
+                ],
+                "center": [
+                    5.431214,
+                    -18.395145,
+                    64.450338
+                ],
+                "size": [
+                    14.585443,
+                    4.33001,
+                    3.550026
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -970,19 +1370,59 @@
         },
         {
             "id": 11,
-            "uuid": "475a2f19-c1e3-4522-8a93-543170ea3c6a",
+            "uuid": "d21e2b42-8bf1-4521-aded-648315f65fe1",
             "name": "Iman_hall_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    17.977858,
+                    26.018062
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -1.5,
+                    16.477858,
+                    25.518062
+                ],
+                "max": [
+                    1.5,
+                    19.477858,
+                    26.518062
+                ],
+                "center": [
+                    0.0,
+                    17.977858,
+                    26.018062
+                ],
+                "size": [
+                    3.0,
+                    3.0,
+                    1.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -999,19 +1439,59 @@
         },
         {
             "id": 12,
-            "uuid": "27e42c00-070e-4b97-a9f4-25dd502c6c06",
+            "uuid": "2ecb919d-1850-4269-a898-016456687b00",
             "name": "Imanes_apoya_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.500986,
+                    0.00493,
+                    -46.844149
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -35.997791,
+                    -9.99507,
+                    -48.345877
+                ],
+                "max": [
+                    70.999763,
+                    10.00493,
+                    -45.34242
+                ],
+                "center": [
+                    17.500986,
+                    0.00493,
+                    -46.844149
+                ],
+                "size": [
+                    106.997554,
+                    20.0,
+                    3.003458
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1033,19 +1513,59 @@
         },
         {
             "id": 13,
-            "uuid": "8e96d6ff-af15-477e-bcd3-a7a5d5b3ac89",
+            "uuid": "9846a602-b4db-4c51-af3b-23948f6d2928",
             "name": "Imanes_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.500986,
+                    0.00493,
+                    -43.844149
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -35.997791,
+                    -9.99507,
+                    -45.345877
+                ],
+                "max": [
+                    70.999763,
+                    10.00493,
+                    -42.34242
+                ],
+                "center": [
+                    17.500986,
+                    0.00493,
+                    -43.844149
+                ],
+                "size": [
+                    106.997554,
+                    20.0,
+                    3.003458
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1067,19 +1587,59 @@
         },
         {
             "id": 14,
-            "uuid": "8b85dee6-37f9-48e3-90b3-edf3b49dd993",
+            "uuid": "b9b7a400-b164-4a20-9244-7f7ac552e358",
             "name": "Led_apoya_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -38.967771,
+                    -1e-06,
+                    -49.829314
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -46.627771,
+                    -2.400001,
+                    -52.229314
+                ],
+                "max": [
+                    -31.307771,
+                    2.399999,
+                    -47.429314
+                ],
+                "center": [
+                    -38.967771,
+                    -1e-06,
+                    -49.829314
+                ],
+                "size": [
+                    15.32,
+                    4.8,
+                    4.8
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1106,19 +1666,59 @@
         },
         {
             "id": 15,
-            "uuid": "0bad957e-b675-494f-a7e8-1c546dae3613",
+            "uuid": "059e1256-6123-47ca-8d48-15a9b31d612f",
             "name": "Led_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -38.967771,
+                    -1e-06,
+                    -14.110624
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -46.627771,
+                    -2.400001,
+                    -16.510624
+                ],
+                "max": [
+                    -31.307771,
+                    2.399999,
+                    -11.710624
+                ],
+                "center": [
+                    -38.967771,
+                    -1e-06,
+                    -14.110624
+                ],
+                "size": [
+                    15.32,
+                    4.8,
+                    4.8
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1145,19 +1745,59 @@
         },
         {
             "id": 16,
-            "uuid": "98c1c03c-1561-4284-b332-f8d6fa593aea",
+            "uuid": "6fe1ccfc-88e0-4ba7-9ce7-d47d7507a3d6",
             "name": "LIDAR",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -1.991429,
+                    0.519943,
+                    74.528037
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -10.586429,
+                    -21.763511,
+                    62.936037
+                ],
+                "max": [
+                    6.603571,
+                    22.803398,
+                    86.120037
+                ],
+                "center": [
+                    -1.991429,
+                    0.519943,
+                    74.528037
+                ],
+                "size": [
+                    17.19,
+                    44.566909,
+                    23.184
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1259,19 +1899,59 @@
         },
         {
             "id": 17,
-            "uuid": "ae3c6712-96c3-4cf2-98b0-ccd0e288d4a3",
+            "uuid": "193ecf55-926d-4e11-9b8f-f8e5e1f6a114",
             "name": "Micromotor",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -0.002523,
+                    33.741568,
+                    64.484259
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -6.002523,
+                    23.885851,
+                    47.684259
+                ],
+                "max": [
+                    5.997477,
+                    43.597284,
+                    81.284259
+                ],
+                "center": [
+                    -0.002523,
+                    33.741568,
+                    64.484259
+                ],
+                "size": [
+                    12.0,
+                    19.711433,
+                    33.6
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1353,19 +2033,59 @@
         },
         {
             "id": 18,
-            "uuid": "848dc30e-d3bb-4bdc-a049-88ba9e934d33",
+            "uuid": "99fc56cd-fb54-42f9-b724-2c99fdcac9a5",
             "name": "NEMA17",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    51.00774,
+                    0.0,
+                    -2.650396
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    24.845095,
+                    -21.168357,
+                    -32.150396
+                ],
+                "max": [
+                    77.170386,
+                    21.168357,
+                    26.849604
+                ],
+                "center": [
+                    51.00774,
+                    0.0,
+                    -2.650396
+                ],
+                "size": [
+                    52.325292,
+                    42.336714,
+                    59.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1397,19 +2117,59 @@
         },
         {
             "id": 19,
-            "uuid": "6f834518-3561-47aa-9503-031022dbcdf5",
+            "uuid": "43dbaf6f-14cd-4c14-84f5-f575f416adbe",
             "name": "Polea_GT2_20D",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    55.86,
+                    0.0,
+                    17.28
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    46.26,
+                    -9.6,
+                    9.28
+                ],
+                "max": [
+                    65.46,
+                    9.6,
+                    25.28
+                ],
+                "center": [
+                    55.86,
+                    0.0,
+                    17.28
+                ],
+                "size": [
+                    19.2,
+                    19.2,
+                    16.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1446,19 +2206,59 @@
         },
         {
             "id": 20,
-            "uuid": "7bbcf78d-ed75-4720-bad8-09846a8162d5",
+            "uuid": "f713d1b8-9996-4e6e-99df-fc52889ebd9e",
             "name": "Porta_lidar",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.25104,
+                    77.583125
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -15.0,
+                    -32.093778,
+                    62.583125
+                ],
+                "max": [
+                    15.0,
+                    32.595858,
+                    92.583125
+                ],
+                "center": [
+                    0.0,
+                    0.25104,
+                    77.583125
+                ],
+                "size": [
+                    30.0,
+                    64.689636,
+                    30.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1475,19 +2275,59 @@
         },
         {
             "id": 21,
-            "uuid": "cf3cc751-6d3f-47f7-86f6-b5b44de6e850",
+            "uuid": "f084e4cd-f46e-40dc-9f4d-948179c0f628",
             "name": "Power_12V",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    57.497389,
+                    37.343751,
+                    -26.214407
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    40.997389,
+                    34.582944,
+                    -40.214407
+                ],
+                "max": [
+                    73.997389,
+                    40.104557,
+                    -12.214407
+                ],
+                "center": [
+                    57.497389,
+                    37.343751,
+                    -26.214407
+                ],
+                "size": [
+                    33.0,
+                    5.521613,
+                    28.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1664,19 +2504,59 @@
         },
         {
             "id": 22,
-            "uuid": "44aee5c1-e7b0-456a-90d3-0fe77194253b",
+            "uuid": "ae1f8a07-5d14-488c-99bf-24a892f9a62d",
             "name": "Power_5V_A",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    57.462661,
+                    -37.338641,
+                    -26.216299
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    40.962661,
+                    -40.099448,
+                    -40.216299
+                ],
+                "max": [
+                    73.962661,
+                    -34.577835,
+                    -12.216299
+                ],
+                "center": [
+                    57.462661,
+                    -37.338641,
+                    -26.216299
+                ],
+                "size": [
+                    33.0,
+                    5.521613,
+                    28.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1853,19 +2733,59 @@
         },
         {
             "id": 23,
-            "uuid": "b977b708-67e3-4f52-b787-023be1cc893c",
+            "uuid": "75d0a69c-b61a-43f2-a40a-0dd29821f058",
             "name": "Reset_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Predeterminada",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    76.26786,
+                    26.002344,
+                    -21.676882
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    63.66786,
+                    20.452344,
+                    -27.226882
+                ],
+                "max": [
+                    88.86786,
+                    31.552344,
+                    -16.126882
+                ],
+                "center": [
+                    76.26786,
+                    26.002344,
+                    -21.676882
+                ],
+                "size": [
+                    25.2,
+                    11.1,
+                    11.1
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1912,19 +2832,59 @@
         },
         {
             "id": 24,
-            "uuid": "eec263b1-93f0-4f39-814b-a46b101689ef",
+            "uuid": "cd4e4be1-29ed-4229-9b91-e631993a7bc1",
             "name": "Ruleman_60082RSC3",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.0,
+                    19.03
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -34.0,
+                    -34.0,
+                    11.53
+                ],
+                "max": [
+                    34.0,
+                    34.0,
+                    26.53
+                ],
+                "center": [
+                    0.0,
+                    0.0,
+                    19.03
+                ],
+                "size": [
+                    68.0,
+                    68.0,
+                    15.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -1951,19 +2911,59 @@
         },
         {
             "id": 25,
-            "uuid": "648a18b4-9219-4ba2-9cbe-af84ba6725eb",
+            "uuid": "00430902-8b10-4f05-ac5d-46eaf2fae691",
             "name": "Rulemanes_696",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    -0.000708,
+                    77.583125
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -9.0,
+                    -32.593778,
+                    68.583125
+                ],
+                "max": [
+                    9.0,
+                    32.592361,
+                    86.583125
+                ],
+                "center": [
+                    0.0,
+                    -0.000708,
+                    77.583125
+                ],
+                "size": [
+                    18.0,
+                    65.186139,
+                    18.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2005,19 +3005,59 @@
         },
         {
             "id": 26,
-            "uuid": "3704c9be-f63e-4c2e-877d-4dbf73016705",
+            "uuid": "a02d52f1-2ce2-4039-a782-0725a189695e",
             "name": "Sujeta_NEMA17",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    52.524403,
+                    -0.006494,
+                    -7.845032
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    29.855357,
+                    -30.415429,
+                    -17.259071
+                ],
+                "max": [
+                    75.193449,
+                    30.402442,
+                    1.569006
+                ],
+                "center": [
+                    52.524403,
+                    -0.006494,
+                    -7.845032
+                ],
+                "size": [
+                    45.338092,
+                    60.817871,
+                    18.828077
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2034,19 +3074,59 @@
         },
         {
             "id": 27,
-            "uuid": "069022be-eae5-41a2-bf8c-9733ee9075d8",
+            "uuid": "ef1d7bb7-8fa2-46f1-a0ed-903ad6f3fa53",
             "name": "Sujeta_Ruleman",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.16639,
+                    -0.996736,
+                    27.526419
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -29.428221,
+                    -29.594933,
+                    26.326419
+                ],
+                "max": [
+                    29.761002,
+                    27.601461,
+                    28.726419
+                ],
+                "center": [
+                    0.16639,
+                    -0.996736,
+                    27.526419
+                ],
+                "size": [
+                    59.189223,
+                    57.196394,
+                    2.4
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2063,19 +3143,59 @@
         },
         {
             "id": 28,
-            "uuid": "8ae398ac-7609-4857-a613-c0534f904788",
+            "uuid": "1cb1592e-9541-4adf-b56e-d2a5e3d989db",
             "name": "Sujeta_TMC_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    10.934724,
+                    -34.529524,
+                    -26.913037
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -2.002271,
+                    -43.677338,
+                    -33.610288
+                ],
+                "max": [
+                    23.871718,
+                    -25.381709,
+                    -20.215786
+                ],
+                "center": [
+                    10.934724,
+                    -34.529524,
+                    -26.913037
+                ],
+                "size": [
+                    25.873989,
+                    18.295629,
+                    13.394502
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2097,19 +3217,59 @@
         },
         {
             "id": 29,
-            "uuid": "0101cf88-fe74-4571-a739-76aa0a566002",
+            "uuid": "95d7d9cc-a9f7-4a5b-869e-c759afd7b239",
             "name": "Tapa_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.5,
+                    0.0,
+                    -8.228899
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -57.5,
+                    -60.0,
+                    -43.599551
+                ],
+                "max": [
+                    92.5,
+                    60.0,
+                    27.141754
+                ],
+                "center": [
+                    17.5,
+                    0.0,
+                    -8.228899
+                ],
+                "size": [
+                    150.0,
+                    120.0,
+                    70.741305
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2126,19 +3286,59 @@
         },
         {
             "id": 30,
-            "uuid": "54afc735-9642-440c-adc9-1b760f968a40",
+            "uuid": "6e36a10d-5020-48cb-9302-bde93fd8688e",
             "name": "TMC_2208_XY",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    10.934724,
+                    -34.529524,
+                    -22.663786
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    0.774724,
+                    -42.149524,
+                    -34.811786
+                ],
+                "max": [
+                    21.094724,
+                    -26.909524,
+                    -10.515786
+                ],
+                "center": [
+                    10.934724,
+                    -34.529524,
+                    -22.663786
+                ],
+                "size": [
+                    20.32,
+                    15.24,
+                    24.296
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2525,19 +3725,59 @@
         },
         {
             "id": 31,
-            "uuid": "6baa3bd8-6837-45c9-b972-6c32539c66bb",
+            "uuid": "eb703a67-ffdb-4e82-b2e4-c455a5573b31",
             "name": "TMC_2208_Z",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -23.870001,
+                    0.206657,
+                    46.607676
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -31.490001,
+                    -9.953343,
+                    34.459676
+                ],
+                "max": [
+                    -16.250001,
+                    10.366657,
+                    58.755676
+                ],
+                "center": [
+                    -23.870001,
+                    0.206657,
+                    46.607676
+                ],
+                "size": [
+                    15.24,
+                    20.32,
+                    24.296
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
@@ -2919,19 +4159,59 @@
         },
         {
             "id": 32,
-            "uuid": "51c8b170-91f2-4b42-aa94-4ef187565112",
+            "uuid": "ba6b284f-c4bd-4040-b891-1e52029733c2",
             "name": "Tornillos_base",
-            "type": "component",
+            "type": "Mechanical",
             "layer": "Default",
             "parent": null,
             "children": [],
             "stl": null,
-            "transform": null,
-            "bounding_box": null,
-            "center": null,
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    14.996655,
+                    -0.0,
+                    -42.239612
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -31.003345,
+                    -49.5,
+                    -46.239612
+                ],
+                "max": [
+                    60.996655,
+                    49.5,
+                    -38.239612
+                ],
+                "center": [
+                    14.996655,
+                    -0.0,
+                    -42.239612
+                ],
+                "size": [
+                    92.0,
+                    99.0,
+                    8.0
+                ]
+            },
             "mass": null,
             "material": null,
-            "properties": {},
+            "properties": {
+                "dynamic": false,
+                "respondable": false,
+                "visible": true,
+                "collidable": false,
+                "detectable": false,
+                "measurable": false
+            },
             "status": {
                 "geometry_audit": "PASSED",
                 "hierarchy_audit": "PENDING",
