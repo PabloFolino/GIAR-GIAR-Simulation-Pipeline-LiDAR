@@ -1,13 +1,13 @@
 {
-    "format_version": "1.0",
+    "format_version": "1.1",
     "generated_by": "GSPL-01_Rhino_Extractor",
     "generator_version": "1.0",
     "generated": {
-        "date": "2026-07-15",
-        "time": "15:24:59"
+        "date": "2026-07-22",
+        "time": "16:03:52"
     },
     "project": "GIAR Low Cost 3D LiDAR",
-    "root": 1,
+    "root_component_id": 1,
     "statistics": {
         "components": 32,
         "objects": 32,
@@ -16,7 +16,7 @@
     },
     "components": [
         {
-            "id": 1,
+            "component_id": 1,
             "name": "Anillo_deslizante",
             "description": "",
             "notes": "",
@@ -64,7 +64,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 1,
+                    "component_id": 1,
                     "type": "Shape",
                     "name": "Anillo_deslizante_Shape",
                     "position": [
@@ -89,7 +90,7 @@
             ]
         },
         {
-            "id": 2,
+            "component_id": 2,
             "name": "Apoya_base",
             "description": "",
             "notes": "",
@@ -137,7 +138,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 2,
+                    "component_id": 2,
                     "type": "Shape",
                     "name": "Apoya_base_Shape",
                     "position": [
@@ -162,7 +164,7 @@
             ]
         },
         {
-            "id": 3,
+            "component_id": 3,
             "name": "Base",
             "description": "",
             "notes": "",
@@ -210,7 +212,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 3,
+                    "component_id": 3,
                     "type": "Shape",
                     "name": "Base_Shape",
                     "position": [
@@ -235,7 +238,7 @@
             ]
         },
         {
-            "id": 4,
+            "component_id": 4,
             "name": "Cabezal_giratorio",
             "description": "",
             "notes": "",
@@ -283,7 +286,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 4,
+                    "component_id": 4,
                     "type": "Shape",
                     "name": "Cabezal_giratorio_Shape",
                     "position": [
@@ -308,7 +312,7 @@
             ]
         },
         {
-            "id": 5,
+            "component_id": 5,
             "name": "Cierre_base",
             "description": "",
             "notes": "",
@@ -356,7 +360,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 5,
+                    "component_id": 5,
                     "type": "Shape",
                     "name": "Cierre_base_Shape",
                     "position": [
@@ -381,7 +386,7 @@
             ]
         },
         {
-            "id": 6,
+            "component_id": 6,
             "name": "Conector_imantado_apoya_base",
             "description": "",
             "notes": "",
@@ -429,7 +434,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 6,
+                    "component_id": 6,
                     "type": "Shape",
                     "name": "Conector_imantado_apoya_base_Shape",
                     "position": [
@@ -454,7 +460,7 @@
             ]
         },
         {
-            "id": 7,
+            "component_id": 7,
             "name": "Conector_imantado_base",
             "description": "",
             "notes": "",
@@ -502,7 +508,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 7,
+                    "component_id": 7,
                     "type": "Shape",
                     "name": "Conector_imantado_base_Shape",
                     "position": [
@@ -527,7 +534,7 @@
             ]
         },
         {
-            "id": 8,
+            "component_id": 8,
             "name": "ESP_32",
             "description": "",
             "notes": "",
@@ -575,7 +582,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 8,
+                    "component_id": 8,
                     "type": "Shape",
                     "name": "ESP_32_Shape",
                     "position": [
@@ -600,7 +608,7 @@
             ]
         },
         {
-            "id": 9,
+            "component_id": 9,
             "name": "Hall_base",
             "description": "",
             "notes": "",
@@ -648,7 +656,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 9,
+                    "component_id": 9,
                     "type": "Shape",
                     "name": "Hall_base_Shape",
                     "position": [
@@ -673,7 +682,7 @@
             ]
         },
         {
-            "id": 10,
+            "component_id": 10,
             "name": "Hall_lidar",
             "description": "",
             "notes": "",
@@ -721,7 +730,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 10,
+                    "component_id": 10,
                     "type": "Shape",
                     "name": "Hall_lidar_Shape",
                     "position": [
@@ -746,7 +756,7 @@
             ]
         },
         {
-            "id": 11,
+            "component_id": 11,
             "name": "Iman_hall_base",
             "description": "",
             "notes": "",
@@ -794,7 +804,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 11,
+                    "component_id": 11,
                     "type": "Shape",
                     "name": "Iman_hall_base_Shape",
                     "position": [
@@ -819,7 +830,7 @@
             ]
         },
         {
-            "id": 12,
+            "component_id": 12,
             "name": "Imanes_apoya_base",
             "description": "",
             "notes": "",
@@ -867,7 +878,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 12,
+                    "component_id": 12,
                     "type": "Shape",
                     "name": "Imanes_apoya_base_Shape",
                     "position": [
@@ -892,7 +904,7 @@
             ]
         },
         {
-            "id": 13,
+            "component_id": 13,
             "name": "Imanes_base",
             "description": "",
             "notes": "",
@@ -940,7 +952,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 13,
+                    "component_id": 13,
                     "type": "Shape",
                     "name": "Imanes_base_Shape",
                     "position": [
@@ -965,7 +978,7 @@
             ]
         },
         {
-            "id": 14,
+            "component_id": 14,
             "name": "Led_apoya_base",
             "description": "",
             "notes": "",
@@ -1013,7 +1026,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 14,
+                    "component_id": 14,
                     "type": "Shape",
                     "name": "Led_apoya_base_Shape",
                     "position": [
@@ -1038,7 +1052,7 @@
             ]
         },
         {
-            "id": 15,
+            "component_id": 15,
             "name": "Led_base",
             "description": "",
             "notes": "",
@@ -1086,7 +1100,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 15,
+                    "component_id": 15,
                     "type": "Shape",
                     "name": "Led_base_Shape",
                     "position": [
@@ -1111,7 +1126,7 @@
             ]
         },
         {
-            "id": 16,
+            "component_id": 16,
             "name": "LIDAR",
             "description": "",
             "notes": "",
@@ -1159,7 +1174,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 16,
+                    "component_id": 16,
                     "type": "Shape",
                     "name": "LIDAR_Shape",
                     "position": [
@@ -1184,7 +1200,7 @@
             ]
         },
         {
-            "id": 17,
+            "component_id": 17,
             "name": "Micromotor",
             "description": "",
             "notes": "",
@@ -1232,7 +1248,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 17,
+                    "component_id": 17,
                     "type": "Shape",
                     "name": "Micromotor_Shape",
                     "position": [
@@ -1257,7 +1274,7 @@
             ]
         },
         {
-            "id": 18,
+            "component_id": 18,
             "name": "NEMA17",
             "description": "",
             "notes": "",
@@ -1305,7 +1322,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 18,
+                    "component_id": 18,
                     "type": "Shape",
                     "name": "NEMA17_Shape",
                     "position": [
@@ -1330,7 +1348,7 @@
             ]
         },
         {
-            "id": 19,
+            "component_id": 19,
             "name": "Polea_GT2_20D",
             "description": "",
             "notes": "",
@@ -1378,7 +1396,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 19,
+                    "component_id": 19,
                     "type": "Shape",
                     "name": "Polea_GT2_20D_Shape",
                     "position": [
@@ -1403,7 +1422,7 @@
             ]
         },
         {
-            "id": 20,
+            "component_id": 20,
             "name": "Porta_lidar",
             "description": "",
             "notes": "",
@@ -1451,7 +1470,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 20,
+                    "component_id": 20,
                     "type": "Shape",
                     "name": "Porta_lidar_Shape",
                     "position": [
@@ -1476,7 +1496,7 @@
             ]
         },
         {
-            "id": 21,
+            "component_id": 21,
             "name": "Power_12V",
             "description": "",
             "notes": "",
@@ -1524,7 +1544,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 21,
+                    "component_id": 21,
                     "type": "Shape",
                     "name": "Power_12V_Shape",
                     "position": [
@@ -1549,7 +1570,7 @@
             ]
         },
         {
-            "id": 22,
+            "component_id": 22,
             "name": "Power_5V_A",
             "description": "",
             "notes": "",
@@ -1597,7 +1618,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 22,
+                    "component_id": 22,
                     "type": "Shape",
                     "name": "Power_5V_A_Shape",
                     "position": [
@@ -1622,7 +1644,7 @@
             ]
         },
         {
-            "id": 23,
+            "component_id": 23,
             "name": "Reset_base",
             "description": "",
             "notes": "",
@@ -1670,7 +1692,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 23,
+                    "component_id": 23,
                     "type": "Shape",
                     "name": "Reset_base_Shape",
                     "position": [
@@ -1695,7 +1718,7 @@
             ]
         },
         {
-            "id": 24,
+            "component_id": 24,
             "name": "Ruleman_60082RSC3",
             "description": "",
             "notes": "",
@@ -1743,7 +1766,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 24,
+                    "component_id": 24,
                     "type": "Shape",
                     "name": "Ruleman_60082RSC3_Shape",
                     "position": [
@@ -1768,7 +1792,7 @@
             ]
         },
         {
-            "id": 25,
+            "component_id": 25,
             "name": "Rulemanes_696",
             "description": "",
             "notes": "",
@@ -1816,7 +1840,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 25,
+                    "component_id": 25,
                     "type": "Shape",
                     "name": "Rulemanes_696_Shape",
                     "position": [
@@ -1841,7 +1866,7 @@
             ]
         },
         {
-            "id": 26,
+            "component_id": 26,
             "name": "Sujeta_NEMA17",
             "description": "",
             "notes": "",
@@ -1889,7 +1914,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 26,
+                    "component_id": 26,
                     "type": "Shape",
                     "name": "Sujeta_NEMA17_Shape",
                     "position": [
@@ -1914,7 +1940,7 @@
             ]
         },
         {
-            "id": 27,
+            "component_id": 27,
             "name": "Sujeta_Ruleman",
             "description": "",
             "notes": "",
@@ -1962,7 +1988,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 27,
+                    "component_id": 27,
                     "type": "Shape",
                     "name": "Sujeta_Ruleman_Shape",
                     "position": [
@@ -1987,7 +2014,7 @@
             ]
         },
         {
-            "id": 28,
+            "component_id": 28,
             "name": "Sujeta_TMC_base",
             "description": "",
             "notes": "",
@@ -2035,7 +2062,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 28,
+                    "component_id": 28,
                     "type": "Shape",
                     "name": "Sujeta_TMC_base_Shape",
                     "position": [
@@ -2060,7 +2088,7 @@
             ]
         },
         {
-            "id": 29,
+            "component_id": 29,
             "name": "Tapa_base",
             "description": "",
             "notes": "",
@@ -2108,7 +2136,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 29,
+                    "component_id": 29,
                     "type": "Shape",
                     "name": "Tapa_base_Shape",
                     "position": [
@@ -2133,7 +2162,7 @@
             ]
         },
         {
-            "id": 30,
+            "component_id": 30,
             "name": "TMC_2208_XY",
             "description": "",
             "notes": "",
@@ -2181,7 +2210,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 30,
+                    "component_id": 30,
                     "type": "Shape",
                     "name": "TMC_2208_XY_Shape",
                     "position": [
@@ -2206,7 +2236,7 @@
             ]
         },
         {
-            "id": 31,
+            "component_id": 31,
             "name": "TMC_2208_Z",
             "description": "",
             "notes": "",
@@ -2254,7 +2284,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 31,
+                    "component_id": 31,
                     "type": "Shape",
                     "name": "TMC_2208_Z_Shape",
                     "position": [
@@ -2279,7 +2310,7 @@
             ]
         },
         {
-            "id": 32,
+            "component_id": 32,
             "name": "Tornillos_base",
             "description": "",
             "notes": "",
@@ -2327,7 +2358,8 @@
             },
             "objects": [
                 {
-                    "id": 1,
+                    "object_id": 32,
+                    "component_id": 32,
                     "type": "Shape",
                     "name": "Tornillos_base_Shape",
                     "position": [

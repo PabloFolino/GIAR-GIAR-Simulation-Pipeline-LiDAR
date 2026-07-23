@@ -1,0 +1,2963 @@
+{
+    "metadata": {
+        "format_version": "2.0",
+        "generated_by": "GSPL-02_Simulation_Compiler",
+        "generator_version": "1.2.0",
+        "generated": {
+            "date": "2026-07-23",
+            "time": "17:15:26"
+        },
+        "project": "GIAR Low Cost 3D LiDAR",
+        "author": "GIAR - Grupo de Inteligencia Artificial y Robótica"
+    },
+    "statistics": {
+        "components": 32,
+        "objects": 34,
+        "warnings": 0,
+        "errors": 0
+    },
+    "components": [
+        {
+            "common": {
+                "component_id": 1,
+                "uuid": "e0c26616-b860-4350-9b5a-413395daab45",
+                "name": "Anillo_deslizante",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.0,
+                    16.471754
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -14.4,
+                    -14.4,
+                    -3.078246
+                ],
+                "max": [
+                    14.4,
+                    14.4,
+                    36.021754
+                ],
+                "center": [
+                    0.0,
+                    0.0,
+                    16.471754
+                ],
+                "size": [
+                    28.8,
+                    28.8,
+                    39.1
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 1,
+                        "name": "Anillo_deslizante_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            0,
+                            16.471754
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 2,
+                "uuid": "ea3f1ce1-4c8f-4b57-b57f-b7060f4b42c1",
+                "name": "Apoya_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    18.809974,
+                    0.0,
+                    -45.770978
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -45.269223,
+                    -50.0,
+                    -61.514778
+                ],
+                "max": [
+                    82.88917,
+                    50.0,
+                    -30.027178
+                ],
+                "center": [
+                    18.809974,
+                    0.0,
+                    -45.770978
+                ],
+                "size": [
+                    128.158393,
+                    100.0,
+                    31.4876
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 2,
+                        "name": "Apoya_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": true,
+                        "respondable": true,
+                        "visible": true,
+                        "collidable": true,
+                        "detectable": true,
+                        "measurable": true,
+                        "position": [
+                            18.809974,
+                            0,
+                            -45.770978
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 3,
+                "uuid": "eeae4b77-3ae0-40fd-a0da-7527480c8a14",
+                "name": "Base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.5,
+                    0.0,
+                    -28.682394
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -57.5,
+                    -60.0,
+                    -45.737687
+                ],
+                "max": [
+                    92.5,
+                    60.0,
+                    -11.627102
+                ],
+                "center": [
+                    17.5,
+                    0.0,
+                    -28.682394
+                ],
+                "size": [
+                    150.0,
+                    120.0,
+                    34.110584
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 3,
+                        "name": "Base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": true,
+                        "respondable": true,
+                        "visible": true,
+                        "collidable": true,
+                        "detectable": true,
+                        "measurable": true,
+                        "position": [
+                            17.5,
+                            0,
+                            -28.682394
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 4,
+                "uuid": "90545397-067c-4443-91ef-8664f941d4c0",
+                "name": "Cabezal_giratorio",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    -0.0,
+                    35.914016
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -66.870964,
+                    -66.870964,
+                    8.298032
+                ],
+                "max": [
+                    66.870964,
+                    66.870964,
+                    63.53
+                ],
+                "center": [
+                    0.0,
+                    -0.0,
+                    35.914016
+                ],
+                "size": [
+                    133.741929,
+                    133.741929,
+                    55.231968
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 4,
+                        "name": "Cabezal_giratorio_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": true,
+                        "detectable": true,
+                        "measurable": true,
+                        "position": [
+                            0,
+                            0,
+                            35.914016
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 5,
+                "uuid": "8ef6d02d-0305-4edb-b314-4e7f4fa18cd5",
+                "name": "Cierre_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    58.353849,
+                    -0.010907,
+                    -35.017178
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    33.193677,
+                    -12.550415,
+                    -44.017404
+                ],
+                "max": [
+                    83.514022,
+                    12.528601,
+                    -26.016951
+                ],
+                "center": [
+                    58.353849,
+                    -0.010907,
+                    -35.017178
+                ],
+                "size": [
+                    50.320346,
+                    25.079016,
+                    18.000453
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 5,
+                        "name": "Cierre_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            58.353849,
+                            -0.010907,
+                            -35.017178
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 6,
+                "uuid": "71943c3e-e10f-40af-b2a4-4b7edac0c809",
+                "name": "Conector_imantado_apoya_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.501179,
+                    -0.0,
+                    -47.37
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    15.501179,
+                    -12.22,
+                    -50.32
+                ],
+                "max": [
+                    19.501179,
+                    12.22,
+                    -44.42
+                ],
+                "center": [
+                    17.501179,
+                    -0.0,
+                    -47.37
+                ],
+                "size": [
+                    4.0,
+                    24.44,
+                    5.9
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 6,
+                        "name": "Conector_imantado_apoya_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            17.501179,
+                            0,
+                            -47.37
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 7,
+                "uuid": "587577f5-60cc-44bb-8deb-9d4a89328604",
+                "name": "Conector_imantado_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.501179,
+                    0.0,
+                    -42.881053
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    15.501179,
+                    -12.22,
+                    -46.156053
+                ],
+                "max": [
+                    19.501179,
+                    12.22,
+                    -39.606053
+                ],
+                "center": [
+                    17.501179,
+                    0.0,
+                    -42.881053
+                ],
+                "size": [
+                    4.0,
+                    24.44,
+                    6.55
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 7,
+                        "name": "Conector_imantado_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            17.501179,
+                            0,
+                            -42.881053
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 8,
+                "uuid": "5af09750-15d5-4713-89c8-55b8efe3c9b9",
+                "name": "ESP_32",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.697369,
+                    -0.055266,
+                    38.13461
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -7.072631,
+                    -12.755266,
+                    32.892317
+                ],
+                "max": [
+                    42.467369,
+                    12.644734,
+                    43.376904
+                ],
+                "center": [
+                    17.697369,
+                    -0.055266,
+                    38.13461
+                ],
+                "size": [
+                    49.54,
+                    25.4,
+                    10.484587
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 8,
+                        "name": "ESP_32_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            17.697369,
+                            -0.055266,
+                            38.13461
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 9,
+                "uuid": "0d0ee90f-1a38-42ac-86c5-1ff3e9fa15cc",
+                "name": "Hall_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.005,
+                    23.443114,
+                    29.479356
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -2.160005,
+                    16.150393,
+                    28.654041
+                ],
+                "max": [
+                    2.170005,
+                    30.735836,
+                    30.30467
+                ],
+                "center": [
+                    0.005,
+                    23.443114,
+                    29.479356
+                ],
+                "size": [
+                    4.33001,
+                    14.585443,
+                    1.65063
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 9,
+                        "name": "Hall_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0.005,
+                            23.443114,
+                            29.479356
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 10,
+                "uuid": "2c714f06-8420-4481-90be-3b91ca28208f",
+                "name": "Hall_lidar",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    5.431214,
+                    -18.395145,
+                    64.450338
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -1.861507,
+                    -20.56015,
+                    62.675325
+                ],
+                "max": [
+                    12.723936,
+                    -16.23014,
+                    66.225351
+                ],
+                "center": [
+                    5.431214,
+                    -18.395145,
+                    64.450338
+                ],
+                "size": [
+                    14.585443,
+                    4.33001,
+                    3.550026
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 10,
+                        "name": "Hall_lidar_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            5.431214,
+                            -18.395145,
+                            64.450338
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 11,
+                "uuid": "b3a4bf2d-279f-4d18-a957-39318b46c716",
+                "name": "Iman_hall_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    17.977858,
+                    26.018062
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -1.5,
+                    16.477858,
+                    25.518062
+                ],
+                "max": [
+                    1.5,
+                    19.477858,
+                    26.518062
+                ],
+                "center": [
+                    0.0,
+                    17.977858,
+                    26.018062
+                ],
+                "size": [
+                    3.0,
+                    3.0,
+                    1.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 11,
+                        "name": "Iman_hall_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": true,
+                        "measurable": true,
+                        "position": [
+                            0,
+                            17.977858,
+                            26.018062
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 12,
+                "uuid": "05e2e703-b45f-4fbf-93f1-57b62ea63636",
+                "name": "Imanes_apoya_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.500986,
+                    0.00493,
+                    -46.844149
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -35.997791,
+                    -9.99507,
+                    -48.345877
+                ],
+                "max": [
+                    70.999763,
+                    10.00493,
+                    -45.34242
+                ],
+                "center": [
+                    17.500986,
+                    0.00493,
+                    -46.844149
+                ],
+                "size": [
+                    106.997554,
+                    20.0,
+                    3.003458
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 12,
+                        "name": "Imanes_apoya_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            17.500986,
+                            0.00493,
+                            -46.844149
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 13,
+                "uuid": "2bf9ee2b-f7e3-4c55-acc4-a0cf81e8bcf1",
+                "name": "Imanes_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.500986,
+                    0.00493,
+                    -43.844149
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -35.997791,
+                    -9.99507,
+                    -45.345877
+                ],
+                "max": [
+                    70.999763,
+                    10.00493,
+                    -42.34242
+                ],
+                "center": [
+                    17.500986,
+                    0.00493,
+                    -43.844149
+                ],
+                "size": [
+                    106.997554,
+                    20.0,
+                    3.003458
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 13,
+                        "name": "Imanes_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            17.500986,
+                            0.00493,
+                            -43.844149
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 14,
+                "uuid": "2847e085-7cb1-402e-8b64-fb4957d30584",
+                "name": "Led_apoya_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -38.967771,
+                    -1e-06,
+                    -49.829314
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -46.627771,
+                    -2.400001,
+                    -52.229314
+                ],
+                "max": [
+                    -31.307771,
+                    2.399999,
+                    -47.429314
+                ],
+                "center": [
+                    -38.967771,
+                    -1e-06,
+                    -49.829314
+                ],
+                "size": [
+                    15.32,
+                    4.8,
+                    4.8
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 14,
+                        "name": "Led_apoya_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            -38.967771,
+                            -1e-06,
+                            -49.829314
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 15,
+                "uuid": "aa7eafdd-aaa1-441d-93a2-4f5e6cf8386e",
+                "name": "Led_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -38.967771,
+                    -1e-06,
+                    -14.110624
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -46.627771,
+                    -2.400001,
+                    -16.510624
+                ],
+                "max": [
+                    -31.307771,
+                    2.399999,
+                    -11.710624
+                ],
+                "center": [
+                    -38.967771,
+                    -1e-06,
+                    -14.110624
+                ],
+                "size": [
+                    15.32,
+                    4.8,
+                    4.8
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 15,
+                        "name": "Led_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            -38.967771,
+                            -1e-06,
+                            -14.110624
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 16,
+                "uuid": "7e9b5cb1-fb23-4bf0-9cc2-2c798d367c6b",
+                "name": "LIDAR",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -1.991429,
+                    0.519943,
+                    74.528037
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -10.586429,
+                    -21.763511,
+                    62.936037
+                ],
+                "max": [
+                    6.603571,
+                    22.803398,
+                    86.120037
+                ],
+                "center": [
+                    -1.991429,
+                    0.519943,
+                    74.528037
+                ],
+                "size": [
+                    17.19,
+                    44.566909,
+                    23.184
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 16,
+                        "name": "LIDAR_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            -1.991429,
+                            0.519943,
+                            74.528037
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 17,
+                "uuid": "7dba741f-7d77-4e37-be0f-02013fdfdf50",
+                "name": "Micromotor",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -0.002523,
+                    33.741568,
+                    64.484259
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -6.002523,
+                    23.885851,
+                    47.684259
+                ],
+                "max": [
+                    5.997477,
+                    43.597284,
+                    81.284259
+                ],
+                "center": [
+                    -0.002523,
+                    33.741568,
+                    64.484259
+                ],
+                "size": [
+                    12.0,
+                    19.711433,
+                    33.6
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 17,
+                        "name": "Micromotor_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            -0.002523,
+                            33.741568,
+                            64.484259
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 18,
+                "uuid": "dc7ff486-b35a-4d58-84f4-9a3953a755a8",
+                "name": "NEMA17",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    51.00774,
+                    0.0,
+                    -2.650396
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    24.845095,
+                    -21.168357,
+                    -32.150396
+                ],
+                "max": [
+                    77.170386,
+                    21.168357,
+                    26.849604
+                ],
+                "center": [
+                    51.00774,
+                    0.0,
+                    -2.650396
+                ],
+                "size": [
+                    52.325292,
+                    42.336714,
+                    59.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 18,
+                        "name": "NEMA17_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            51.00774,
+                            0,
+                            -2.650396
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 19,
+                "uuid": "4fba390f-c3f8-4fe3-b521-7ff9fc52a84f",
+                "name": "Polea_GT2_20D",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    55.86,
+                    0.0,
+                    17.28
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    46.26,
+                    -9.6,
+                    9.28
+                ],
+                "max": [
+                    65.46,
+                    9.6,
+                    25.28
+                ],
+                "center": [
+                    55.86,
+                    0.0,
+                    17.28
+                ],
+                "size": [
+                    19.2,
+                    19.2,
+                    16.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 19,
+                        "name": "Polea_GT2_20D_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            55.86,
+                            0,
+                            17.28
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 20,
+                "uuid": "3a157091-9dc6-4e29-aa63-bbd582153beb",
+                "name": "Porta_lidar",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.25104,
+                    77.583125
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -15.0,
+                    -32.093778,
+                    62.583125
+                ],
+                "max": [
+                    15.0,
+                    32.595858,
+                    92.583125
+                ],
+                "center": [
+                    0.0,
+                    0.25104,
+                    77.583125
+                ],
+                "size": [
+                    30.0,
+                    64.689636,
+                    30.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 20,
+                        "name": "Porta_lidar_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            0.25104,
+                            77.583125
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 21,
+                "uuid": "bf1fff17-e309-41ae-ad89-71b780c0a3a0",
+                "name": "Power_12V",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    57.497389,
+                    37.343751,
+                    -26.214407
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    40.997389,
+                    34.582944,
+                    -40.214407
+                ],
+                "max": [
+                    73.997389,
+                    40.104557,
+                    -12.214407
+                ],
+                "center": [
+                    57.497389,
+                    37.343751,
+                    -26.214407
+                ],
+                "size": [
+                    33.0,
+                    5.521613,
+                    28.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 21,
+                        "name": "Power_12V_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            57.497389,
+                            37.343751,
+                            -26.214407
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 22,
+                "uuid": "74158071-637d-4ba4-82c5-fb7a7d559b05",
+                "name": "Power_5V_A",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    57.462661,
+                    -37.338641,
+                    -26.216299
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    40.962661,
+                    -40.099448,
+                    -40.216299
+                ],
+                "max": [
+                    73.962661,
+                    -34.577835,
+                    -12.216299
+                ],
+                "center": [
+                    57.462661,
+                    -37.338641,
+                    -26.216299
+                ],
+                "size": [
+                    33.0,
+                    5.521613,
+                    28.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 22,
+                        "name": "Power_5V_A_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            57.462661,
+                            -37.338641,
+                            -26.216299
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 23,
+                "uuid": "7ce8f13b-7fa7-41ee-a10c-7dcff0a063f7",
+                "name": "Reset_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    76.26786,
+                    26.002344,
+                    -21.676882
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    63.66786,
+                    20.452344,
+                    -27.226882
+                ],
+                "max": [
+                    88.86786,
+                    31.552344,
+                    -16.126882
+                ],
+                "center": [
+                    76.26786,
+                    26.002344,
+                    -21.676882
+                ],
+                "size": [
+                    25.2,
+                    11.1,
+                    11.1
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 23,
+                        "name": "Reset_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            76.26786,
+                            26.002344,
+                            -21.676882
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 24,
+                "uuid": "e2ff376b-a54a-4f95-8862-613e7fe7ea1d",
+                "name": "Ruleman_60082RSC3",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    0.0,
+                    19.03
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -34.0,
+                    -34.0,
+                    11.53
+                ],
+                "max": [
+                    34.0,
+                    34.0,
+                    26.53
+                ],
+                "center": [
+                    0.0,
+                    0.0,
+                    19.03
+                ],
+                "size": [
+                    68.0,
+                    68.0,
+                    15.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 24,
+                        "name": "Ruleman_60082RSC3_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            0,
+                            19.03
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                },
+                {
+                    "common": {
+                        "object_id": 24,
+                        "name": "Ruleman_60082RSC3_Joint",
+                        "type": "joint",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            0,
+                            19.03
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {}
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 25,
+                "uuid": "fb75665a-de51-407f-acc8-e28516c17831",
+                "name": "Rulemanes_696",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.0,
+                    -0.000708,
+                    77.583125
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -9.0,
+                    -32.593778,
+                    68.583125
+                ],
+                "max": [
+                    9.0,
+                    32.592361,
+                    86.583125
+                ],
+                "center": [
+                    0.0,
+                    -0.000708,
+                    77.583125
+                ],
+                "size": [
+                    18.0,
+                    65.186139,
+                    18.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 25,
+                        "name": "Rulemanes_696_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            -0.000708,
+                            77.583125
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                },
+                {
+                    "common": {
+                        "object_id": 25,
+                        "name": "Rulemanes_696_Joint",
+                        "type": "joint",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0,
+                            -0.000708,
+                            77.583125
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {}
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 26,
+                "uuid": "a7ff4ca6-0bdb-4fe1-ab4c-0eac6426cae6",
+                "name": "Sujeta_NEMA17",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    52.524403,
+                    -0.006494,
+                    -7.845032
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    29.855357,
+                    -30.415429,
+                    -17.259071
+                ],
+                "max": [
+                    75.193449,
+                    30.402442,
+                    1.569006
+                ],
+                "center": [
+                    52.524403,
+                    -0.006494,
+                    -7.845032
+                ],
+                "size": [
+                    45.338092,
+                    60.817871,
+                    18.828077
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 26,
+                        "name": "Sujeta_NEMA17_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            52.524403,
+                            -0.006494,
+                            -7.845032
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 27,
+                "uuid": "739808c5-10f0-43f9-ae73-e4623325df9a",
+                "name": "Sujeta_Ruleman",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    0.16639,
+                    -0.996736,
+                    27.526419
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -29.428221,
+                    -29.594933,
+                    26.326419
+                ],
+                "max": [
+                    29.761002,
+                    27.601461,
+                    28.726419
+                ],
+                "center": [
+                    0.16639,
+                    -0.996736,
+                    27.526419
+                ],
+                "size": [
+                    59.189223,
+                    57.196394,
+                    2.4
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 27,
+                        "name": "Sujeta_Ruleman_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            0.16639,
+                            -0.996736,
+                            27.526419
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 28,
+                "uuid": "66e79ac2-62e6-406a-9f9b-4ac2ac6b89da",
+                "name": "Sujeta_TMC_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    10.934724,
+                    -34.529524,
+                    -26.913037
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -2.002271,
+                    -43.677338,
+                    -33.610288
+                ],
+                "max": [
+                    23.871718,
+                    -25.381709,
+                    -20.215786
+                ],
+                "center": [
+                    10.934724,
+                    -34.529524,
+                    -26.913037
+                ],
+                "size": [
+                    25.873989,
+                    18.295629,
+                    13.394502
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 28,
+                        "name": "Sujeta_TMC_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            10.934724,
+                            -34.529524,
+                            -26.913037
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 29,
+                "uuid": "1f6a4d22-3db5-4cab-b24c-93c86dcfb57d",
+                "name": "Tapa_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": true,
+                "status": "NEW",
+                "check": "OK",
+                "messages": []
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    17.5,
+                    0.0,
+                    -8.228899
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -57.5,
+                    -60.0,
+                    -43.599551
+                ],
+                "max": [
+                    92.5,
+                    60.0,
+                    27.141754
+                ],
+                "center": [
+                    17.5,
+                    0.0,
+                    -8.228899
+                ],
+                "size": [
+                    150.0,
+                    120.0,
+                    70.741305
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 29,
+                        "name": "Tapa_base_Shape",
+                        "type": "shape",
+                        "enabled": true,
+                        "dynamic": true,
+                        "respondable": false,
+                        "visible": true,
+                        "collidable": false,
+                        "detectable": true,
+                        "measurable": true,
+                        "position": [
+                            17.5,
+                            0,
+                            -8.228899
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "OK",
+                        "messages": []
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 30,
+                "uuid": "45ad622f-eccf-48ae-b530-bd51f39a2d58",
+                "name": "TMC_2208_XY",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    10.934724,
+                    -34.529524,
+                    -22.663786
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    0.774724,
+                    -42.149524,
+                    -34.811786
+                ],
+                "max": [
+                    21.094724,
+                    -26.909524,
+                    -10.515786
+                ],
+                "center": [
+                    10.934724,
+                    -34.529524,
+                    -22.663786
+                ],
+                "size": [
+                    20.32,
+                    15.24,
+                    24.296
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 30,
+                        "name": "TMC_2208_XY_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            10.934724,
+                            -34.529524,
+                            -22.663786
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 31,
+                "uuid": "291a6307-b9b4-4db6-92a9-7c02cb541f99",
+                "name": "TMC_2208_Z",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    -23.870001,
+                    0.206657,
+                    46.607676
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -31.490001,
+                    -9.953343,
+                    34.459676
+                ],
+                "max": [
+                    -16.250001,
+                    10.366657,
+                    58.755676
+                ],
+                "center": [
+                    -23.870001,
+                    0.206657,
+                    46.607676
+                ],
+                "size": [
+                    15.24,
+                    20.32,
+                    24.296
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 31,
+                        "name": "TMC_2208_Z_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            -23.870001,
+                            0.206657,
+                            46.607676
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        },
+        {
+            "common": {
+                "component_id": 32,
+                "uuid": "468bf3f0-cc35-480e-ad94-594089164a7d",
+                "name": "Tornillos_base",
+                "type": "Mechanical",
+                "parent_id": null,
+                "description": null,
+                "enabled": false,
+                "status": "NEW",
+                "check": "DISABLED",
+                "messages": [
+                    {
+                        "code": "ASM-000",
+                        "severity": "INFO",
+                        "message": "Component disabled by engineer."
+                    }
+                ]
+            },
+            "frame": {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": [
+                    14.996655,
+                    -0.0,
+                    -42.239612
+                ],
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "bounding_box": {
+                "min": [
+                    -31.003345,
+                    -49.5,
+                    -46.239612
+                ],
+                "max": [
+                    60.996655,
+                    49.5,
+                    -38.239612
+                ],
+                "center": [
+                    14.996655,
+                    -0.0,
+                    -42.239612
+                ],
+                "size": [
+                    92.0,
+                    99.0,
+                    8.0
+                ]
+            },
+            "models": [],
+            "objects": [
+                {
+                    "common": {
+                        "object_id": 32,
+                        "name": "Tornillos_base_Shape",
+                        "type": "shape",
+                        "enabled": false,
+                        "dynamic": false,
+                        "respondable": false,
+                        "visible": false,
+                        "collidable": false,
+                        "detectable": false,
+                        "measurable": false,
+                        "position": [
+                            14.996655,
+                            0,
+                            -42.239612
+                        ],
+                        "orientation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "check": "DISABLED",
+                        "messages": [
+                            {
+                                "code": "OBJ-000",
+                                "severity": "INFO",
+                                "message": "Object disabled by engineer."
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "physics": {},
+                        "collision": {},
+                        "visual": {},
+                        "material": {}
+                    }
+                }
+            ]
+        }
+    ]
+}

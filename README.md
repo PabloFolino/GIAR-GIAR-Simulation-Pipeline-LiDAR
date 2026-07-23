@@ -73,7 +73,7 @@ flowchart TB
 
     G["GSPL-02<br/>Assembly Builder"]
 
-    H["📄 2_assembly_database.json"]
+    H["📄 2_simulation_database.json"]
 
     I["GSPL-03<br/>Transform Builder"]
 
@@ -134,8 +134,8 @@ Each program has a single responsibility and enriches the engineering informatio
 |     Nº      | Program               | Description                                                                                                                                     | Input                                                                                 | Output                                                         |
 | :---------: | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | **GSPL-01** | **Rhino Extractor**   | Reads the Rhino `.3dm` CAD model, audits the geometry, extracts all components and generates the initial engineering databases.                 | `LIDAR_completo_ver23.3dm`                                                            | `1_model_database.json`<br>`1_assembly.json`<br>`1_assembly_table.xlsx` |
-| **GSPL-02** | **Assembly Builder**  | Reads the Engineering Assembly Table, validates the assembly, builds the hierarchy and generates the validated assembly database.               | `1_model_database.json`<br>`1_assembly.json`<br>`1_assembly_table.xlsx`               | Updated `1_assembly.json`<br>`2_assembly_database.json` |
-| **GSPL-03** | **Transform Builder** | Computes local reference frames, transformations, component centers and geometric information required for simulation.                          | `2_assembly_database.json`                                                            | `3_transform_database.json` |
+| **GSPL-02** | **Assembly Builder**  | Reads the Engineering Assembly Table, validates engineering rules, compiles simulation components and objects, generates the `2_simulation_database.json`, produces engineering reports and executes the internal Self Test.              | `1_model_database.json`<br>`1_assembly.json`<br>`1_assembly_table.xlsx`               |`2_simulation_database.json`<br>`2_assembly_table.xlsx`<br>`2_simulation_report.md`|
+| **GSPL-03** | **Transform Builder** | Computes local reference frames, transformations, component centers and geometric information required for simulation.                          | `2_simulation_database.json`                                                            | `3_transform_database.json` |
 | **GSPL-04** | **STL Exporter**      | Exports one STL mesh for every enabled visual component and prepares the geometric resources required by the simulator.                         | `3_transform_database.json`                                                           | `STL/*.stl` |
 | **GSPL-05** | **Coppelia Builder**  | Builds the complete CoppeliaSim model (`.ttm`) by creating the hierarchy, simulation objects, dynamics and engineering configuration.          | `3_transform_database.json` + STL files                                               | `GIAR_Low_Cost_3D_LiDAR.ttm` |
 
@@ -243,34 +243,98 @@ On the components tab, keep the following in mind:
 | **TRUE** | **TRUE** | The component is included in both the visual model and the simulation model. A Shape object is generated and participates in the simulation. |
 | **TRUE** | **FALSE** | The component is included only in the visual model. It is visible but does not participate in the simulation. |
 | **FALSE** | **TRUE** | The component is included only in the simulation model. It participates in the simulation but has no visible geometry. |
-| **FALSE** | **FALSE** | The component is excluded from the generated assembly and is not included in `2_assembly_database.json`. |
+| **FALSE** | **FALSE** | The component is excluded from the generated assembly and is not included in `2_simulation_database.json`. |
 
 And on the Objects tab, note that "Enabled" controls whether the component or object participates in the pipeline. The ¨"Enabled" column updates automatically and is set to **FALSE** if either the "Visual" or "Simulation" column is **FALSE**.
-If a component has **Enable**: FALSE, the component is not included in "2_assembly_database.json", and no associated simulation objects are generated.
+If a component has **Enable**: FALSE, the component is not included in "2_simulation_database.json", and no associated simulation objects are generated.
 
 
 ---
 
-# 6. Versiones de GSPL-02_Assembly_Builder.py
+# 6. Versiones de GSPL-02_Simulation_Compiler.py
 
-The Assembly Builder transforms the Engineering Assembly Table into a validates and enriches the engineering information provided by the engineer while preserving the CAD geometry extracted by GSPL-01.
+The GSPL-02 Simulation Compiler transforms the engineering decisions defined by the simulation engineer into a validated Simulation Assembly Database. It resolves the assembly hierarchy, validates engineering consistency, compiles simulation objects and generates the internal representation consumed by the remaining stages of the GSPL pipeline.
 
 It is responsible for interpreting engineering decisions and converting them into the internal representation used by the remaining stages of the pipeline.
 
-|   ID    | Task | Status | Comments |
-| :-----: | ------------------------------------------------------------ | :----: | -------------------------------------------------------------- |
-| Ver 0.1 | Read `config.json` | ✔ | |
-| Ver 0.2 | Load `1_model_database.json` | ✔ | |
-| Ver 0.3 | Read `1_assembly_table.xlsx` | ✔ | |
-| Ver 0.4 | Validate Components worksheet | ⬜ | |
-| Ver 0.5 | Validate Objects worksheet | ⬜ | |
-| Ver 0.6 | Resolve Parent IDs automatically | ⬜ | |
-| Ver 0.7 | Build the assembly hierarchy | ⬜ | |
-| Ver 0.8 | Validate engineering rules | ⬜ | Based on GSPL-SPEC-002 |
-| Ver 0.9 | Update `1_assembly.json` | ⬜ | |
-| Ver 1.0 | Generate `2_assembly_database.json` | ✔ | Stable release |
+|ID|Task|Status|
+|---|---|:-:|
+|Ver 0.1|Read config|✔|
+|Ver 0.2|Load databases|✔|
+|Ver 0.3|Read Engineering Table|✔|
+|Ver 0.4|Validate Components|✔|
+|Ver 0.5|Validate Objects|✔|
+|Ver 0.6|Resolve Parent IDs|✔|
+|Ver 0.7|Build engineering hierarchy|✔|
+|Ver 0.8|Compile Simulation Database|✔|
+|Ver 0.9|Generate Markdown Report|✔|
+|Ver 1.0|Self Test|✔|
+|Ver 1.1|Simulation Validation|✔|
+|Ver 1.2|Stable Compiler Architecture|✔||
 
 ***
+
+## 6.1 Simulation Database
+
+The **Simulation Database** is the central engineering artifact produced by **GSPL-02 Simulation Compiler**. It represents the complete simulation model independently of any simulator implementation. Unlike the Engineering Assembly, which describes engineering decisions, the Simulation Database contains only validated information ready to be consumed by the remaining stages of the pipeline. Its architecture is organized as follows: 
+```text
+ Simulation Database
+  metadata
+  statistics
+  components[]
+     common
+     frame
+     bounding_box
+     models[]
+     objects[]
+        common
+        properties
+```
+
+## 6.2 Compilation Process
+
+The GSPL-02 Simulation Compiler performs the following stages sequentially: 
+```
+	1. Read configuration. 
+	2. Load engineering databases. 
+	3. Load the Engineering Assembly Table. 
+	4. Validate engineering information. 
+	5. Resolve parent-child relationships. 
+	6. Compile simulation components. 
+	7. Compile simulation objects. 
+	8. Generate the Simulation Database. 
+	9. Generate engineering reports. 
+	10. Execute the internal Self Test. 
+	11. Validate the generated database.
+```
+
+## 6.3 Internal Self Test
+
+GSPL-02 includes an internal validation framework executed automatically after every compilation.
+The current Self Test verifies:
+```text
+	- Configuration 
+	- Simulation Database 
+    - Engineering Table 
+    - Markdown Report 
+    - Statistics 
+```
+
+          
+The compilation is considered successful only when all validation tests pass. Typical output:
+
+```text 
+[PASS] Configuration 
+[PASS] Simulation Database 
+[PASS] Engineering Table 
+[PASS] Markdown Report 
+[PASS] Statistics 
+
+Tests : 5/5 
+SELF TEST : PASS 
+Simulation Validation : PASS
+```
+
 
 ---
 
@@ -282,7 +346,7 @@ Its primary responsibility is to calculate the local and global reference frames
 
 |   ID    | Task | Status | Comments |
 | :-----: | ------------------------------------------------------------ | :----: | -------------------------------------------------------------- |
-| Ver 0.1 | Read `2_assembly_database.json` | ⬜ | |
+| Ver 0.1 | Read `2_simulation_database.json` | ⬜ | |
 | Ver 0.2 | Build local reference frames | ⬜ | |
 | Ver 0.3 | Compute global transformations | ⬜ | |
 | Ver 0.4 | Compute component positions | ⬜ | |
@@ -347,7 +411,7 @@ The following roadmap summarizes the long-term development of the complete GSPL 
 | 05 | CAD Database Builder | Generate `1_model_database.json`. | ✔ |
 | 06 | Assembly Template Builder | Generate `1_assembly.json`. | ✔ |
 | 07 | Engineering Assembly Table | Generate `1_assembly_table.xlsx`. | ✔ |
-| 08 | Assembly Builder | Validate engineering data and generate `2_assembly_database.json`. | ⬜ |
+| 08 | Assembly Builder | Validate engineering data and generate `2_simulation_database.json`. | ⬜ |
 | 09 | Transform Builder | Compute transformations and reference frames. | ⬜ |
 | 10 | STL Exporter | Export STL meshes. | ⬜ |
 | 11 | Coppelia Scene Builder | Create the simulation scene. | ⬜ |
@@ -482,8 +546,8 @@ Current implementation status:
 | Module | Status |
 |:------- |:-----:|
 | GSPL-01 – Rhino Extractor | ✔ Completed |
-| GSPL-02 – Assembly Builder | 🚧 In Development |
-| GSPL-03 – Transform Builder | ⬜ Planned |
+| GSPL-02 – Simulation Compiler | ✔ Stable |
+| GSPL-03 – Transform Builder | 🚧 In Development|
 | GSPL-04 – STL Exporter | ⬜ Planned |
 | GSPL-05 – Coppelia Builder | ⬜ Planned |
 
@@ -579,9 +643,10 @@ The following documents describe the architecture and engineering workflow of th
 
 | Document | Description |
 |-----------|-------------|
-| [GSPL-SPEC-001 – CAD Database Specification](Documentation/GSPL-SPEC-001.md) | Defines the structure of `1_model_database.json`. |
-| [GSPL-SPEC-002 – Engineering Assembly Specification](Documentation/GSPL-SPEC-002.md) | Defines the engineering workflow, `1_assembly.json` and `1_assembly_table.xlsx`. |
-| ARCHITECTURE.md *(coming soon)* | Overall software architecture and internal design of the GSPL. |
+| GSPL-SPEC-001 – CAD Database Specification | Defines the structure of `1_model_database.json`. |
+| GSPL-SPEC-002 – Engineering Assembly Specification | Defines the engineering workflow, `1_assembly.json` and `1_assembly_table.xlsx`. |
+| GSPL-SPEC-003 – Simulation Database Specification | Defines the architecture of `2_simulation_database.json`. |
+| ARCHITECTURE.md | Overall software architecture and internal design of the GSPL. |
 
 ---
 
@@ -604,7 +669,7 @@ GSPL-01
 GSPL-02
      │
      ▼
-2_assembly_database.json
+2_simulation_database.json
      │
      ▼
 GSPL-03

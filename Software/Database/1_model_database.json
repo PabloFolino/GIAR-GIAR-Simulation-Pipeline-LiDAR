@@ -9,8 +9,8 @@
     },
     "components": [
         {
-            "id": 1,
-            "uuid": "37b2b37a-88bd-4351-bff9-e14ea4fc786a",
+            "component_id": 1,
+            "uuid": "e0c26616-b860-4350-9b5a-413395daab45",
             "name": "Anillo_deslizante",
             "type": "Mechanical",
             "layer": "Default",
@@ -163,8 +163,8 @@
             ]
         },
         {
-            "id": 2,
-            "uuid": "f415c5e8-0284-4924-a84b-664079002dcd",
+            "component_id": 2,
+            "uuid": "ea3f1ce1-4c8f-4b57-b57f-b7060f4b42c1",
             "name": "Apoya_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -232,8 +232,8 @@
             ]
         },
         {
-            "id": 3,
-            "uuid": "ff8ee30d-31b7-40ab-a64f-2e0d721c2941",
+            "component_id": 3,
+            "uuid": "eeae4b77-3ae0-40fd-a0da-7527480c8a14",
             "name": "Base",
             "type": "Mechanical",
             "layer": "Default",
@@ -301,8 +301,8 @@
             ]
         },
         {
-            "id": 4,
-            "uuid": "a1f97f42-1456-48bb-b5e8-460f88357fde",
+            "component_id": 4,
+            "uuid": "90545397-067c-4443-91ef-8664f941d4c0",
             "name": "Cabezal_giratorio",
             "type": "Mechanical",
             "layer": "Default",
@@ -380,8 +380,8 @@
             ]
         },
         {
-            "id": 5,
-            "uuid": "9c6eab63-b8e6-4df3-9574-e8b9819963b9",
+            "component_id": 5,
+            "uuid": "8ef6d02d-0305-4edb-b314-4e7f4fa18cd5",
             "name": "Cierre_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -454,8 +454,8 @@
             ]
         },
         {
-            "id": 6,
-            "uuid": "fa9e1707-54b5-4286-97c6-b2a81f21fc2c",
+            "component_id": 6,
+            "uuid": "71943c3e-e10f-40af-b2a4-4b7edac0c809",
             "name": "Conector_imantado_apoya_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -578,8 +578,8 @@
             ]
         },
         {
-            "id": 7,
-            "uuid": "ddc90601-adab-48f9-8d16-184030863af6",
+            "component_id": 7,
+            "uuid": "587577f5-60cc-44bb-8deb-9d4a89328604",
             "name": "Conector_imantado_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -722,8 +722,8 @@
             ]
         },
         {
-            "id": 8,
-            "uuid": "da897f75-abda-4edf-bd9d-d6e5b863b824",
+            "component_id": 8,
+            "uuid": "5af09750-15d5-4713-89c8-55b8efe3c9b9",
             "name": "ESP_32",
             "type": "Mechanical",
             "layer": "Default",
@@ -1226,8 +1226,8 @@
             ]
         },
         {
-            "id": 9,
-            "uuid": "9a77d556-774c-476f-a215-072f73ef6cef",
+            "component_id": 9,
+            "uuid": "0d0ee90f-1a38-42ac-86c5-1ff3e9fa15cc",
             "name": "Hall_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1295,8 +1295,8 @@
             ]
         },
         {
-            "id": 10,
-            "uuid": "f01acb72-f00a-41ac-acd4-de2975fd15e5",
+            "component_id": 10,
+            "uuid": "2c714f06-8420-4481-90be-3b91ca28208f",
             "name": "Hall_lidar",
             "type": "Mechanical",
             "layer": "Default",
@@ -1369,8 +1369,8 @@
             ]
         },
         {
-            "id": 11,
-            "uuid": "d21e2b42-8bf1-4521-aded-648315f65fe1",
+            "component_id": 11,
+            "uuid": "b3a4bf2d-279f-4d18-a957-39318b46c716",
             "name": "Iman_hall_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1438,8 +1438,8 @@
             ]
         },
         {
-            "id": 12,
-            "uuid": "2ecb919d-1850-4269-a898-016456687b00",
+            "component_id": 12,
+            "uuid": "05e2e703-b45f-4fbf-93f1-57b62ea63636",
             "name": "Imanes_apoya_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1512,8 +1512,8 @@
             ]
         },
         {
-            "id": 13,
-            "uuid": "9846a602-b4db-4c51-af3b-23948f6d2928",
+            "component_id": 13,
+            "uuid": "2bf9ee2b-f7e3-4c55-acc4-a0cf81e8bcf1",
             "name": "Imanes_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1586,8 +1586,8 @@
             ]
         },
         {
-            "id": 14,
-            "uuid": "b9b7a400-b164-4a20-9244-7f7ac552e358",
+            "component_id": 14,
+            "uuid": "2847e085-7cb1-402e-8b64-fb4957d30584",
             "name": "Led_apoya_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1665,8 +1665,8 @@
             ]
         },
         {
-            "id": 15,
-            "uuid": "059e1256-6123-47ca-8d48-15a9b31d612f",
+            "component_id": 15,
+            "uuid": "aa7eafdd-aaa1-441d-93a2-4f5e6cf8386e",
             "name": "Led_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -1744,8 +1744,8 @@
             ]
         },
         {
-            "id": 16,
-            "uuid": "6fe1ccfc-88e0-4ba7-9ce7-d47d7507a3d6",
+            "component_id": 16,
+            "uuid": "7e9b5cb1-fb23-4bf0-9cc2-2c798d367c6b",
             "name": "LIDAR",
             "type": "Mechanical",
             "layer": "Default",
@@ -1898,8 +1898,8 @@
             ]
         },
         {
-            "id": 17,
-            "uuid": "193ecf55-926d-4e11-9b8f-f8e5e1f6a114",
+            "component_id": 17,
+            "uuid": "7dba741f-7d77-4e37-be0f-02013fdfdf50",
             "name": "Micromotor",
             "type": "Mechanical",
             "layer": "Default",
@@ -2032,8 +2032,8 @@
             ]
         },
         {
-            "id": 18,
-            "uuid": "99fc56cd-fb54-42f9-b724-2c99fdcac9a5",
+            "component_id": 18,
+            "uuid": "dc7ff486-b35a-4d58-84f4-9a3953a755a8",
             "name": "NEMA17",
             "type": "Mechanical",
             "layer": "Default",
@@ -2116,8 +2116,8 @@
             ]
         },
         {
-            "id": 19,
-            "uuid": "43dbaf6f-14cd-4c14-84f5-f575f416adbe",
+            "component_id": 19,
+            "uuid": "4fba390f-c3f8-4fe3-b521-7ff9fc52a84f",
             "name": "Polea_GT2_20D",
             "type": "Mechanical",
             "layer": "Default",
@@ -2205,8 +2205,8 @@
             ]
         },
         {
-            "id": 20,
-            "uuid": "f713d1b8-9996-4e6e-99df-fc52889ebd9e",
+            "component_id": 20,
+            "uuid": "3a157091-9dc6-4e29-aa63-bbd582153beb",
             "name": "Porta_lidar",
             "type": "Mechanical",
             "layer": "Default",
@@ -2274,8 +2274,8 @@
             ]
         },
         {
-            "id": 21,
-            "uuid": "f084e4cd-f46e-40dc-9f4d-948179c0f628",
+            "component_id": 21,
+            "uuid": "bf1fff17-e309-41ae-ad89-71b780c0a3a0",
             "name": "Power_12V",
             "type": "Mechanical",
             "layer": "Default",
@@ -2503,8 +2503,8 @@
             ]
         },
         {
-            "id": 22,
-            "uuid": "ae1f8a07-5d14-488c-99bf-24a892f9a62d",
+            "component_id": 22,
+            "uuid": "74158071-637d-4ba4-82c5-fb7a7d559b05",
             "name": "Power_5V_A",
             "type": "Mechanical",
             "layer": "Default",
@@ -2732,8 +2732,8 @@
             ]
         },
         {
-            "id": 23,
-            "uuid": "75d0a69c-b61a-43f2-a40a-0dd29821f058",
+            "component_id": 23,
+            "uuid": "7ce8f13b-7fa7-41ee-a10c-7dcff0a063f7",
             "name": "Reset_base",
             "type": "Mechanical",
             "layer": "Predeterminada",
@@ -2831,8 +2831,8 @@
             ]
         },
         {
-            "id": 24,
-            "uuid": "cd4e4be1-29ed-4229-9b91-e631993a7bc1",
+            "component_id": 24,
+            "uuid": "e2ff376b-a54a-4f95-8862-613e7fe7ea1d",
             "name": "Ruleman_60082RSC3",
             "type": "Mechanical",
             "layer": "Default",
@@ -2910,8 +2910,8 @@
             ]
         },
         {
-            "id": 25,
-            "uuid": "00430902-8b10-4f05-ac5d-46eaf2fae691",
+            "component_id": 25,
+            "uuid": "fb75665a-de51-407f-acc8-e28516c17831",
             "name": "Rulemanes_696",
             "type": "Mechanical",
             "layer": "Default",
@@ -3004,8 +3004,8 @@
             ]
         },
         {
-            "id": 26,
-            "uuid": "a02d52f1-2ce2-4039-a782-0725a189695e",
+            "component_id": 26,
+            "uuid": "a7ff4ca6-0bdb-4fe1-ab4c-0eac6426cae6",
             "name": "Sujeta_NEMA17",
             "type": "Mechanical",
             "layer": "Default",
@@ -3073,8 +3073,8 @@
             ]
         },
         {
-            "id": 27,
-            "uuid": "ef1d7bb7-8fa2-46f1-a0ed-903ad6f3fa53",
+            "component_id": 27,
+            "uuid": "739808c5-10f0-43f9-ae73-e4623325df9a",
             "name": "Sujeta_Ruleman",
             "type": "Mechanical",
             "layer": "Default",
@@ -3142,8 +3142,8 @@
             ]
         },
         {
-            "id": 28,
-            "uuid": "1cb1592e-9541-4adf-b56e-d2a5e3d989db",
+            "component_id": 28,
+            "uuid": "66e79ac2-62e6-406a-9f9b-4ac2ac6b89da",
             "name": "Sujeta_TMC_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -3216,8 +3216,8 @@
             ]
         },
         {
-            "id": 29,
-            "uuid": "95d7d9cc-a9f7-4a5b-869e-c759afd7b239",
+            "component_id": 29,
+            "uuid": "1f6a4d22-3db5-4cab-b24c-93c86dcfb57d",
             "name": "Tapa_base",
             "type": "Mechanical",
             "layer": "Default",
@@ -3285,8 +3285,8 @@
             ]
         },
         {
-            "id": 30,
-            "uuid": "6e36a10d-5020-48cb-9302-bde93fd8688e",
+            "component_id": 30,
+            "uuid": "45ad622f-eccf-48ae-b530-bd51f39a2d58",
             "name": "TMC_2208_XY",
             "type": "Mechanical",
             "layer": "Default",
@@ -3724,8 +3724,8 @@
             ]
         },
         {
-            "id": 31,
-            "uuid": "eb703a67-ffdb-4e82-b2e4-c455a5573b31",
+            "component_id": 31,
+            "uuid": "291a6307-b9b4-4db6-92a9-7c02cb541f99",
             "name": "TMC_2208_Z",
             "type": "Mechanical",
             "layer": "Default",
@@ -4158,8 +4158,8 @@
             ]
         },
         {
-            "id": 32,
-            "uuid": "ba6b284f-c4bd-4040-b891-1e52029733c2",
+            "component_id": 32,
+            "uuid": "468bf3f0-cc35-480e-ad94-594089164a7d",
             "name": "Tornillos_base",
             "type": "Mechanical",
             "layer": "Default",

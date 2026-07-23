@@ -6,10 +6,10 @@
       {
         "id": "b1c07fb8c4fd5983",
         "type": "tabs",
-        "dimension": 60.38415366146459,
+        "dimension": 52.460984393757506,
         "children": [
           {
-            "id": "ebc482cba87d3e56",
+            "id": "1154f4c7f0175a23",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,45 +21,16 @@
               "icon": "lucide-file",
               "title": "README"
             }
-          },
-          {
-            "id": "1154f4c7f0175a23",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Documentation/GSPL-SPEC-001.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "GSPL-SPEC-001"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
-        "id": "4b67a92c47456898",
+        "id": "5d8b6e8d85ea32f8",
         "type": "tabs",
-        "dimension": 39.61584633853541,
+        "dimension": 47.539015606242494,
         "children": [
           {
-            "id": "a186ef1a099f1dac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Documentation/GSPL-SPEC-001.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "GSPL-SPEC-001"
-            }
-          },
-          {
-            "id": "b9befff4c95bf9aa",
+            "id": "8067cc5e2e6e7f43",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -125,8 +96,7 @@
               "title": "Marcadores"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -235,23 +205,28 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "1154f4c7f0175a23",
+  "active": "8067cc5e2e6e7f43",
   "lastOpenFiles": [
+    "Documentation/GSPL-SPEC-003 — Simulation Database Specification.md",
     "README.md",
+    "Documentation/GSPL-SPEC-CPP-001_CoppeliaSim_Object_Survey.md",
+    "Documentation/Nuevo Documento de texto.txt",
+    "Sin título.canvas",
+    "Software/GSPL-02_Simulation_Compiler_ver1_2.py",
+    "Software/GSPL-02_Simulation_Compiler_ver1_1 copy.py",
+    "Documentation/GSPL-SPEC-002.md",
+    "Software/Database/1_assembly_table _backup.xlsx",
+    "Software/GSPL-01_Rhino_Extractor_ver1_1.py",
+    "Software/GSPL-01_Rhino_Extractor_ver1 copy.py",
+    "Software/GSPL-01_Rhino_Extractor_ver2.py",
+    "Software/Database/1_assembly_table _buckup.xlsx",
+    "Software/Database/1_assembly_table - copia.xlsx",
+    "Software/Database/lu323402mp1tb.tmp",
+    "Software/Logs/2_simulation_report.md",
+    "Software/Database/2_simulation_report.md",
     "Documentation/GSPL-SPEC-001.md",
-    "Software/Database/1_assembly_table.xlsx",
-    "Software/Database/1_assembly_table_old.xlsx",
-    "Software/GSPL-01_Rhino_Extractor_ver1.py",
-    "Software/GSPL-01_Rhino_Extractor copy.py",
-    "Software/Database/lu346006yr596.tmp",
-    "Software/Database/2_assembly_table.xlsx",
-    "Software/Database/2_assembly_database.json",
     "Software/Logs/2_assembly_report.md",
     "Software/Database/2_assembly_report.md",
-    "Software/Logs/GSPL-02_Assembly_Builder.log",
-    "Software/GSPL-02_Assembly_Builder.py",
-    "Software/Database/lu346006yr58x.tmp",
-    "Documentation/GSPL-SPEC-002.md",
     "Sin título.md",
     "Figures/Structure_proyect.png"
   ]

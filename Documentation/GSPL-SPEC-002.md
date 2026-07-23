@@ -1,320 +1,602 @@
-# GSPL-SPEC-002
+# Table of Contents
 
-# Engineering Assembly Specification
+## Part I — Introduction
 
-**GIAR Simulation Pipeline for LiDAR (GSPL)**
+1. Introduction
+   - 1.1 Purpose
+   - 1.2 Scope
+   - 1.3 Objectives
+   - 1.4 Target Audience
+   - 1.5 Terminology
+   - 1.6 Document Organization
+
+---
+
+## Part II — GSPL Architecture
+
+2. GSPL Architecture
+   - 2.1 Overview
+   - 2.2 Layered Architecture
+   - 2.3 Layer Responsibilities
+   - 2.4 Pipeline Overview
+   - 2.5 Program Responsibilities
+   - 2.6 Engineering Intervention
+   - 2.7 Data Flow
+   - 2.8 Design Principles
+
+3. Pipeline Databases
+   - 3.1 Overview
+   - 3.2 Pipeline Databases
+   - 3.3 Engineering Files
+   - 3.4 Database Ownership
+   - 3.5 Model Database
+   - 3.6 Engineering Assembly Database
+   - 3.7 Engineering Assembly Table
+   - 3.8 Simulation Database
+   - 3.9 Transform Database
+   - 3.10 Database Evolution
+   - 3.11 Engineering Responsibility
+   - 3.12 Summary
 
 ---
 
-| Item | Value |
-|------|-------|
-| Document | GSPL-SPEC-002 |
-| Title | Engineering Assembly Specification |
-| Version | 3.0 |
-| Status | Released |
-| Author | GIAR – Grupo de Inteligencia Artificial y Robótica |
-| Related Programs | GSPL-01, GSPL-02 |
-| Related Files | `1_assembly.json`, `1_assembly_table.xlsx` |
+## Part III — Engineering Layer
+
+4. Engineering Assembly Database (`1_assembly.json`)
+   - 4.1 Overview
+   - 4.2 Purpose
+   - 4.3 Generation
+   - 4.4 General Structure
+   - 4.5 Metadata
+   - 4.6 Components
+   - 4.7 Component Structure
+   - 4.8 Automatically Generated Information
+   - 4.9 Engineering Control Database
+   - 4.10 Relationship with the Engineering Assembly Table
+   - 4.11 Relationship with the Simulation Database
+   - 4.12 Editing Policy
+   - 4.13 Summary
+
+5. Engineering Assembly Table (`1_assembly_table.xlsx`)
+   - 5.1 Overview
+   - 5.2 Purpose
+   - 5.3 Engineering Philosophy
+   - 5.4 Workbook Structure
+   - 5.5 Components Worksheet
+   - 5.6 Components Fields
+   - 5.7 Objects Worksheet
+   - 5.8 Object Definition
+   - 5.9 Lists Worksheet
+   - 5.10 Validation
+   - 5.11 Engineering Workflow
+   - 5.12 Compilation
+   - 5.13 Engineering Responsibility
+   - 5.14 Single Source of Truth
+   - 5.15 Summary
+
+6. Engineering Workflow
+   - 6.1 Overview
+   - 6.2 Workflow Overview
+   - 6.3 Mechanical Design
+   - 6.4 Engineering Extraction
+   - 6.5 Engineering Definition
+   - 6.6 Simulation Compilation
+   - 6.7 Transformation Generation
+   - 6.8 Geometry Export
+   - 6.9 Simulation Construction
+   - 6.10 Iterative Engineering
+   - 6.11 Engineering Traceability
+   - 6.12 Workflow Principles
+   - 6.13 Summary
 
 ---
+
+## Part IV — Simulation Layer
+
+7. Simulation Database (`2_simulation_database.json`)
+   - 7.1 Overview
+   - 7.2 Purpose
+   - 7.3 Generation
+   - 7.4 Inputs
+   - 7.5 General Structure
+   - 7.6 Metadata
+   - 7.7 Components
+   - 7.8 Simulation Objects
+   - 7.9 Component Compilation
+   - 7.10 Validation
+   - 7.11 Traceability
+   - 7.12 Downstream Consumers
+   - 7.13 Engineering Independence
+   - 7.14 Design Principles
+   - 7.15 Summary
+
+8.8. Reference Frame Database (3_reference_frame_database.json)
+
+9. Simulation Objects
+
+10. Validation Rules
+
+11. Reports
+
+---
+
+## Part V — Runtime Layer
+
+12. STL Export
+
+13. CoppeliaSim Builder
+
+14. Runtime Assets
+
+---
+
+## Part VI — Configuration
+
+15. Configuration File (`config.json`)
+
+16. Directory Structure
+
+17. Naming Conventions
+
+18. Logging
+
+---
+
+## Part VII — Appendices
+
+A. JSON Schemas
+
+B. Excel Workbook Specification
+
+C. Validation Rules
+
+D. Object Types
+
+E. Joint Types
+
+F. Reference Frames
+
+G. Glossary
+
+H. Revision History
+
+***
 
 # 1. Introduction
 
 ## 1.1 Purpose
 
-This document defines the engineering interface used by the **GIAR Simulation Pipeline for LiDAR (GSPL)** to transform a CAD model created in Rhino into a complete simulation model for CoppeliaSim.
+This document defines the architecture, engineering principles and operational workflow of the **GIAR Simulation Pipeline (GSPL)**.
 
-The specification describes two complementary engineering artifacts:
+The GSPL is an automated software pipeline designed to transform three-dimensional Computer-Aided Design (CAD) models into complete robotic simulation models.
 
-- `1_assembly.json`
-- `1_assembly_table.xlsx`
+The specification establishes a standardized methodology for converting engineering information into simulator-ready assets while maintaining traceability, reproducibility and modularity throughout the entire process.
 
-Although both files describe the same assembly, they have different purposes within the pipeline.
+This document serves as the authoritative technical reference for the development, maintenance and future evolution of the GSPL.
 
 ---
 
 ## 1.2 Scope
 
-This document specifies:
+The GSPL covers the complete transformation process from a mechanical CAD model to a fully operational simulation model.
 
-- the structure of `1_assembly.json`;
-- the structure of `1_assembly_table.xlsx`;
-- the engineering workflow between GSPL-01 and GSPL-02;
-- the responsibilities of the simulation engineer;
-- the validation rules applied by the pipeline;
-- the engineering best practices for preparing simulation models.
+The current implementation targets:
 
-This specification applies to every project developed using the GSPL architecture.
+- Rhino as the CAD authoring environment.
+- STL as the geometry exchange format.
+- CoppeliaSim as the simulation platform.
+
+The pipeline architecture has been intentionally designed to remain simulator-independent, allowing future support for additional simulation environments without modifying the engineering workflow.
+
+This specification describes the overall architecture of the GSPL rather than the implementation details of individual programs.
 
 ---
 
-## 1.3 Intended Audience
+## 1.3 Objectives
+
+The primary objectives of the GSPL are:
+
+- automate the conversion of CAD models into simulation models;
+- separate engineering decisions from software implementation;
+- provide deterministic execution throughout the pipeline;
+- preserve engineering traceability;
+- minimize manual intervention;
+- simplify maintenance and future extensions;
+- establish a standardized engineering workflow.
+
+Together, these objectives enable the creation of complex robotic simulation models using a repeatable and scalable methodology.
+
+---
+
+## 1.4 Target Audience
 
 This document is intended for:
 
-- Mechanical Engineers
-- Robotics Engineers
-- Mechatronics Engineers
-- Simulation Engineers
-- Researchers
-- Developers extending the GSPL
+- simulation engineers;
+- robotics researchers;
+- software developers;
+- CAD designers;
+- system integrators;
+- future contributors to the GSPL project.
 
-No previous knowledge of the internal implementation of the GSPL software is required.
-
----
-
-## 1.4 Engineering Philosophy
-
-The GSPL separates the complete simulation process into independent stages.
-
-Each program performs one specific task and generates well-defined intermediate files.
-
-This philosophy provides:
-
-- modularity;
-- traceability;
-- reproducibility;
-- maintainability;
-- scalability.
-
-The engineer interacts only with the engineering interface.
-
-The remaining files are considered internal pipeline files.
+A general understanding of CAD systems and robotic simulation is assumed.
 
 ---
 
-## 1.5 Internal Pipeline vs Engineering Interface
+## 1.5 Terminology
 
-One of the main design principles of the GSPL is the separation between **engineering data** and **pipeline data**.
+Throughout this specification, the following terminology is used.
 
-The simulation engineer should work only with the engineering interface.
-
-The internal JSON files are generated, updated and consumed automatically by the GSPL programs.
-
-The following table summarizes the role of each file.
-
-| File | Purpose | Edited by Engineer |
-|------|---------|:------------------:|
-| `1_model_database.json` | CAD database extracted from Rhino | ❌ |
-| `1_assembly.json` | Internal pipeline representation of the assembly | ⚠ Normally No |
-| `1_assembly_table.xlsx` | Engineering editing interface | ✔ |
-| `2_assembly_database.json` | Validated assembly database | ❌ |
-
-Except for debugging or advanced development, the engineer should never edit `1_assembly.json` directly.
-
-Instead, all engineering information shall be entered into `1_assembly_table.xlsx`.
-
-GSPL-02 automatically converts the spreadsheet into the corresponding JSON representation.
+| Term | Description |
+|------|-------------|
+| CAD | Computer-Aided Design model created in Rhino. |
+| Component | Logical engineering element extracted from the CAD model. |
+| Simulation Object | Entity created inside the simulation environment. |
+| Pipeline Database | JSON database generated by a GSPL stage. |
+| Engineering Database | Database describing the engineering model. |
+| Engineering Assembly Table | Excel workbook used to define engineering decisions. |
+| Simulation Database | Fully compiled engineering description of the simulation model. |
+| Transform Database | Database containing calculated reference frames and transformations. |
+| Runtime Assets | Files consumed directly by the simulation environment. |
 
 ---
 
 ## 1.6 Document Organization
 
-This specification is divided into the following chapters.
+This specification is organized into seven major parts.
 
-| Chapter | Description |
-|----------|-------------|
-| 2 | GSPL Architecture |
-| 3 | Internal Pipeline Files |
-| 4 | Specification of `1_assembly.json` |
-| 5 | Engineering Interface (`1_assembly_table.xlsx`) |
-| 6 | Engineering Workflow |
-| 7 | Practical Examples |
-| 8 | Validation Rules |
-| 9 | Best Practices |
-| 10 | Design Philosophy |
+### Part I — Introduction
 
-The chapters should be read sequentially.
+Introduces the GSPL, its objectives and the overall scope of the specification.
 
+### Part II — GSPL Architecture
+
+Describes the layered architecture, the pipeline organization and the engineering databases that support the GSPL.
+
+### Part III — Engineering Layer
+
+Defines the engineering artifacts used to configure and validate the simulation model.
+
+### Part IV — Simulation Layer
+
+Describes the Simulation Database and the information required to construct the simulation model.
+
+### Part V — Runtime Layer
+
+Defines the generation of runtime assets including STL geometry and the CoppeliaSim model.
+
+### Part VI — Configuration
+
+Describes configuration files, directory organization, naming conventions and logging.
+
+### Part VII — Appendices
+
+Contains reference material, schemas, validation rules and supporting documentation.
+
+---
+
+## 1.7 GSPL Overview
+
+The GSPL is organized as a strictly sequential processing pipeline.
+
+Each stage performs a single engineering responsibility and produces the complete set of outputs required by the next stage.
+
+```text
+Rhino CAD (.3dm)
+        │
+        ▼
+GSPL-01 Rhino Extractor
+        │
+        ▼
+GSPL-02 Simulation Compiler
+        │
+        ▼
+GSPL-03 Transform Builder
+        │
+        ▼
+GSPL-04 STL Exporter
+        │
+        ▼
+GSPL-05 Coppelia Builder
+        │
+        ▼
+Simulation Model (.ttm)
+```
+
+This architecture ensures modularity, deterministic execution and complete traceability across the entire engineering workflow.
+
+---
+
+## 1.8 Design Philosophy
+
+The GSPL is based on four fundamental principles.
+
+- **Separation of Responsibilities**  
+  Each program performs a single, well-defined task.
+
+- **Deterministic Processing**  
+  Identical inputs always produce identical outputs.
+
+- **Engineering Traceability**  
+  Every simulation entity can be traced back to its engineering origin.
+
+- **Pipeline Modularity**  
+  Each stage depends only on the outputs of the immediately preceding stage, allowing independent development, testing and maintenance.
+
+These principles define the foundation upon which the entire GSPL architecture is built.
+
+***
 # 2. GSPL Architecture
 
 ## 2.1 Overview
 
-The **GIAR Simulation Pipeline for LiDAR (GSPL)** is organized as a sequence of independent programs.
+The **GIAR Simulation Pipeline for LiDAR (GSPL)** is organized as a sequence of independent programs, where each stage performs a single engineering responsibility and produces deterministic outputs for the following stage.
 
-Each program performs a single well-defined task and generates one or more intermediate files that become the input of the following stage.
+Rather than being viewed simply as a chain of programs, the GSPL is organized as a set of conceptual layers that progressively transform a mechanical CAD model into a complete robotic simulation.
 
-This modular architecture simplifies development, testing, debugging and maintenance while providing complete traceability throughout the conversion process.
+Each layer increases the amount of engineering knowledge contained in the project while preserving complete traceability between the original CAD model and the final simulation.
 
-The pipeline transforms a Rhino CAD model into a fully configured CoppeliaSim model.
+This layered architecture provides:
+
+- modularity;
+- reproducibility;
+- deterministic processing;
+- traceability;
+- maintainability;
+- extensibility.
 
 ---
 
-## 2.2 Pipeline Overview
+## 2.2 Layered Architecture
+
+The GSPL is divided into four conceptual layers.
+
+Each layer represents a different abstraction level of the engineering process.
 
 ```text
-                    Rhino CAD Model
-                          (.3dm)
-                             │
-                             ▼
-          GSPL-01_Rhino_Extractor.py
-                             │
-         ┌───────────────────┼───────────────────┐
-         ▼                   ▼                   ▼
+┌──────────────────────────────────────────────────────────────┐
+│                         CAD Layer                            │
+│                                                              │
+│ Rhino (.3dm)                                                 │
+│ 1_model_database.json                                        │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│                     Engineering Layer                        │
+│                                                              │
+│ 1_assembly.json                                              │
+│ 1_assembly_table.xlsx                                        │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│                     Simulation Layer                         │
+│                                                              │
+│ 2_simulation_database.json                                   │
+│ 3_reference_frame_database.json                                    │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│                      Runtime Layer                           │
+│                                                              │
+│ STL Meshes                                                   │
+│ GIAR_Low_Cost_3D_LiDAR.ttm                                   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+Each layer has a clearly defined purpose and is generated by a specific GSPL program.
+
+---
+
+## 2.3 Layer Responsibilities
+
+### CAD Layer
+
+The CAD Layer contains the mechanical description extracted directly from Rhino.
+
+It represents the physical product and contains only geometric information.
+
+Typical information includes:
+
+- components;
+- geometry;
+- bounding boxes;
+- materials;
+- layers;
+- colors.
+
+This layer contains no simulation knowledge.
+
+---
+
+### Engineering Layer
+
+The Engineering Layer contains the engineering decisions introduced by the simulation engineer.
+
+At this stage the engineer defines:
+
+- assembly hierarchy;
+- simulation models;
+- simulation objects;
+- joints;
+- sensors;
+- cameras;
+- lights;
+- engineering documentation.
+
+The Engineering Layer describes the intended simulation but does not yet represent a complete simulation model.
+
+---
+
+### Simulation Layer
+
+The Simulation Layer represents the compiled simulation model.
+
+It combines:
+
+- CAD information;
+- engineering decisions;
+- validated hierarchy;
+- simulation objects;
+- simulation metadata.
+
+This layer is automatically generated by the **GSPL-02 Simulation Compiler**.
+
+The Simulation Layer becomes the official input for all remaining stages of the pipeline.
+
+---
+
+### Runtime Layer
+
+The Runtime Layer contains every resource required to execute the simulation.
+
+This includes:
+
+- STL meshes;
+- CoppeliaSim model;
+- runtime resources.
+
+The Runtime Layer is generated automatically without additional engineering intervention.
+
+---
+
+## 2.4 Pipeline Overview
+
+```text
+                    Rhino CAD Model (.3dm)
+                              │
+                              ▼
+                 GSPL-01 Rhino Extractor
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        ▼                     ▼                     ▼
 1_model_database.json   1_assembly.json   1_assembly_table.xlsx
-                             │                   │
-                             │                   │
-                             │        Simulation Engineer
-                             │                   │
-                             └───────────┬───────┘
-                                         ▼
-                  GSPL-02_Assembly_Builder.py
-                                         │
-                                         ▼
-                         2_assembly_database.json
-                                         │
-                                         ▼
-                  GSPL-03_Transform_Builder.py
-                                         │
-                                         ▼
-                        3_transform_database.json
-                                         │
-                                         ▼
-                     GSPL-04_STL_Exporter.py
-                                         │
-                                         ▼
-                           STL Mesh Collection
-                                         │
-                                         ▼
-                  GSPL-05_Coppelia_Builder.py
-                                         │
-                                         ▼
-                    GIAR_Low_Cost_3D_LiDAR.ttm
+                                                  │
+                                                  ▼
+                                      Simulation Engineer
+                                                  │
+                                                  ▼
+                               GSPL-02 Simulation Compiler
+                                   │                 │
+                                   ▼                 ▼
+                  2_simulation_database.json   2_assembly_table.xlsx
+                                   │
+                                   ▼
+                         GSPL-03 Transform Builder
+                                   │
+                                   ▼
+                        3_reference_frame_database.json
+                                   │
+                                   ▼
+                           GSPL-04 STL Exporter
+                                   │
+                                   ▼
+                               STL Meshes
+                                   │
+                                   ▼
+                         GSPL-05 Coppelia Builder
+                                   │
+                                   ▼
+                     GIAR_Low_Cost_3D_LiDAR.ttm
 ```
 
 ---
 
-## 2.3 Pipeline Philosophy
-
-Each GSPL program has a single responsibility.
-
-Programs never modify information that belongs to previous stages unless explicitly specified by the pipeline.
-
-This approach guarantees:
-
-- predictable behaviour;
-- independent testing;
-- reproducibility;
-- easy maintenance;
-- scalability.
-
-Each output file becomes the official input of the next stage.
-
----
-
-## 2.4 Program Responsibilities
+## 2.5 Program Responsibilities
 
 ### GSPL-01 — Rhino Extractor
 
-Purpose
+**Purpose**
 
-Extract all engineering information available from the Rhino model.
+Extract all engineering information available from the Rhino CAD model.
 
-Responsibilities
+**Responsibilities**
 
-- Read the `.3dm` file.
+- Read the Rhino project.
 - Audit the CAD model.
-- Verify supported geometry.
 - Generate the CAD database.
-- Generate the initial assembly template.
-- Generate the engineering spreadsheet.
+- Generate the initial Engineering Assembly.
+- Generate the Engineering Assembly Table.
 
-Outputs
+**Outputs**
 
-- `1_model_database.json`
-- `1_assembly.json`
-- `1_assembly_table.xlsx`
+- 1_model_database.json
+- 1_assembly.json
+- 1_assembly_table.xlsx
 
 ---
 
-### GSPL-02 — Assembly Builder
+### GSPL-02 — Simulation Compiler
 
-Purpose
+**Purpose**
 
-Transform the engineering description into a complete assembly definition.
+Compile the engineering description into a validated Simulation Database.
 
-Responsibilities
+**Mission**
 
-- Read `1_assembly_table.xlsx`.
-- Validate engineering data.
-- Complete Parent IDs.
-- Validate hierarchy.
-- Validate simulation objects.
-- Update `1_assembly.json`.
-- Generate `2_assembly_database.json`.
+The GSPL-02 Simulation Compiler transforms the engineering decisions recorded in the Engineering Assembly Table into a validated Simulation Database consumed by the remaining stages of the GSPL pipeline.
 
-Outputs
+**Inputs**
 
-- Updated `1_assembly.json`
-- `2_assembly_database.json`
+- config.json
+- 1_model_database.json
+- 1_assembly.json
+- 1_assembly_table.xlsx
+
+**Internal Stages**
+
+1. Load
+2. Validate
+3. Compile
+4. Generate Reports
+
+**Outputs**
+
+- 2_simulation_database.json
+- 2_assembly_table.xlsx
+- 2_simulation_report.md
 
 ---
 
 ### GSPL-03 — Transform Builder
 
-Purpose
+**Purpose**
 
-Calculate all geometric transformations required by the simulation.
+Calculate every local and global transformation required by the simulation. Builds the **Reference Frame Tree (RFT)** and computes all local and global transformations.
 
-Responsibilities
+**Outputs**
 
-- Build transformation matrices.
-- Calculate local reference systems.
-- Compute component positions.
-- Compute object transformations.
-- Validate transformations.
-
-Output
-
-- `3_transform_database.json`
+- 3_reference_frame_database.json
 
 ---
 
 ### GSPL-04 — STL Exporter
 
-Purpose
+**Purpose**
 
-Generate the geometric meshes used by CoppeliaSim.
+Generate every STL mesh required by the simulation.
 
-Responsibilities
+**Outputs**
 
-- Export STL meshes.
-- Organize exported geometry.
-- Update mesh information.
-
-Outputs
-
-- STL files
-- Updated database information
+- STL Meshes
 
 ---
 
 ### GSPL-05 — Coppelia Builder
 
-Purpose
+**Purpose**
 
-Generate the final simulation model.
+Generate the final CoppeliaSim model from the Simulation Database.
 
-Responsibilities
+**Outputs**
 
-- Create the CoppeliaSim scene.
-- Create Shapes.
-- Create Joints.
-- Create Dummies.
-- Create Sensors.
-- Create Cameras.
-- Create Lights.
-- Configure dynamics.
-- Configure hierarchy.
-- Save the `.ttm` model.
-
-Output
-
-- `GIAR_Low_Cost_3D_LiDAR.ttm`
+- GIAR_Low_Cost_3D_LiDAR.ttm
 
 ---
 
-## 2.5 Engineering Intervention
+## 2.6 Engineering Intervention
 
 Only one stage of the pipeline requires manual engineering input.
 
@@ -323,7 +605,7 @@ GSPL-01
      │
      ▼
 
-1_assembly_table.xlsx
+Engineering Assembly Table
 
      ▲
 
@@ -334,108 +616,62 @@ Simulation Engineer
 
      ▼
 
-GSPL-02
+GSPL-02 Simulation Compiler
 ```
 
-All remaining stages operate automatically.
+All remaining stages execute automatically.
 
-This design minimizes manual intervention while preserving complete engineering control over the simulation model.
-
----
-
-## 2.6 Internal Files
-
-The pipeline generates several intermediate files.
-
-These files are considered **internal data structures**.
-
-They are intended for communication between GSPL programs rather than for manual editing.
-
-Examples include:
-
-- `1_model_database.json`
-- `1_assembly.json`
-- `2_assembly_database.json`
-- `3_transform_database.json`
-
-Although they use the JSON format, they should be regarded as implementation artifacts of the pipeline.
+This design minimizes manual intervention while preserving complete engineering control over the generated simulation.
 
 ---
 
-## 2.7 Engineering Files
+## 2.7 Data Flow
 
-Engineering files are specifically designed to be edited by users.
-
-Current engineering files include:
-
-| File | Purpose |
-|------|---------|
-| `1_assembly_table.xlsx` | Complete definition of the simulation assembly. |
-
-Future versions of the GSPL may introduce additional engineering spreadsheets for other stages of the pipeline.
-
----
-
-## 2.8 Why an Engineering Spreadsheet?
-
-Although JSON provides an excellent machine-readable format, it is not the most convenient format for daily engineering work.
-
-Large robotic systems may contain hundreds of components and thousands of simulation objects.
-
-Spreadsheet-based editing provides several advantages:
-
-- familiar engineering workflow;
-- filtering and sorting;
-- drop-down lists;
-- validation rules;
-- color coding;
-- progress tracking;
-- easier review by multidisciplinary teams.
-
-For these reasons, the GSPL adopts `1_assembly_table.xlsx` as the official engineering editing interface.
-
----
-
-## 2.9 Data Flow
-
-The following diagram summarizes the complete data flow.
+The complete engineering process can be summarized by the following transformation.
 
 ```text
- Rhino CAD
-     │
-     ▼
-1_model_database.json
-     │
-     ▼
-1_assembly.json
-     │
-     ▼
-1_assembly_table.xlsx
-     │
-Engineer
-     │
-     ▼
-GSPL-02 Validation
-     │
-     ▼
-Updated 1_assembly.json
-     │
-     ▼
-2_assembly_database.json
-     │
-     ▼
-3_transform_database.json
-     │
-     ▼
-STL Meshes
-     │
-     ▼
+CAD Assembly
+
+        +
+
+Engineering Decisions
+
+        │
+
+        ▼
+
+Simulation Assembly
+
+        │
+
+        ▼
+
+Simulation Database
+
+        │
+
+        ▼
+
+Transform Database
+
+        │
+
+        ▼
+
+Runtime Assets
+
+        │
+
+        ▼
+
 CoppeliaSim Model
 ```
 
+The GSPL-02 Simulation Compiler is responsible for transforming the Engineering Assembly into the Simulation Database.
+
 ---
 
-## 2.10 Design Principles
+## 2.8 Design Principles
 
 The GSPL architecture follows the following principles.
 
@@ -453,345 +689,327 @@ One file, one purpose.
 
 ### DP-003
 
-Engineering data shall be separated from internal pipeline data.
+Engineering data shall remain separated from internal pipeline data.
 
 ---
 
 ### DP-004
 
-The simulation engineer interacts with spreadsheets rather than internal JSON files.
+The simulation engineer interacts exclusively with the Engineering Assembly Table.
 
 ---
 
 ### DP-005
 
-Every stage shall produce deterministic outputs from deterministic inputs.
+GSPL-02 compiles engineering information instead of modifying previous pipeline stages.
 
 ---
 
 ### DP-006
 
-All intermediate files shall remain human-readable whenever possible.
+Every stage shall produce deterministic outputs from deterministic inputs.
 
 ---
 
 ### DP-007
 
-The pipeline shall be modular and extensible.
+Every generated file shall be traceable to its originating engineering decision.
 
 ---
 
 ### DP-008
 
-Every generated file shall be traceable to its originating stage.
-
-
-# 3. Internal Pipeline Files
-
-## 3.1 Overview
-
-The GSPL generates a sequence of intermediate files during the conversion process.
-
-These files are collectively referred to as the **Pipeline Layer**.
-
-They represent the internal data exchanged between the different GSPL programs.
-
-Although most of these files are stored using the JSON format, they are **not intended to be edited manually**.
-
-Instead, they provide a structured, deterministic and machine-readable representation of the complete engineering process.
+The pipeline shall remain modular, extensible and simulator independent.
 
 ---
 
-## 3.2 Pipeline Files
+# 3. Pipeline Databases
 
-The current version of the GSPL generates the following internal files.
+## 3.1 Overview
 
-| Stage | File | Description |
-|--------|------|-------------|
-| GSPL-01 | `1_model_database.json` | CAD database extracted from Rhino. |
-| GSPL-01 | `1_assembly.json` | Internal assembly representation. |
-| GSPL-02 | `2_assembly_database.json` | Validated assembly database. |
-| GSPL-03 | `3_transform_database.json` | Global and local transformations. |
-| GSPL-04 | STL Meshes | Geometry exported for CoppeliaSim. |
-| GSPL-05 | `.ttm` | Final CoppeliaSim model. |
+The GSPL is based on a sequence of engineering databases generated throughout the pipeline.
+
+Each database represents a specific abstraction level of the engineering process and serves as the official interface between consecutive GSPL programs.
+
+Rather than exchanging temporary data structures, each program produces a complete, deterministic and self-consistent database that becomes the official input for the next stage.
+
+This approach provides:
+
+- deterministic execution;
+- reproducibility;
+- traceability;
+- independent program development;
+- simplified debugging;
+- long-term maintainability.
+
+Although the databases are stored using the JSON format, they should be regarded as engineering artifacts rather than implementation details.
+
+---
+
+## 3.2 Pipeline Databases
+
+The current GSPL architecture generates the following databases.
+
+| Stage | Database | Layer | Purpose |
+|--------|----------|-------|---------|
+| GSPL-01 | `1_model_database.json` | CAD | CAD information extracted from Rhino. |
+| GSPL-01 | `1_assembly.json` | Engineering | Initial Engineering Assembly generated from the CAD model. |
+| GSPL-02 | `2_simulation_database.json` | Simulation | Validated simulation database. |
+| GSPL-03 | `3_reference_frame_database.json` | Reference Frame and Transform Database |Stores the complete Reference Frame Tree (RFT) together with all local and global reference frames and the transformations derived from them. |
+| GSPL-04 | STL Meshes | Runtime | Geometry exported for simulation. |
+| GSPL-05 | `.ttm` | Runtime | Final CoppeliaSim model. |
+
+Each database has exactly one producer and one primary consumer.
+
+No program modifies databases generated by previous stages.
 
 ---
 
 ## 3.3 Engineering Files
 
-Unlike the internal pipeline files, engineering files are intended to be edited by the simulation engineer.
+Unlike the internal databases, engineering files are intended to be edited by the simulation engineer.
 
-Current engineering files are:
+The current engineering files are:
 
 | File | Purpose |
 |------|---------|
-| `1_assembly_table.xlsx` | Definition of the complete simulation assembly. |
+| `1_assembly_table.xlsx` | Engineering Assembly definition. |
 
-Future versions of the GSPL may introduce additional engineering spreadsheets.
+The Engineering Assembly Table is the only document that should normally be modified manually.
 
----
-
-# 3.4 Internal vs Engineering Files
-
-The following table summarizes the intended use of every file.
-
-| File | Generated By | Edited By Engineer | Used By |
-|------|--------------|:------------------:|--------|
-| `1_model_database.json` | GSPL-01 | ❌ | GSPL-02 |
-| `1_assembly.json` | GSPL-01 / GSPL-02 | ⚠ Normally No | GSPL-02, GSPL-03 |
-| `1_assembly_table.xlsx` | GSPL-01 | ✔ | GSPL-02 |
-| `2_assembly_database.json` | GSPL-02 | ❌ | GSPL-03 |
-| `3_transform_database.json` | GSPL-03 | ❌ | GSPL-04 |
-| STL Meshes | GSPL-04 | ❌ | GSPL-05 |
-| `.ttm` | GSPL-05 | ❌ | CoppeliaSim |
+Future versions of the GSPL may introduce additional engineering workbooks while preserving the same overall architecture.
 
 ---
 
-# 3.5 The Role of `1_assembly.json`
+## 3.4 Database Ownership
 
-`1_assembly.json` is the internal representation of the complete simulation assembly.
+One of the fundamental architectural principles of the GSPL is database ownership.
 
-It is the common language spoken by all GSPL programs after the engineering phase has finished.
+Every database belongs to exactly one program.
 
-The file contains:
+Once generated, a database becomes immutable.
 
-- assembly hierarchy;
-- reference frames;
-- simulation models;
-- CoppeliaSim objects;
-- object properties;
-- engineering metadata.
+Subsequent programs may read the database but shall never modify it.
 
-Although it is stored in JSON format and therefore can be opened with any text editor, it should normally **not** be edited manually.
+This guarantees deterministic execution and complete traceability.
 
-Instead, it is generated and updated automatically by the GSPL.
+| Database | Generated By | Modified By |
+|-----------|--------------|-------------|
+| `1_model_database.json` | GSPL-01 | None |
+| `1_assembly.json` | GSPL-01 | None |
+| `2_simulation_database.json` | GSPL-02 | None |
+| `3_reference_frame_database.json` | GSPL-03 | None |
+
+Whenever additional information is required, a new database shall be generated instead of modifying an existing one.
 
 ---
 
-# 3.6 The Role of `1_assembly_table.xlsx`
+## 3.5 The Role of 3_reference_frame_database.json
 
-The spreadsheet is the official engineering editing interface.
+The Model Database represents the CAD Layer.
 
-It allows the simulation engineer to define:
+Its purpose is to describe every component extracted from Rhino without introducing any simulation knowledge.
+
+Typical information includes:
+
+- component identifiers;
+- names;
+- geometry;
+- bounding boxes;
+- materials;
+- Rhino attributes.
+
+This database is generated exclusively by GSPL-01.
+
+---
+
+## 3.6 The Role of `1_assembly.json`
+
+The Engineering Assembly represents the Engineering Layer.
+
+It is generated automatically by GSPL-01 as an initial engineering template.
+
+Its purpose is to preserve the engineering structure extracted from the CAD model before any manual intervention.
+
+The simulation engineer normally interacts with the Engineering Assembly Table instead of editing this file directly.
+
+The Engineering Assembly therefore acts as an intermediate engineering reference rather than as the primary simulation database.
+
+---
+
+## 3.7 The Role of `1_assembly_table.xlsx`
+
+The Engineering Assembly Table is the official engineering interface of the GSPL.
+
+It records every engineering decision introduced by the simulation engineer.
+
+Examples include:
 
 - assembly hierarchy;
 - simulation models;
 - simulation objects;
 - joints;
 - sensors;
-- engineering notes;
-- validation status.
+- engineering notes.
 
-The spreadsheet intentionally hides all implementation details of the pipeline.
-
-This makes the engineering workflow independent from the internal JSON representation.
+This workbook is the single source of truth for every engineering decision made during the project.
 
 ---
 
-# 3.7 Why Two Representations?
+## 3.8 The Role of `2_simulation_database.json`
 
-One of the main design decisions of the GSPL is maintaining two different representations of the same assembly.
+The Simulation Database is the most important database generated by the GSPL.
 
-## Engineering Representation
+It is produced by the **GSPL-02 Simulation Compiler**.
 
-```
-1_assembly_table.xlsx
-```
+Unlike the Engineering Assembly, the Simulation Database represents a complete, validated and deterministic description of the simulation model.
 
-Designed for people.
+It combines:
 
-Characteristics:
+- CAD information;
+- engineering decisions;
+- validated hierarchy;
+- simulation objects;
+- simulation metadata.
 
-- easy to edit;
-- tabular format;
-- filtering;
-- sorting;
-- drop-down lists;
-- engineering workflow.
+Every remaining GSPL program operates exclusively on this database.
 
----
-
-## Internal Representation
-
-```
-1_assembly.json
-```
-
-Designed for software.
-
-Characteristics:
-
-- hierarchical;
-- machine-readable;
-- deterministic;
-- extensible;
-- optimized for processing.
+The Simulation Database therefore becomes the official interface between the engineering stage and the automatic simulation pipeline.
 
 ---
 
-Keeping both representations separated provides significant advantages.
+## 3.9 The Role of `3_reference_frame_database.json`
+
+The Transform Database extends the Simulation Database by adding every geometric transformation required by the simulation.
+
+Typical information includes:
+
+- local reference frames;
+- global reference frames;
+- transformation matrices;
+- object positions;
+- object orientations.
+
+This database is consumed by the STL Exporter and the Coppelia Builder.
 
 ---
 
-# 3.8 Automatic Synchronization
+## 3.10 Database Evolution
 
-The synchronization between both representations is performed by GSPL-02.
+The GSPL progressively enriches the project information throughout the pipeline.
 
+```text
+Rhino CAD
+      │
+      ▼
+Model Database
+      │
+      ▼
+Engineering Assembly
+      │
+      ▼
+Engineering Decisions
+      │
+      ▼
+Simulation Database
+      │
+      ▼
+Transform Database
+      │
+      ▼
+Runtime Assets
+      │
+      ▼
+CoppeliaSim Model
 ```
-Engineer
 
-        │
-
-        ▼
-
-1_assembly_table.xlsx
-
-        │
-
-        ▼
-
-GSPL-02
-
-        │
-
-        ▼
-
-Updated
-
-1_assembly.json
-```
-
-The engineer never needs to manually synchronize both files.
+Each stage adds engineering knowledge while preserving all information generated by previous stages.
 
 ---
 
-# 3.9 Parent Resolution
-
-One example of this synchronization is the assembly hierarchy.
-
-Inside the spreadsheet the engineer selects the parent using the component name.
-
-Example
-
-| Parent Name |
-|-------------|
-| Base |
-| Rotating_Head |
-| LIDAR_Frame |
-
-During execution GSPL-02 automatically resolves these names into component identifiers.
-
-The resulting JSON contains
-
-```json
-"parent":15
-```
-
-or
-
-```json
-"parent":null
-```
-
-for the root component.
-
-The engineer shall never manually edit the Parent ID.
-
----
-
-# 3.10 Pipeline Independence
-
-One important objective of the GSPL architecture is keeping the engineering interface independent from the internal implementation.
-
-Future versions of the pipeline may:
-
-- change JSON structures;
-- introduce additional metadata;
-- optimize databases;
-- split files;
-- merge files.
-
-None of these changes should require modifications to the engineering spreadsheet.
-
-This separation guarantees long-term compatibility of engineering projects.
-
----
-
-# 3.11 Engineering Responsibility
+## 3.11 Engineering Responsibility
 
 The simulation engineer is responsible only for engineering decisions.
 
 Examples include:
 
-- selecting the parent component;
-- deciding whether a component belongs to the visual model;
-- deciding whether a component belongs to the simulation model;
-- adding joints;
-- adding sensors;
-- configuring simulation objects;
+- defining assembly hierarchy;
+- selecting simulation models;
+- creating simulation objects;
+- configuring joints;
 - documenting engineering decisions.
 
-The engineer is not responsible for maintaining internal pipeline structures.
+The engineer is not responsible for maintaining any pipeline database.
 
-Those tasks belong to the GSPL software.
+Those databases are generated automatically by the GSPL.
 
 ---
 
-# 3.12 Summary
+## 3.12 Summary
 
-The GSPL intentionally separates the engineering workflow from the software implementation.
+The GSPL architecture intentionally separates engineering information from pipeline processing.
 
-This separation is achieved by maintaining two complementary representations of the same assembly.
+Engineering decisions are recorded in the Engineering Assembly Table.
 
-| Engineering Layer | Pipeline Layer |
-|-------------------|----------------|
-| `1_assembly_table.xlsx` | `1_assembly.json` |
+The GSPL-02 Simulation Compiler transforms those decisions into the Simulation Database, which becomes the official representation used by all remaining stages.
 
-The spreadsheet is optimized for engineering.
+This architecture guarantees deterministic execution, modularity, traceability and long-term maintainability while preserving a clear separation between engineering activities and software implementation.
 
-The JSON is optimized for software.
 
-Both files describe exactly the same assembly, but from different perspectives.
-
-# 4. Specification of `1_assembly.json`
+***
+# 4. Engineering Assembly Database (`1_assembly.json`)
 
 ## 4.1 Overview
 
-`1_assembly.json` is the internal representation of the engineering assembly used by the GSPL.
+The **Engineering Assembly Database** (`1_assembly.json`) is the internal engineering database generated automatically by **GSPL-01 Rhino Extractor**.
 
-It is automatically generated during the execution of **GSPL-01_Rhino_Extractor.py** and later updated by **GSPL-02_Assembly_Builder.py** after processing the information contained in the **Engineering Assembly Table** (`1_assembly_table.xlsx`).
+It represents the initial engineering interpretation of the CAD model before any manual engineering decisions are introduced.
 
-Although the file uses the JSON format and can be opened with any text editor, it is considered an **internal pipeline file**.
+Unlike the Engineering Assembly Table, this database is not intended to be edited manually.
 
-Under normal circumstances it shall **not** be edited manually.
+Its primary purpose is to provide a deterministic engineering baseline that can later be compared with the compiled simulation model generated by **GSPL-02 Simulation Compiler**.
 
-Instead, the simulation engineer shall complete the Engineering Assembly Table and allow GSPL-02 to generate the corresponding JSON representation.
+The Engineering Assembly Database therefore acts as an engineering control document throughout the pipeline.
 
 ---
 
 ## 4.2 Purpose
 
-The purpose of `1_assembly.json` is to provide a hierarchical, deterministic and machine-readable description of the complete simulation assembly.
+The Engineering Assembly Database has four main objectives.
 
-The file combines:
+- Preserve the engineering structure extracted from the CAD model.
+- Provide an immutable engineering reference.
+- Allow auditing of engineering modifications.
+- Serve as the initial input for the Simulation Compiler.
 
-- component hierarchy;
-- engineering metadata;
-- simulation models;
-- reference frames;
-- bounding boxes;
-- CoppeliaSim object definitions.
+Unlike the Simulation Database, this file contains only information that can be inferred directly from the CAD model.
 
-It represents the official assembly definition exchanged between GSPL programs.
+Engineering decisions introduced later by the simulation engineer are intentionally excluded.
 
 ---
 
-## 4.3 General Structure
+## 4.3 Generation
 
-The file is divided into two major sections.
+The database is generated exclusively by
+
+```text
+GSPL-01_Rhino_Extractor.py
+```
+
+No subsequent GSPL program modifies this file.
+
+Once created, it remains unchanged during the remainder of the pipeline.
+
+This guarantees complete traceability between the original CAD model and the generated simulation.
+
+---
+
+## 4.4 General Structure
+
+The Engineering Assembly Database is divided into two major sections.
 
 1. Metadata
-2. Component Definitions
+2. Components
 
 General structure
 
@@ -813,62 +1031,54 @@ General structure
 
 ---
 
-# 4.4 Metadata
+## 4.5 Metadata
 
-The metadata section identifies the generated file.
+The metadata section identifies the origin of the database.
 
 | Field | Description |
 |--------|-------------|
-| format_version | File format version. |
-| generated_by | Program that generated the file. |
-| generator_version | Generator version. |
+| format_version | Database format version. |
+| generated_by | Program that generated the database. |
+| generator_version | Software version. |
 | project | Project name. |
-| root | Identifier of the root component. |
+| root | Root component identifier. |
 
-Example
-
-```json
-{
-
-    "format_version":"1.0",
-
-    "generated_by":"GSPL-01_Rhino_Extractor",
-
-    "generator_version":"1.0.0",
-
-    "project":"GIAR Low Cost 3D LiDAR",
-
-    "root":1
-
-}
-```
-
-The value of **root** corresponds to the component whose **parent** is `null`.
+The metadata guarantees that every database can be traced to the software version that generated it.
 
 ---
 
-# 4.5 Components
+## 4.6 Components
 
-The **components** array contains every engineering component extracted from the CAD model.
+Each Rhino component appears exactly once in the Engineering Assembly Database.
 
-Each Rhino component shall appear exactly once.
+Every component contains only information automatically extracted from the CAD model.
+
+Typical information includes:
+
+- identifier;
+- name;
+- bounding box;
+- reference frame;
+- geometric models;
+- initial object list.
+
+Engineering properties are intentionally omitted.
+
+---
+
+## 4.7 Component Structure
 
 Example
 
 ```json
 {
-
     "id":18,
 
     "name":"NEMA17",
 
-    "description":"Stepper Motor",
-
-    "notes":"",
-
     "enabled":true,
 
-    "parent":4,
+    "parent":null,
 
     "frame":{
 
@@ -896,275 +1106,96 @@ Example
 
     ],
 
-    "objects":[
-
-    ]
-
+    "objects":[ ]
 }
 ```
 
 ---
 
-# 4.6 Component Fields
+## 4.8 Automatically Generated Information
 
-Every component contains the following fields.
+The following information is generated automatically by GSPL-01.
 
-| Field | Required | Description |
-|--------|:-------:|-------------|
-| id | ✔ | Unique identifier generated by GSPL-01. |
-| name | ✔ | Component name extracted from Rhino. |
-| description | | Engineering description. |
-| notes | | Engineering notes. |
-| enabled | ✔ | Enables or disables the component. |
-| parent | ✔ | Parent component ID. |
-| frame | ✔ | Local component reference frame. |
-| bounding_box | ✔ | Bounding Box automatically calculated by GSPL-01. |
-| models | ✔ | Simulation models where the component participates. |
-| objects | ✔ | List of generated CoppeliaSim objects. |
+| Property | Source |
+|----------|--------|
+| Component ID | Rhino |
+| Component Name | Rhino |
+| Bounding Box | Rhino Geometry |
+| Local Reference Frame | Rhino Geometry |
+| Initial Parent | Rhino Assembly |
+| Default Models | GSPL Rules |
+| Initial Objects | GSPL Rules |
 
----
-
-# 4.7 Component Identification
-
-Every component receives a unique identifier.
-
-Example
-
-```json
-"id":27
-```
-
-The identifier is generated automatically by GSPL-01.
-
-It shall never be modified manually.
-
-The ID is used internally by the GSPL to:
-
-- define parent relationships;
-- reference components;
-- build the assembly tree;
-- create deterministic transformations.
+No engineering interpretation is required to generate these values.
 
 ---
 
-# 4.8 Parent Relationship
+## 4.9 Engineering Control Database
 
-The field
+The Engineering Assembly Database serves as an engineering control document.
 
-```json
-"parent"
-```
+Its contents remain unchanged during the entire simulation pipeline.
 
-defines the assembly hierarchy.
+This allows engineers to compare:
 
-Example
+- the original engineering structure;
+- the engineering decisions;
+- the compiled simulation database.
 
-```json
-"parent":8
-```
-
-The parent always references another component by its identifier.
-
-The root component is represented by
-
-```json
-"parent":null
-```
-
-Only one component in the assembly shall have a null parent.
+Consequently, every engineering modification remains fully traceable.
 
 ---
 
-# 4.9 Reference Frame
+## 4.10 Relationship with the Engineering Assembly Table
 
-Every component contains its own local reference frame.
+The Engineering Assembly Database and the Engineering Assembly Table complement each other.
 
-```json
-"frame":{
+| Engineering Assembly Database | Engineering Assembly Table |
+|------------------------------|----------------------------|
+| Automatically generated | Edited by the engineer |
+| JSON | Excel |
+| Read-only | Editable |
+| Engineering baseline | Engineering decisions |
 
-    "position":[...],
-
-    "orientation":[...]
-
-}
-```
-
-Initially GSPL-01 estimates the frame automatically using the Rhino geometry.
-
-During the engineering stage the reference frame may later be adjusted through the Engineering Assembly Table.
-
-GSPL-02 updates the JSON accordingly.
+Both describe the same mechanical system from different perspectives.
 
 ---
 
-# 4.10 Bounding Box
+## 4.11 Relationship with the Simulation Database
 
-Every component stores its Bounding Box.
+The Engineering Assembly Database should not be confused with the Simulation Database.
 
-```json
-"bounding_box":{
+The Engineering Assembly Database represents the mechanical assembly extracted from the CAD model.
 
-    "min":[...],
+The Simulation Database represents the final engineering interpretation of that assembly after all engineering decisions have been compiled.
 
-    "max":[...],
-
-    "center":[...],
-
-    "size":[...]
-
-}
-```
-
-The Bounding Box is generated automatically.
-
-It shall never be modified manually.
-
-Later stages use it for:
-
-- transformation calculations;
-- collision estimation;
-- STL generation;
-- engineering validation.
+The transformation between both representations is performed exclusively by the **GSPL-02 Simulation Compiler**.
 
 ---
 
-# 4.11 Models
+## 4.12 Editing Policy
 
-The field
+The Engineering Assembly Database should normally never be edited manually.
 
-```json
-"models"
-```
+Any engineering modification shall be performed using the Engineering Assembly Table.
 
-defines where the component participates.
+Direct modifications are recommended only for:
 
-Supported values are
+- software debugging;
+- database inspection;
+- pipeline development.
 
-| Value | Description |
-|--------|-------------|
-| visual | Visual model. |
-| simulation | Simulation model. |
-
-Examples
-
-Visual only
-
-```json
-"models":[
-
-    "visual"
-
-]
-```
-
-Simulation only
-
-```json
-"models":[
-
-    "simulation"
-
-]
-```
-
-Both
-
-```json
-"models":[
-
-    "visual",
-
-    "simulation"
-
-]
-```
+Engineering projects should never depend on manual modifications of this database.
 
 ---
 
-# 4.12 Objects
+## 4.13 Summary
 
-Every component owns a list of CoppeliaSim objects.
+The Engineering Assembly Database represents the immutable engineering baseline of the project.
 
-Initially GSPL-01 generates a minimal definition.
+It preserves the original engineering structure extracted from Rhino while remaining independent from subsequent engineering decisions.
 
-GSPL-02 later expands this list according to the Engineering Assembly Table.
-
-Example
-
-```json
-"objects":[
-
-    {
-
-        "type":"shape",
-
-        "name":"NEMA17_Shape",
-
-        "position":[0,0,0],
-
-        "orientation":[0,0,0],
-
-        "properties":{
-
-        }
-
-    }
-
-]
-```
-
----
-
-# 4.13 Synchronization with the Engineering Assembly Table
-
-One of the most important characteristics of the GSPL is that `1_assembly.json` is synchronized automatically from the Engineering Assembly Table.
-
-The following information is transferred by GSPL-02:
-
-- Parent hierarchy;
-- Enabled state;
-- Simulation models;
-- Component descriptions;
-- Engineering notes;
-- CoppeliaSim objects;
-- Joint definitions;
-- Sensor definitions;
-- Cameras;
-- Lights;
-- Additional engineering properties.
-
-This synchronization guarantees that the JSON representation always reflects the engineer's decisions.
-
----
-
-# 4.14 Editing Policy
-
-The following table summarizes which fields are edited manually.
-
-| Field | GSPL | Engineer |
-|--------|:----:|:--------:|
-| Metadata | ✔ | |
-| ID | ✔ | |
-| Name | ✔ | |
-| Parent | ✔ *(from Parent Name)* | |
-| Description | | ✔ |
-| Notes | | ✔ |
-| Models | | ✔ |
-| Objects | | ✔ |
-| Bounding Box | ✔ | |
-| Frame | ✔ / GSPL-02 | ✔ |
-
----
-
-# 4.15 Summary
-
-`1_assembly.json` is not intended to be an engineering document.
-
-Instead, it is the **internal representation** used by the GSPL programs.
-
-The simulation engineer should work with the **Engineering Assembly Table**.
-
-GSPL-02 automatically converts the engineering information into the corresponding JSON structure, ensuring consistency, traceability and deterministic execution throughout the pipeline.
+Together with the Engineering Assembly Table, it provides the information required by the GSPL-02 Simulation Compiler to generate the validated Simulation Database used by the remaining stages of the GSPL pipeline.
 
 ***
 
@@ -1174,380 +1205,111 @@ GSPL-02 automatically converts the engineering information into the correspondin
 
 The **Engineering Assembly Table** (`1_assembly_table.xlsx`) is the official engineering interface of the GSPL.
 
-It provides a user-friendly environment where the simulation engineer defines all simulation-specific information that cannot be automatically extracted from the Rhino CAD model.
+It provides a structured environment where the simulation engineer defines every engineering decision required to transform a mechanical CAD model into a complete simulation model.
 
-Unlike the internal JSON files, the Engineering Assembly Table is specifically designed for human interaction.
+Unlike the internal pipeline databases, the Engineering Assembly Table is specifically designed for human interaction.
 
-It supports:
+It is generated automatically by **GSPL-01 Rhino Extractor** and later processed by the **GSPL-02 Simulation Compiler**.
 
-- filtering;
-- sorting;
-- engineering review;
-- data validation;
-- drop-down lists;
-- progress tracking.
-
-The spreadsheet is automatically generated by **GSPL-01_Rhino_Extractor.py** and later processed by **GSPL-02_Assembly_Builder.py**.
-
-The engineer should complete this spreadsheet before continuing with the pipeline.
+Throughout the pipeline, this workbook represents the single source of truth for all engineering decisions.
 
 ---
 
-# 5.2 Workbook Structure
+## 5.2 Purpose
+
+The Engineering Assembly Table has four primary objectives.
+
+- Describe the engineering assembly.
+- Record engineering decisions.
+- Configure simulation objects.
+- Provide a human-friendly interface independent of the internal pipeline implementation.
+
+The workbook intentionally hides every internal database structure used by the GSPL.
+
+This allows the engineering workflow to remain stable even if future versions modify the internal databases.
+
+---
+
+## 5.3 Engineering Philosophy
+
+The GSPL intentionally separates engineering from software implementation.
+
+The simulation engineer works exclusively with the Engineering Assembly Table.
+
+The GSPL software is responsible for:
+
+- validating engineering information;
+- compiling simulation databases;
+- generating transformation databases;
+- exporting STL meshes;
+- building the CoppeliaSim model.
+
+This separation minimizes engineering effort while preserving complete traceability.
+
+---
+
+## 5.4 Workbook Structure
 
 The workbook currently contains three worksheets.
 
 | Worksheet | Purpose | Editable |
 |------------|---------|:--------:|
-| Components | Defines the engineering assembly | ✔ |
-| Objects | Defines all CoppeliaSim objects | ✔ |
-| Lists | Internal validation lists | ❌ |
+| Components | Engineering assembly definition | ✔ |
+| Objects | Simulation object definitions | ✔ |
+| Lists | Validation lists | ❌ |
 
-The **Lists** worksheet is automatically generated by GSPL-01 and is hidden from normal users.
+The Lists worksheet is automatically generated and remains hidden.
 
 It shall never be modified manually.
 
 ---
 
-# 5.3 Engineering Workflow
+## 5.5 Components Worksheet
 
-The normal engineering workflow is illustrated below.
+Each row represents exactly one engineering component.
 
-```text
-Rhino CAD
+The worksheet defines the logical organization of the mechanical assembly.
 
-     │
+Typical information includes:
 
-     ▼
+- component hierarchy;
+- engineering descriptions;
+- simulation models;
+- engineering status;
+- documentation.
 
-GSPL-01
-
-     │
-
-     ▼
-
-1_assembly_table.xlsx
-
-     │
-
-Engineer completes
-
-     │
-
-     ▼
-
-GSPL-02
-
-     │
-
-     ▼
-
-Updated 1_assembly.json
-
-     │
-
-     ▼
-
-2_assembly_database.json
-```
-
-The engineer never edits the JSON files directly.
+The Components worksheet intentionally contains no implementation-specific information.
 
 ---
 
-# 5.4 Components Worksheet
+## 5.6 Components Fields
 
-The **Components** worksheet defines the logical assembly hierarchy.
+The Components worksheet contains the following information.
 
-Each row represents exactly one CAD component extracted from Rhino.
-
-Example
-
-| ID | Name | Parent Name | Visual | Simulation |
-|---:|------|-------------|:------:|:----------:|
-| 1 | Base | | ✔ | ✔ |
-| 2 | Motor | Base | ✔ | ✔ |
-| 3 | Cover | Base | ✔ | ✖ |
-
----
-
-# 5.5 Components Columns
-
-## ID
-
-Generated by
-
-GSPL-01
-
-Editable
-
-No
-
-Description
-
-Unique component identifier.
-
-Example
-
-```text
-15
-```
-
-The ID shall never be modified manually.
+| Field | Generated By | Editable | Description |
+|--------|--------------|:--------:|-------------|
+| ID | GSPL-01 | ❌ | Unique component identifier. |
+| Name | GSPL-01 | ❌ | Component name extracted from Rhino. |
+| Type | Engineer | ✔ | Engineering classification. |
+| Description | Engineer | ✔ | Engineering description. |
+| Enabled | Engineer | ✔ | Enables or disables the component. |
+| Parent Name | Engineer | ✔ | Parent component selected by name. |
+| Parent ID | GSPL-02 | ❌ | Automatically resolved identifier. |
+| Visual | Engineer | ✔ | Belongs to the visual model. |
+| Simulation | Engineer | ✔ | Belongs to the simulation model. |
+| Reviewed | Engineer | ✔ | Engineering review flag. |
+| Status | Engineer | ✔ | Engineering workflow state. |
+| Notes | Engineer | ✔ | Engineering documentation. |
 
 ---
 
-## Name
+## 5.7 Objects Worksheet
 
-Generated by
+The Objects worksheet defines every simulation object associated with each engineering component.
 
-GSPL-01
+Unlike the Components worksheet, a component may generate any number of simulation objects.
 
-Editable
-
-No
-
-Description
-
-Component name extracted from Rhino.
-
-Example
-
-```text
-Motor_Bracket
-```
-
-If the component name changes, regenerate the project using GSPL-01.
-
-Never edit this field manually.
-
----
-
-## Type
-
-Generated by
-
-Engineer
-
-Editable
-
-Yes
-
-Purpose
-
-Engineering classification.
-
-Examples
-
-```text
-Mechanical
-
-Electrical
-
-Electronic
-
-Sensor
-
-Structure
-
-Actuator
-```
-
----
-
-## Description
-
-Free engineering description.
-
-Example
-
-```text
-Main rotating platform.
-```
-
----
-
-## Enabled
-
-Determines whether the component participates in the project.
-
-Values
-
-```text
-TRUE
-
-FALSE
-```
-
-Normally every component should remain enabled.
-
----
-
-## Parent Name
-
-One of the most important fields.
-
-The engineer selects the parent component using the drop-down list.
-
-Example
-
-| Component | Parent Name |
-|-----------|-------------|
-| Motor | Base |
-| Encoder | Motor |
-| Cover | Base |
-
-The engineer always works with names.
-
-Never with IDs.
-
----
-
-## Parent ID
-
-Generated by
-
-GSPL-02
-
-Editable
-
-No
-
-This column is automatically completed when GSPL-02 processes the Engineering Assembly Table.
-
-The engineer shall never modify this field.
-
-If Parent Name is empty, Parent ID remains empty and the generated JSON will contain
-
-```json
-"parent": null
-```
-
-Otherwise GSPL-02 automatically resolves
-
-```text
-Base
-```
-
-into
-
-```json
-"parent":1
-```
-
----
-
-## Visual
-
-Indicates whether the component belongs to the visual model.
-
-Values
-
-```text
-TRUE
-
-FALSE
-```
-
-Decorative parts are usually visual only.
-
----
-
-## Simulation
-
-Indicates whether the component belongs to the simulation model.
-
-Values
-
-```text
-TRUE
-
-FALSE
-```
-
-Mechanical parts generally belong to both models.
-
----
-
-## Reviewed
-
-Engineering review flag.
-
-Values
-
-```text
-TRUE
-
-FALSE
-```
-
-Initially
-
-```text
-FALSE
-```
-
-After verification
-
-```text
-TRUE
-```
-
----
-
-## Status
-
-Engineering workflow state.
-
-Current values
-
-```text
-NEW
-
-IN_PROGRESS
-
-REVIEWED
-
-VERIFIED
-
-DONE
-```
-
----
-
-## Notes
-
-Free engineering comments.
-
-Example
-
-```text
-Pending mechanical verification.
-```
-
----
-
-# 5.6 Objects Worksheet
-
-The **Objects** worksheet defines every CoppeliaSim object created from each Rhino component.
-
-Unlike the Components worksheet, a single component may generate multiple CoppeliaSim objects.
-
-Example
-
-| Component | Object |
-|-----------|--------|
-| Motor | Shape |
-| Motor | Joint |
-| Motor | Dummy |
-
-Therefore multiple rows may reference the same component.
-
----
-
-# 5.7 Typical Objects
-
-Common object types include
+Typical object types include:
 
 - Shape
 - Joint
@@ -1558,318 +1320,363 @@ Common object types include
 - Camera
 - Light
 
-Future versions of the GSPL may support additional CoppeliaSim object types.
+Future versions of the GSPL may extend this list without modifying the overall engineering workflow.
 
 ---
 
-# 5.8 Lists Worksheet
+## 5.8 Object Definition
 
-The Lists worksheet contains every drop-down list used by the Engineering Assembly Table.
+Every row describes one simulation object.
+
+Typical information includes:
+
+- Component
+- Object Name
+- Object Type
+- Joint Type
+- Position
+- Orientation
+- Dynamic Properties
+- Additional Parameters
+
+The Objects worksheet represents the engineering specification that will later be compiled into the Simulation Database.
+
+---
+
+## 5.9 Lists Worksheet
+
+The Lists worksheet contains every validation list required by the workbook.
 
 Examples include:
 
-- Component names
-- Object types
-- Joint types
-- Status values
-- Component types
-- Boolean values
+- component names;
+- object types;
+- joint types;
+- engineering status;
+- component types;
+- Boolean values.
 
-This worksheet is generated automatically.
+This worksheet is generated automatically by GSPL-01.
 
 It is marked as **VeryHidden** and should never be modified manually.
 
 ---
 
-# 5.9 Data Validation
+## 5.10 Validation
 
-The Engineering Assembly Table contains built-in validation rules.
-
-Examples include:
-
-- Parent selection
-- Object type selection
-- Joint type selection
-- Boolean fields
-- Engineering status
-
-These validations reduce typing errors before GSPL-02 validates the assembly.
-
----
-
-# 5.10 Automatic Processing
-
-When GSPL-02 reads the Engineering Assembly Table it automatically performs several operations.
+The Engineering Assembly Table incorporates multiple validation mechanisms before the Simulation Compiler performs its own validation.
 
 Examples include:
 
-- resolving Parent IDs;
-- updating the internal JSON;
-- validating hierarchy;
-- validating object definitions;
-- generating engineering reports.
+- drop-down lists;
+- mandatory fields;
+- Boolean validation;
+- engineering status;
+- object type validation;
+- parent selection.
 
-Therefore the spreadsheet always remains the primary engineering interface.
-
----
-
-# 5.11 Engineering Responsibility
-
-The simulation engineer is responsible for:
-
-- defining the assembly hierarchy;
-- selecting simulation models;
-- creating CoppeliaSim objects;
-- configuring joints;
-- documenting engineering decisions.
-
-The engineer is **not** responsible for maintaining internal JSON structures.
+These mechanisms reduce engineering errors before compilation.
 
 ---
 
-# 5.12 Summary
+## 5.11 Engineering Workflow
+
+The Engineering Assembly Table is completed after executing GSPL-01.
+
+The normal engineering workflow is:
+
+```text
+Rhino CAD
+
+      │
+
+      ▼
+
+GSPL-01 Rhino Extractor
+
+      │
+
+      ▼
+
+Engineering Assembly Table
+
+      │
+
+Simulation Engineer
+
+      │
+
+      ▼
+
+GSPL-02 Simulation Compiler
+```
+
+The simulation engineer never edits the pipeline databases directly.
+
+---
+
+## 5.12 Compilation
+
+When GSPL-02 executes, the Engineering Assembly Table becomes the primary engineering input.
+
+The Simulation Compiler performs four major operations.
+
+### 1. Load
+
+Reads every worksheet.
+
+### 2. Validate
+
+Verifies engineering consistency.
+
+### 3. Compile
+
+Generates the Simulation Database.
+
+### 4. Report
+
+Produces engineering reports and validation messages.
+
+No engineering information is lost during compilation.
+
+Instead, the engineering decisions become part of the Simulation Database.
+
+---
+
+## 5.13 Engineering Responsibility
+
+The simulation engineer is responsible for defining:
+
+- assembly hierarchy;
+- simulation models;
+- simulation objects;
+- joints;
+- sensors;
+- engineering documentation.
+
+The engineer is not responsible for maintaining any internal database generated by the GSPL.
+
+---
+
+## 5.14 Single Source of Truth
+
+Within the Engineering Layer, the Engineering Assembly Table is considered the official source of engineering information.
+
+Whenever discrepancies exist between:
+
+- Engineering Assembly Database;
+- Engineering Assembly Table;
+
+the information contained in the Engineering Assembly Table always takes precedence during compilation.
+
+This design ensures that every engineering decision explicitly recorded by the engineer becomes part of the final simulation model.
+
+---
+
+## 5.15 Summary
 
 The Engineering Assembly Table is the central engineering document of the GSPL.
 
-It provides a simple, familiar and robust environment for preparing simulation models while hiding the complexity of the internal pipeline representation.
+It provides a stable, intuitive and simulator-independent interface between engineering activities and the automatic simulation pipeline.
 
-Every engineering modification should be performed in this workbook.
-
-The GSPL software is responsible for translating those modifications into the corresponding internal JSON structures.
+By separating engineering decisions from software implementation, the GSPL allows increasingly complex simulation models to be developed while preserving modularity, traceability and deterministic execution.
 
 ***
+
 # 6. Engineering Workflow
 
 ## 6.1 Overview
 
-The GSPL has been designed to separate engineering decisions from software implementation.
+The GSPL implements a deterministic engineering workflow that transforms a mechanical CAD model into a complete simulation model.
 
-The engineer focuses exclusively on the mechanical and simulation aspects of the project, while the GSPL automatically generates the internal data structures required to build the final CoppeliaSim model.
+The workflow separates engineering activities from software implementation, allowing engineers to focus exclusively on simulation design while the GSPL automates every computational task.
 
-The complete workflow consists of six stages.
-
-```text
-Rhino CAD
-    │
-    ▼
-GSPL-01
-    │
-    ▼
-Engineering Assembly Table
-    │
-    ▼
-GSPL-02
-    │
-    ▼
-GSPL-03
-    │
-    ▼
-GSPL-04
-    │
-    ▼
-GSPL-05
-    │
-    ▼
-CoppeliaSim (.ttm)
-```
+Each stage receives well-defined inputs, performs a single responsibility and generates deterministic outputs for the following stage.
 
 ---
 
-# 6.2 Stage 1 — CAD Modeling
+## 6.2 Workflow Overview
 
-The engineering process begins with the mechanical model created in Rhino.
+The complete engineering workflow is illustrated below.
 
-At this stage, the CAD model should contain only geometric information.
+```text
+                Rhino CAD Model
+                     (.3dm)
+                        │
+                        ▼
+          GSPL-01 Rhino Extractor
+                        │
+        ┌───────────────┼────────────────┐
+        ▼               ▼                ▼
+1_model_database   1_assembly.json   1_assembly_table.xlsx
+                        │                ▲
+                        │                │
+                        │         Simulation Engineer
+                        │                │
+                        └────────┬───────┘
+                                 ▼
+                  GSPL-02 Simulation Compiler
+                                 │
+        ┌────────────────────────┼─────────────────────┐
+        ▼                        ▼                     ▼
+2_simulation_database     2_assembly_table     2_simulation_report
+                                 │
+                                 ▼
+                  GSPL-03 Transform Builder
+                                 │
+                                 ▼
+                  3_reference_frame_database.json
+                                 │
+                                 ▼
+                     GSPL-04 STL Exporter
+                                 │
+                                 ▼
+                           STL Meshes
+                                 │
+                                 ▼
+                   GSPL-05 Coppelia Builder
+                                 │
+                                 ▼
+                 GIAR_Low_Cost_3D_LiDAR.ttm
+```
 
-The Rhino model should define:
+Every stage produces deterministic outputs that become the official inputs for the following stage.
 
-- all mechanical components;
-- component names;
+---
+
+## 6.3 Stage 1 — Mechanical Design
+
+The workflow begins with the creation of the mechanical model in Rhino.
+
+At this stage the model contains only CAD information.
+
+Typical information includes:
+
 - component geometry;
-- layers;
-- colors (optional);
-- materials (optional).
+- component names;
+- assembly hierarchy;
+- materials;
+- colors;
+- layers.
 
-The CAD model should **not** contain simulation-specific information such as:
-
-- joints;
-- sensors;
-- cameras;
-- lights;
-- dynamics;
-- collision parameters.
-
-Those elements are defined later during the engineering stage.
+No simulation information is introduced during this stage.
 
 ---
 
-# 6.3 Stage 2 — GSPL-01
+## 6.4 Stage 2 — Engineering Extraction
 
-Execute
+The Rhino model is processed by **GSPL-01 Rhino Extractor**.
 
-```text
-GSPL-01_Rhino_Extractor.py
-```
+This program automatically extracts every engineering element that can be inferred from the CAD model.
 
-This program performs the following tasks automatically.
+Generated outputs include:
 
-• Audits the Rhino model.
+- Model Database;
+- Engineering Assembly Database;
+- Engineering Assembly Table.
 
-• Verifies supported geometry.
-
-• Generates
-
-```text
-1_model_database.json
-```
-
-• Generates
-
-```text
-1_assembly.json
-```
-
-• Generates
-
-```text
-1_assembly_table.xlsx
-```
-
-At this point the engineering interface is ready.
+These files establish the engineering baseline for the project.
 
 ---
 
-# 6.4 Stage 3 — Engineering Assembly Table
+## 6.5 Stage 3 — Engineering Definition
 
-The simulation engineer opens
+The simulation engineer completes the Engineering Assembly Table.
 
-```text
-1_assembly_table.xlsx
-```
+Typical engineering tasks include:
 
-and completes all engineering information.
+- defining simulation hierarchy;
+- selecting simulation models;
+- creating simulation objects;
+- defining joints;
+- configuring sensors;
+- documenting engineering decisions.
 
-Typical tasks include:
-
-• defining the assembly hierarchy;
-
-• selecting parent components;
-
-• deciding whether components belong to the visual model;
-
-• deciding whether components belong to the simulation model;
-
-• adding simulation objects;
-
-• defining joints;
-
-• defining sensors;
-
-• adding engineering notes.
-
-This stage represents the only manual intervention required by the GSPL.
+This is the only manual stage of the entire GSPL pipeline.
 
 ---
 
-# 6.5 Stage 4 — GSPL-02
+## 6.6 Stage 4 — Simulation Compilation
 
-Execute
+The Engineering Assembly Table is processed by the **GSPL-02 Simulation Compiler**.
 
-```text
-GSPL-02_Assembly_Builder.py
-```
+The compiler transforms engineering information into a validated Simulation Database.
 
-GSPL-02 performs several automatic operations.
+Internally, GSPL-02 executes four sequential phases.
+
+### Phase 1 — Load
+
+All engineering databases and workbooks are loaded into memory.
+
+### Phase 2 — Validation
+
+The engineering information is validated.
 
 Examples include:
 
-• reads the Engineering Assembly Table;
+- hierarchy consistency;
+- duplicate names;
+- missing objects;
+- invalid joint definitions;
+- spreadsheet integrity.
 
-• validates every worksheet;
+### Phase 3 — Compilation
 
-• resolves Parent IDs;
+The validated engineering information is transformed into the Simulation Database.
 
-• builds the assembly tree;
+Engineering decisions are merged with the Engineering Assembly Database while preserving complete traceability.
 
-• validates hierarchy consistency;
+### Phase 4 — Reporting
 
-• validates simulation objects;
+Compilation results are documented.
 
-• updates
+Typical outputs include:
 
-```text
-1_assembly.json
-```
-
-• generates
-
-```text
-2_assembly_database.json
-```
-
-If errors are detected, GSPL-02 reports them together with the worksheet name, row number and a description of the problem.
-
-The engineer corrects the spreadsheet and executes GSPL-02 again.
+- validation report;
+- engineering warnings;
+- compilation statistics;
+- updated engineering workbook.
 
 ---
 
-# 6.6 Stage 5 — GSPL-03
+## 6.7 Stage 5 — Reference Frame Generation
 
-Execute
+GSPL-03 builds the Reference Frame Tree (RFT) from the validated Simulation Database. Once the tree has been constructed, all local and global transformations are calculated automatically.
 
-```text
-GSPL-03_Transform_Builder.py
-```
-
-This stage computes every geometric transformation required by the simulation.
-
-Typical calculations include:
+This stage calculates:
 
 - local reference frames;
-- global transformations;
-- component positions;
+- global reference frames;
+- transformation matrices;
 - object positions;
-- transformation matrices.
+- object orientations.
 
-The resulting information is stored in
-
-```text
-3_transform_database.json
-```
+The resulting Transform Database becomes the geometric reference for the remainder of the pipeline.
 
 ---
 
-# 6.7 Stage 6 — GSPL-04
+## 6.8 Stage 6 — Geometry Export
 
-Execute
+The Transform Database is processed by **GSPL-04 STL Exporter**.
 
-```text
-GSPL-04_STL_Exporter.py
-```
+The exporter generates every STL mesh required by the simulation.
 
-This program exports the meshes required by CoppeliaSim.
-
-Each enabled visual component generates an STL mesh.
-
-The exported meshes preserve:
+Generated meshes preserve:
 
 - geometry;
+- scale;
 - orientation;
-- scale.
+- engineering hierarchy.
 
-The STL collection becomes the geometric input for the final builder.
+These meshes become runtime resources.
 
 ---
 
-# 6.8 Stage 7 — GSPL-05
+## 6.9 Stage 7 — Simulation Construction
 
-Execute
+The final stage is executed by **GSPL-05 Coppelia Builder**.
 
-```text
-GSPL-05_Coppelia_Builder.py
-```
-
-The builder creates the complete simulation model.
+Using the Simulation Database, the Transform Database and the exported meshes, the builder creates the complete CoppeliaSim model.
 
 Typical operations include:
 
@@ -1877,1118 +1684,724 @@ Typical operations include:
 - creating Joints;
 - creating Dummies;
 - creating Sensors;
-- creating Cameras;
-- creating Lights;
 - configuring dynamics;
-- creating the assembly hierarchy;
-- configuring simulation properties.
+- building hierarchy;
+- assigning properties.
 
-Finally the program saves
+Finally, the complete simulation model is saved as a `.ttm` file.
+
+---
+
+## 6.10 Iterative Engineering
+
+Engineering is naturally an iterative process.
+
+Whenever validation errors are detected, the engineer updates the Engineering Assembly Table and executes the Simulation Compiler again.
 
 ```text
-GIAR_Low_Cost_3D_LiDAR.ttm
+Engineering Assembly Table
+            │
+            ▼
+GSPL-02 Simulation Compiler
+            │
+            ▼
+Validation Report
+            │
+     Errors Found?
+       │        │
+      Yes       No
+       │         │
+       ▼         ▼
+Update Table   Continue
+       │
+       └──────────────►
 ```
+
+This cycle may be repeated as many times as necessary until the engineering model is fully validated.
 
 ---
 
-# 6.9 Iterative Development
+## 6.11 Engineering Traceability
 
-Engineering projects are rarely completed in a single iteration.
+Every engineering decision remains traceable throughout the pipeline.
 
-The recommended workflow is iterative.
+Typical traceability chain:
 
 ```text
-Rhino
-   │
-   ▼
-GSPL-01
-   │
-   ▼
-Engineering Table
-   │
-   ▼
-GSPL-02
-   │
-   ▼
-Validation
-
-Errors?
-
-YES ─────────────┐
-                 │
-                 ▼
-Engineer updates
-Engineering Table
-                 │
-                 ▼
-GSPL-02 again
-
-NO
- │
- ▼
-Continue with GSPL-03
+Rhino Component
+        │
+        ▼
+Engineering Assembly Database
+        │
+        ▼
+Engineering Assembly Table
+        │
+        ▼
+Simulation Database
+        │
+        ▼
+Transform Database
+        │
+        ▼
+CoppeliaSim Object
 ```
 
-The engineer may execute GSPL-02 as many times as necessary until the assembly is completely validated.
+This traceability greatly simplifies debugging, maintenance and future project evolution.
 
 ---
 
-# 6.10 Typical Engineering Session
+## 6.12 Workflow Principles
 
-A typical engineering session may follow the sequence below.
+The GSPL workflow follows the following principles.
 
-1. Modify the Rhino CAD model.
+### WF-001
 
-2. Execute GSPL-01.
-
-3. Open the Engineering Assembly Table.
-
-4. Complete the Components worksheet.
-
-5. Complete the Objects worksheet.
-
-6. Save the workbook.
-
-7. Execute GSPL-02.
-
-8. Correct reported errors.
-
-9. Repeat until validation succeeds.
-
-10. Continue with GSPL-03.
-
-11. Execute GSPL-04.
-
-12. Execute GSPL-05.
-
-13. Open the generated model in CoppeliaSim.
+One engineering responsibility per stage.
 
 ---
 
-# 6.11 Engineering Responsibilities
+### WF-002
 
-The engineer is responsible for making engineering decisions.
-
-Examples include:
-
-- assembly hierarchy;
-- simulation models;
-- object definitions;
-- sensor placement;
-- joint configuration;
-- engineering documentation.
-
-The engineer is not responsible for maintaining the internal JSON databases.
-
-These databases are automatically maintained by the GSPL.
+One official output database per stage.
 
 ---
 
-# 6.12 Error Handling
+### WF-003
 
-Whenever possible, GSPL programs should never terminate with generic Python exceptions.
-
-Instead they should generate engineering-oriented diagnostic messages.
-
-A validation message should always include:
-
-- program name;
-- worksheet;
-- row number;
-- component name;
-- error description;
-- suggested correction.
-
-Example
-
-```text
-GSPL-02
-
-Worksheet : Components
-
-Row : 18
-
-Component : Motor
-
-ERROR
-
-Parent component "Motor_Base" does not exist.
-
-Suggested Action
-
-Select a valid Parent Name from the drop-down list.
-```
-
-This philosophy allows engineers to correct the model without inspecting the source code.
+Engineering decisions are introduced only through the Engineering Assembly Table.
 
 ---
 
-# 6.13 Workflow Summary
+### WF-004
 
-The GSPL workflow intentionally separates engineering activities from software implementation.
+Pipeline databases are generated automatically.
 
-The engineer works exclusively with Rhino and the Engineering Assembly Table.
+---
 
-The GSPL software is responsible for:
+### WF-005
 
-- data extraction;
-- validation;
-- synchronization;
-- transformation;
-- mesh generation;
-- CoppeliaSim model generation.
+Compilation shall always be deterministic.
 
-This separation provides a robust, traceable and scalable methodology suitable for both research and industrial engineering projects.
+---
+
+### WF-006
+
+Every engineering decision shall remain traceable.
+
+---
+
+### WF-007
+
+The workflow shall support unlimited engineering iterations.
+
+---
+
+## 6.13 Summary
+
+The GSPL Engineering Workflow provides a structured methodology for transforming CAD models into robotic simulation models.
+
+By separating mechanical design, engineering definition, simulation compilation and runtime generation into independent stages, the GSPL achieves a highly modular, deterministic and maintainable engineering process.
+
+This workflow forms the operational backbone of the entire GSPL architecture.
 
 ***
-# 7. Practical Examples
+
+# 7. Simulation Database (`2_simulation_database.json`)
 
 ## 7.1 Overview
 
-This chapter presents practical engineering examples illustrating how the **Engineering Assembly Table** is completed and how GSPL-02 converts the engineering information into the internal assembly representation.
+The **Simulation Database** (`2_simulation_database.json`) is the primary output generated by the **GSPL-02 Simulation Compiler**.
 
-The examples are intentionally simple and progressively introduce more advanced concepts.
+It represents the complete engineering description of the simulation model after all engineering decisions have been validated and compiled.
 
-Although the examples refer to a LiDAR project, the same engineering methodology can be applied to any robotic or mechatronic system.
+Unlike the Engineering Assembly Database, which represents the original mechanical assembly extracted from the CAD model, the Simulation Database represents the finalized simulation model consumed by the remaining stages of the GSPL pipeline.
 
----
-
-# 7.2 Example 1 — Decorative Component
-
-This example shows a component that only belongs to the visual model.
-
-Typical examples include:
-
-- Covers
-- Labels
-- Decorative plates
-- Logos
-
-Since the component has no influence on the simulation, it is excluded from the simulation model.
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | Front_Cover |
-| Parent Name | Base |
-| Visual | TRUE |
-| Simulation | FALSE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| Front_Cover | Front_Cover_Shape | Shape |
-
-Result
-
-• Visible in CoppeliaSim.
-
-• No dynamics.
-
-• No joints.
-
-• No sensors.
+From this stage onward, every GSPL program operates exclusively on the Simulation Database.
 
 ---
 
-# 7.3 Example 2 — Structural Component
+## 7.2 Purpose
 
-The component belongs to both generated models.
+The Simulation Database has the following objectives.
 
-Typical examples include:
+- Consolidate CAD information and engineering decisions.
+- Represent the complete simulation model.
+- Provide a deterministic interface for subsequent pipeline stages.
+- Preserve complete engineering traceability.
+- Eliminate the need for additional engineering interpretation.
 
-- Base
-- Frame
-- Mechanical Supports
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | Base |
-| Parent Name | *(empty)* |
-| Visual | TRUE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| Base | Base_Shape | Shape |
-
-Result
-
-The component appears in both models and participates in the simulation.
+The Simulation Database is considered the authoritative representation of the simulation model.
 
 ---
 
-# 7.4 Example 3 — Revolute Joint
+## 7.3 Generation
 
-This example illustrates the creation of a rotating component.
+The Simulation Database is generated exclusively by
 
-Typical examples include:
-
-- Servo Motors
-- Rotary Platforms
-- Wheels
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | Rotating_Head |
-| Parent Name | Base |
-| Visual | TRUE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type | Joint Type | Motor |
-|-----------|-------------|-------------|------------|-------|
-| Rotating_Head | Rotating_Head_Shape | Shape | | |
-| Rotating_Head | Joint_Z | Joint | Revolute | TRUE |
-
-Result
-
-The component generates:
-
-- one Shape;
-- one Revolute Joint.
-
-GSPL-05 later creates the corresponding CoppeliaSim joint.
-
----
-
-# 7.5 Example 4 — Camera
-
-The CAD model contains the physical camera housing.
-
-The engineer additionally creates the simulation camera.
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | Camera |
-| Parent Name | Rotating_Head |
-| Visual | TRUE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| Camera | Camera_Shape | Shape |
-| Camera | Camera | Camera |
-
-Result
-
-Two independent CoppeliaSim objects are created.
-
-- Shape
-- Camera
-
-The Shape represents the physical housing.
-
-The Camera provides the simulated image.
-
----
-
-# 7.6 Example 5 — Hall Sensor
-
-Hall sensors usually have no visible geometry inside the simulation.
-
-Only their position is relevant.
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | Hall_Sensor |
-| Parent Name | Base |
-| Visual | FALSE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| Hall_Sensor | Hall_Frame | Dummy |
-| Hall_Sensor | Hall | Proximity Sensor |
-
-Result
-
-Only simulation objects are generated.
-
-No visual mesh is required.
-
----
-
-# 7.7 Example 6 — LiDAR
-
-The LiDAR contains mechanical geometry together with a simulated sensor.
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | TFMini |
-| Parent Name | Rotating_Head |
-| Visual | TRUE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| TFMini | TFMini_Shape | Shape |
-| TFMini | TFMini_Frame | Dummy |
-| TFMini | TFMini | Vision Sensor |
-
-Result
-
-The generated model contains:
-
-- one Shape;
-- one Dummy;
-- one Vision Sensor.
-
----
-
-# 7.8 Example 7 — IMU
-
-An IMU normally has no visible representation.
-
-Only its reference frame is required.
-
-## Components Worksheet
-
-| Field | Value |
-|--------|-------|
-| Name | IMU |
-| Parent Name | Base |
-| Visual | FALSE |
-| Simulation | TRUE |
-
-## Objects Worksheet
-
-| Component | Object Name | Object Type |
-|-----------|-------------|-------------|
-| IMU | IMU_Frame | Dummy |
-| IMU | IMU | Force Sensor |
-
-Result
-
-The Dummy defines the IMU reference frame.
-
-The Force Sensor is later configured by GSPL-05.
-
----
-
-# 7.9 Example 8 — Multiple Objects per Component
-
-A single Rhino component may generate several CoppeliaSim objects.
-
-Example
-
-Component
-
-```
-Motor
+```text
+GSPL-02_Simulation_Compiler.py
 ```
 
-Objects
+Its generation consists of four sequential phases.
 
-| Object |
-|--------|
-| Shape |
-| Joint |
-| Dummy |
-| Camera |
-| Vision Sensor |
+1. Load
+2. Validate
+3. Compile
+4. Report
 
-This flexibility allows the engineer to build sophisticated simulation models without modifying the CAD geometry.
+Once generated, the database becomes read-only.
+
+No subsequent GSPL program modifies its contents.
 
 ---
 
-# 7.10 Example 9 — Parent Resolution
+## 7.4 Inputs
 
-The engineer never writes component IDs.
+The Simulation Compiler combines information from the following sources.
 
-Instead, the hierarchy is defined using component names.
+| Source | Purpose |
+|----------|---------|
+| `1_model_database.json` | CAD information |
+| `1_assembly.json` | Engineering control database |
+| `1_assembly_table.xlsx` | Engineering decisions |
+| `config.json` | Pipeline configuration |
 
-Engineering Table
+Each input contributes a specific category of information.
 
-| Component | Parent Name |
-|-----------|-------------|
-| Base | |
-| Motor | Base |
-| Camera | Motor |
+---
 
-During execution GSPL-02 automatically generates
+## 7.5 General Structure
+
+The Simulation Database is organized into four major sections.
 
 ```json
-Base
+{
+    "metadata": { },
 
-"parent": null
+    "statistics": { },
 
-Motor
+    "components": [ ],
 
-"parent": 1
-
-Camera
-
-"parent": 2
+    "simulation_objects": [ ]
+}
 ```
 
-The Parent ID column is therefore considered informative and automatically maintained by the pipeline.
+This organization separates project metadata from simulation entities.
 
 ---
 
-# 7.11 Example 10 — Visual vs Simulation
+## 7.6 Metadata
 
-The following table summarizes common engineering decisions.
+The metadata section identifies the generated database.
 
-| Component | Visual | Simulation |
-|-----------|:------:|:----------:|
-| Decorative Cover | ✔ | |
-| Mechanical Frame | ✔ | ✔ |
-| Motor Housing | ✔ | ✔ |
-| Camera Housing | ✔ | ✔ |
-| Camera Sensor | | ✔ |
-| Hall Sensor | | ✔ |
-| IMU | | ✔ |
-| LIDAR Housing | ✔ | ✔ |
+Typical information includes:
 
----
+- format version;
+- generator;
+- software version;
+- project name;
+- generation date;
+- source databases.
 
-# 7.12 Lessons Learned
-
-The previous examples illustrate the main engineering philosophy adopted by the GSPL.
-
-A Rhino component represents a physical element of the real system.
-
-During the engineering stage, that component may generate one or several CoppeliaSim objects depending on the intended simulation behaviour.
-
-The engineer therefore focuses on **engineering intent** rather than software implementation.
-
-The GSPL automatically transforms those engineering decisions into a consistent internal representation that will later be converted into the final CoppeliaSim model.
-
-***
-
-# 8. Validation Rules
-
-## 8.1 Overview
-
-The purpose of the validation process is to guarantee that the engineering information contained in the **Engineering Assembly Table** is complete, consistent and suitable for generating a valid CoppeliaSim model.
-
-Validation is performed automatically by **GSPL-02_Assembly_Builder.py**.
-
-Whenever possible, validation errors should be reported using engineering terminology rather than programming exceptions.
-
-Each validation rule defined in this chapter has a unique identifier.
+This information guarantees complete traceability.
 
 ---
 
-# 8.2 Validation Categories
+## 7.7 Components
 
-The validation process is divided into the following categories.
+The Components section describes every engineering component participating in the simulation.
 
-| Category | Description |
-|----------|-------------|
-| Components | Validation of component definitions. |
-| Hierarchy | Validation of the assembly tree. |
-| Objects | Validation of CoppeliaSim objects. |
-| Geometry | Validation of positions and orientations. |
-| Simulation | Validation of simulation-specific properties. |
+Each component contains validated information such as:
 
----
+- identifier;
+- name;
+- parent;
+- hierarchy;
+- enabled state;
+- simulation models;
+- engineering attributes.
 
-# 8.3 Component Validation
-
----
-
-## VAL-001
-
-### Component IDs shall be unique.
-
-Every component generated by GSPL-01 must have a unique identifier.
-
-Correct
-
-```text
-1
-2
-3
-4
-```
-
-Incorrect
-
-```text
-1
-2
-2
-4
-```
-
-Error Message
-
-```
-Duplicated Component ID detected.
-```
+Unlike the Engineering Assembly Database, every relationship has already been validated.
 
 ---
 
-## VAL-002
+## 7.8 Simulation Objects
 
-### Component Names shall be unique.
+The Simulation Objects section contains every object that will later be created inside CoppeliaSim.
 
-Correct
-
-```text
-Base
-
-Motor
-
-Camera
-```
-
-Incorrect
-
-```text
-Motor
-
-Motor
-```
-
-Error Message
-
-```
-Duplicated Component Name detected.
-```
-
----
-
-## VAL-003
-
-### Every enabled component shall have a valid name.
-
-Names cannot be empty.
-
-Incorrect
-
-```text
-
-```
-
-Error Message
-
-```
-Component name is missing.
-```
-
----
-
-# 8.4 Hierarchy Validation
-
----
-
-## VAL-010
-
-Exactly one root component shall exist.
-
-A root component is defined as a component whose Parent Name is empty.
-
-Correct
-
-| Name | Parent |
-|------|--------|
-| Base | |
-
-Incorrect
-
-| Name | Parent |
-|------|--------|
-| Base | |
-| Motor | |
-
-Error Message
-
-```
-Multiple root components detected.
-```
-
----
-
-## VAL-011
-
-Every Parent Name shall reference an existing component.
-
-Correct
-
-```
-Motor
-
-↓
-
-Base
-```
-
-Incorrect
-
-```
-Motor
-
-↓
-
-Base123
-```
-
-Error Message
-
-```
-Parent component does not exist.
-```
-
----
-
-## VAL-012
-
-The hierarchy shall not contain cycles.
-
-Correct
-
-```
-Base
-
-↓
-
-Motor
-
-↓
-
-Camera
-```
-
-Incorrect
-
-```
-Base
-
-↓
-
-Motor
-
-↓
-
-Camera
-
-↓
-
-Base
-```
-
-Error Message
-
-```
-Circular hierarchy detected.
-```
-
----
-
-## VAL-013
-
-A component cannot be its own parent.
-
-Incorrect
-
-```
-Motor
-
-↓
-
-Motor
-```
-
-Error Message
-
-```
-Component cannot reference itself as parent.
-```
-
----
-
-# 8.5 Model Validation
-
----
-
-## VAL-020
-
-Every enabled component shall belong to at least one model.
-
-Correct
-
-```
-Visual = TRUE
-
-Simulation = FALSE
-```
-
-Correct
-
-```
-Visual = FALSE
-
-Simulation = TRUE
-```
-
-Correct
-
-```
-Visual = TRUE
-
-Simulation = TRUE
-```
-
-Incorrect
-
-```
-Visual = FALSE
-
-Simulation = FALSE
-```
-
-Error Message
-
-```
-Component does not belong to any model.
-```
-
----
-
-# 8.6 Object Validation
-
----
-
-## VAL-030
-
-Every enabled simulation component shall contain at least one object.
-
-Incorrect
-
-```
-Simulation = TRUE
-
-Objects = none
-```
-
-Error Message
-
-```
-Simulation component has no objects.
-```
-
----
-
-## VAL-031
-
-Object names shall be unique.
-
-Correct
-
-```
-Motor_Shape
-
-Motor_Joint
-```
-
-Incorrect
-
-```
-Motor
-
-Motor
-```
-
-Error Message
-
-```
-Duplicated object name detected.
-```
-
----
-
-## VAL-032
-
-Every object shall define a valid object type.
-
-Supported values
+Typical object types include:
 
 - Shape
 - Joint
 - Dummy
-- Camera
 - Vision Sensor
 - Force Sensor
 - Proximity Sensor
+- Camera
 - Light
 
-Error Message
-
-```
-Unsupported object type.
-```
+Each object is completely defined and no further engineering interpretation is required.
 
 ---
 
-## VAL-033
+## 7.9 Component Compilation
 
-Joint objects shall define a Joint Type.
+During compilation, the Simulation Compiler performs the following operations.
 
-Incorrect
+- Resolves parent identifiers.
+- Validates hierarchy.
+- Expands engineering models.
+- Creates simulation objects.
+- Resolves object references.
+- Assigns unique identifiers.
+- Validates dependencies.
 
-```
-Object Type = Joint
-
-Joint Type = empty
-```
-
-Error Message
-
-```
-Joint Type not specified.
-```
+The resulting database is internally consistent.
 
 ---
 
-## VAL-034
+## 7.10 Validation
 
-Joint Type shall be valid.
+Compilation succeeds only if every engineering rule is satisfied.
 
-Allowed values
+Typical validation rules include:
 
-```
-Revolute
+- unique identifiers;
+- unique names;
+- valid hierarchy;
+- valid parent references;
+- valid object definitions;
+- valid joint configuration;
+- mandatory fields;
+- engineering consistency.
 
-Prismatic
-
-Spherical
-```
+Compilation stops if critical validation errors are detected.
 
 ---
 
-## VAL-035
+## 7.11 Traceability
 
-Joint limits shall satisfy
+Every simulation object can be traced back to its engineering origin.
 
-```
-Lower Limit < Upper Limit
-```
-
-Incorrect
-
-```
-180
-
--180
-```
-
-Error Message
-
-```
-Invalid joint limits.
+```text
+Rhino Component
+        │
+        ▼
+Model Database
+        │
+        ▼
+Engineering Assembly Database
+        │
+        ▼
+Engineering Assembly Table
+        │
+        ▼
+Simulation Database
+        │
+        ▼
+Simulation Object
 ```
 
----
-
-# 8.7 Geometry Validation
+This traceability is preserved throughout the remaining stages of the pipeline.
 
 ---
 
-## VAL-040
+## 7.12 Downstream Consumers
 
-Every position shall contain numeric values.
+The Simulation Database becomes the official input for all remaining GSPL programs.
 
-Incorrect
+| Program | Usage |
+|----------|-------|
+| GSPL-03 | Calculate reference frames and transformations. |
+| GSPL-04 | Export STL geometry. |
+| GSPL-05 | Build the CoppeliaSim model. |
 
+No engineering workbook is required after this stage.
+
+---
+
+## 7.13 Engineering Independence
+
+Once the Simulation Database has been generated, the remaining pipeline executes automatically.
+
+No manual engineering intervention is required.
+
+This guarantees deterministic execution and reproducibility.
+
+---
+
+## 7.14 Design Principles
+
+The Simulation Database follows the following principles.
+
+### SD-001
+
+Every component shall have a unique identifier.
+
+---
+
+### SD-002
+
+Every simulation object shall have a unique identifier.
+
+---
+
+### SD-003
+
+Every engineering decision shall remain traceable.
+
+---
+
+### SD-004
+
+The database shall contain no unresolved references.
+
+---
+
+### SD-005
+
+Every parent-child relationship shall be validated.
+
+---
+
+### SD-006
+
+The database shall be deterministic.
+
+---
+
+### SD-007
+
+The database shall remain simulator independent.
+
+
+## SD-008 — Engineering Information Preservation
+
+**Engineering information shall never be lost during compilation.**
+
+Every piece of information entered by the simulation engineer in `1_assembly_table.xlsx` shall be preserved in `2_simulation_database.json`.
+
+The GSPL-02 Simulation Compiler may reorganize, normalize or group engineering data into a more coherent internal structure, but it shall never discard engineering information.
+
+This guarantees:
+
+- complete engineering traceability;
+- lossless compilation;
+- future extensibility;
+- independence of downstream pipeline stages from the engineering workbook.
+
+
+
+---
+
+## 7.15 Summary
+
+The Simulation Database represents the complete compiled description of the simulation model.
+
+It separates engineering definition from simulation execution and provides the deterministic foundation required by all subsequent stages of the GSPL pipeline.
+
+As the central artifact produced by the GSPL-02 Simulation Compiler, it defines every component, every simulation object and every validated engineering relationship required to build the final simulation model.
+
+
+***
+
+# 8. Reference Frame Tree (RFT)
+
+## 8.1 Overview
+
+The **Reference Frame Tree (RFT)** is the geometric representation of the simulation model generated by **GSPL-03 Transform Builder**.
+
+The RFT defines the spatial organization of every simulation component by assigning a unique reference frame to each component and organizing those frames into a hierarchical tree.
+
+Unlike the Simulation Database, which describes engineering entities and their logical relationships, the Reference Frame Tree describes the complete geometric structure of the simulation.
+
+Once the RFT has been constructed, every local and global transformation required by the simulation can be derived automatically.
+
+The RFT therefore becomes the geometric backbone of the GSPL.
+
+---
+
+## 8.2 Purpose
+
+The purpose of the Reference Frame Tree is to transform the logical engineering hierarchy into a deterministic geometric model.
+
+Its objectives are:
+
+- define one reference frame for every simulation component;
+- preserve the engineering hierarchy as a geometric hierarchy;
+- establish the spatial relationship between components;
+- calculate local transformations;
+- calculate global transformations;
+- provide a simulator-independent geometric representation.
+
+No engineering decisions are introduced during this stage.
+
+---
+
+## 8.3 Engineering Philosophy
+
+The GSPL intentionally separates engineering information from geometric information.
+
+The **Simulation Database** answers the question:
+
+> **What is the simulation model?**
+
+The **Reference Frame Tree** answers the complementary question:
+
+> **Where does every element exist in space?**
+
+This separation greatly simplifies maintenance, validation and future extensions of the pipeline.
+
+---
+
+## 8.4 Inputs
+
+The Reference Frame Tree is generated exclusively from the validated Simulation Database.
+
+| Source | Purpose |
+|---------|---------|
+| `2_simulation_database.json` | Simulation hierarchy and component information |
+| `config.json` | Pipeline configuration |
+
+No manual intervention is required.
+
+---
+
+## 8.5 Outputs
+
+GSPL-03 generates the following database.
+
+| Output | Description |
+|---------|-------------|
+| `3_reference_frame_database.json` | Complete geometric representation of the simulation model. |
+
+This database becomes the official geometric reference for the remainder of the GSPL pipeline.
+
+---
+
+## 8.6 General Structure
+
+The Transform Database is organized into several logical sections.
+
+```json
+{
+    "metadata": { },
+
+    "statistics": { },
+
+    "reference_frames": [ ],
+
+    "kinematic_tree": { },
+
+    "local_transforms": [ ],
+
+    "global_transforms": [ ]
+}
 ```
-Position X
 
-ABC
+This organization separates the geometric topology of the model from the transformations derived from it.
+
+---
+
+## 8.7 The Reference Frame Tree
+
+The Reference Frame Tree is a rooted hierarchical structure.
+
+Every simulation component owns exactly one reference frame.
+
+Every reference frame has exactly one parent, except the root frame.
+
+```text
+World
+ │
+ └── Base
+      │
+      ├── Motor
+      │      │
+      │      └── Encoder
+      │
+      ├── LiDAR
+      │
+      └── Camera
 ```
 
----
-
-## VAL-041
-
-Every orientation shall contain numeric values.
-
-Incorrect
-
-```
-Rotation Y
-
-LEFT
-```
+The hierarchy of the RFT is inherited directly from the validated Simulation Database.
 
 ---
 
-## VAL-042
+## 8.8 Reference Frames
 
-No coordinate shall contain NaN values.
+Each reference frame defines the local coordinate system of one simulation component.
 
----
+Typical information includes:
 
-## VAL-043
+- unique identifier;
+- associated component;
+- parent frame;
+- local origin;
+- local orientation;
+- reference frame type.
 
-No coordinate shall contain infinite values.
+Reference frames describe only geometry.
 
----
-
-# 8.8 Spreadsheet Validation
-
----
-
-## VAL-050
-
-The workbook shall contain all required worksheets.
-
-Required worksheets
-
-- Components
-- Objects
-- Lists
+Simulation behaviour remains stored in the Simulation Database.
 
 ---
 
-## VAL-051
+## 8.9 Local and Global Frames
 
-Worksheet names shall not be modified.
+Two coordinate systems are maintained throughout the pipeline.
 
----
+### Local Reference Frame
 
-## VAL-052
+Describes the position and orientation of a component relative to its parent.
 
-Required columns shall exist.
+### Global Reference Frame
 
----
+Describes the position and orientation of a component relative to the root reference frame.
 
-## VAL-053
+Global frames are never entered manually.
 
-The Lists worksheet shall remain hidden.
-
----
-
-# 8.9 Engineering Validation
+They are calculated recursively from the local hierarchy.
 
 ---
 
-## VAL-060
+## 8.10 Transformation Computation
 
-Parent ID is automatically maintained by GSPL-02.
+After constructing the Reference Frame Tree, GSPL-03 computes every transformation required by the simulation.
 
-The engineer shall never modify this column.
+For every component, the following information is generated.
 
----
+- Local position
+- Local orientation
+- Global position
+- Global orientation
+- Local transformation matrix
+- Global transformation matrix
 
-## VAL-061
-
-ID shall never be modified.
-
----
-
-## VAL-062
-
-Component Name shall never be modified manually.
-
-Rename the Rhino component and regenerate the project instead.
+Every transformation is derived from the Reference Frame Tree.
 
 ---
 
-## VAL-063
+## 8.11 Recursive Evaluation
 
-Bounding Box information shall never be modified manually.
+The Reference Frame Tree is evaluated from the root toward the leaves.
+
+For each node the algorithm performs the following operations.
+
+1. Read the local reference frame.
+2. Read the parent global frame.
+3. Compute the global frame.
+4. Store the resulting transformation.
+
+Since every component depends exclusively on its parent, the resulting geometry is deterministic and reproducible.
 
 ---
 
-## VAL-064
+## 8.12 Validation
 
-Reference Frames shall only be modified when justified by engineering requirements.
+Before computing transformations, GSPL-03 validates the integrity of the Reference Frame Tree.
+
+Typical validation rules include:
+
+- unique reference frames;
+- unique root;
+- valid parent references;
+- disconnected branches;
+- cyclic dependencies;
+- duplicated identifiers.
+
+Compilation stops if the Reference Frame Tree is invalid.
 
 ---
 
-# 8.10 Validation Report
+## 8.13 Traceability
 
-Whenever validation fails, GSPL-02 should generate engineering-oriented messages.
+Every geometric entity remains traceable to its engineering origin.
 
-Every validation report should include
-
-- Validation Rule
-- Worksheet
-- Row
-- Component
-- Error Description
-- Suggested Correction
-
-Example
-
-```
-Validation Rule
-
-VAL-011
-
-Worksheet
-
-Components
-
-Row
-
-18
-
-Component
-
-Motor
-
-Error
-
-Parent component "Motor_Base" does not exist.
-
-Suggested Action
-
-Select a valid Parent Name from the drop-down list.
+```text
+Rhino Component
+        │
+        ▼
+Engineering Assembly
+        │
+        ▼
+Simulation Component
+        │
+        ▼
+Reference Frame
+        │
+        ▼
+Transform
+        │
+        ▼
+Simulation Object
 ```
 
----
-
-# 8.11 Validation Philosophy
-
-Validation should detect engineering problems before they propagate through the pipeline.
-
-Whenever possible, GSPL-02 should continue validating the remaining components after detecting an error.
-
-The objective is to generate a complete engineering report instead of forcing the engineer to correct one error at a time.
-
-This approach significantly reduces engineering time when working with large assemblies.
+This guarantees complete geometric traceability throughout the pipeline.
 
 ---
 
-# 8.12 Summary
+## 8.14 Downstream Consumers
 
-The validation process guarantees that every engineering decision recorded in the Engineering Assembly Table is internally consistent before the remaining stages of the GSPL are executed.
+The Reference Frame Tree becomes the geometric foundation for the remaining stages.
 
-A validated assembly ensures that:
+| Program | Purpose |
+|----------|---------|
+| GSPL-04 STL Exporter | Position every exported mesh. |
+| GSPL-05 Coppelia Builder | Construct the simulation hierarchy and place every object. |
 
-- the hierarchy is correct;
-- component relationships are valid;
-- simulation objects are complete;
-- transformations can be computed;
-- STL meshes can be generated;
-- the final CoppeliaSim model can be built without ambiguity.
+No additional geometric calculations are required after GSPL-03.
 
-The validation rules defined in this chapter constitute the official validation specification for **GSPL-02_Assembly_Builder.py**.
+---
+
+## 8.15 Design Principles
+
+### RFT-001
+
+Every simulation component shall own exactly one reference frame.
+
+---
+
+### RFT-002
+
+Reference frames shall form a rooted tree.
+
+---
+
+### RFT-003
+
+Every non-root reference frame shall have exactly one parent.
+
+---
+
+### RFT-004
+
+Every transformation shall be derived exclusively from the Reference Frame Tree.
+
+---
+
+### RFT-005
+
+Reference frame evaluation shall be deterministic.
+
+---
+
+### RFT-006
+
+The geometric representation shall remain simulator independent.
+
+---
+
+## 8.16 Summary
+
+The Reference Frame Tree transforms the logical engineering model into a complete geometric representation of the simulation.
+
+It provides a deterministic spatial description of every simulation component while preserving complete traceability with the engineering information generated during previous stages.
+
+By separating engineering knowledge from geometric representation, the GSPL establishes a clear distinction between the definition of the simulation model and its spatial realization.
+
+The Reference Frame Tree therefore constitutes the geometric foundation upon which all subsequent stages of the GSPL pipeline are built.
 
 ***
 # 9. Best Practices

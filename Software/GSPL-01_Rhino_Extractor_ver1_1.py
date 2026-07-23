@@ -7,7 +7,7 @@ GSPL-01_Rhino_Extractor.py
 
 GIAR Simulation Pipeline for LiDAR
 
-Version : 1.0
+Version : 1.1
 
 Author:
     Ing. Pablo Daniel Folino
@@ -24,6 +24,7 @@ import logging
 import sys
 import rhino3dm
 import uuid
+import os
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from openpyxl.styles import PatternFill
@@ -31,6 +32,11 @@ from openpyxl.styles import Border
 from openpyxl.styles import Side
 from openpyxl.styles import Alignment
 from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.styles import Protection
+from openpyxl.utils import column_index_from_string
+from openpyxl.workbook.defined_name import DefinedName
+from datetime import datetime
+import copy
 
 
 CONFIG_FILE = "config.json"
@@ -83,7 +89,6 @@ class RhinoExtractor:
 
         self.logger = logging.getLogger("GSPL")
 
-
     # ------------------------------------------------------
     # Banner
     # ------------------------------------------------------
@@ -92,7 +97,10 @@ class RhinoExtractor:
         self.logger.info("")
         self.logger.info("====================================================")
         self.logger.info(" GSPL-01 Rhino Extractor")
-        self.logger.info(" Version : 0.2")
+        self.logger.info(" Version : 1.1")
+        self.logger.info("====================================================")
+        self.logger.info(" Author:")
+        self.logger.info("     Ing. Pablo Daniel Folino")
         self.logger.info("====================================================")
         self.logger.info("")
 
@@ -127,7 +135,6 @@ class RhinoExtractor:
 
                 self.logger.error("[ERROR] %s", directory)
 
-
     # ------------------------------------------------------
     # Open Rhino Model
     # ------------------------------------------------------
@@ -155,7 +162,6 @@ class RhinoExtractor:
 
         self.logger.info("[ OK ] Rhino model loaded.")
 
-
     # ------------------------------------------------------
     # Model information
     # ------------------------------------------------------
@@ -177,7 +183,6 @@ class RhinoExtractor:
 
         self.logger.info("Groups       : %d",
                          len(self.model.Groups))
-
 
     # ------------------------------------------------------
     # Inspect Objects
@@ -369,13 +374,11 @@ class RhinoExtractor:
             # --------------------------------------------------
             # Component Name
             # --------------------------------------------------
-
             name = att.Name.strip() if att.Name else "<UNNAMED>"
 
             # --------------------------------------------------
             # Layer
             # --------------------------------------------------
-
             try:
                 layer = self.model.Layers[att.LayerIndex].Name
             except Exception:
@@ -384,7 +387,6 @@ class RhinoExtractor:
             # --------------------------------------------------
             # Geometry Type
             # --------------------------------------------------
-
             geometry = str(geo.ObjectType).replace("ObjectType.", "")
 
             # --------------------------------------------------
@@ -394,46 +396,33 @@ class RhinoExtractor:
             if name not in components:
 
                 component = {
-
-                    "id": len(components) + 1,
-
+                    "component_id": len(components) + 1,
                     "uuid": str(uuid.uuid4()),
-
                     "name": name,
-
-                    "type": "component",
-
+                    "type":"Mechanical",
                     "layer": layer,
-
                     "parent": None,
-
                     "children": [],
-
                     "stl": None,
-
-                    "transform": None,
-
+                    "frame": None,
                     "bounding_box": None,
-
-                    "center": None,
-
                     "mass": None,
-
                     "material": None,
-
-                    "properties": {},
-
+                    "properties": {
+                        "dynamic": False,
+                        "respondable": False,
+                        "visible": True,
+                        "collidable": False,
+                        "detectable": False,
+                        "measurable": False
+                    },
                     "status": {
-
                         "geometry_audit": "PASSED",
                         "hierarchy_audit": "PENDING",
                         "stl_export": "PENDING",
                         "simulation": "PENDING"
-
                     },
-
                     "entities": []
-
                 }
 
                 components[name] = component
@@ -441,23 +430,16 @@ class RhinoExtractor:
             # --------------------------------------------------
             # Add Entity
             # --------------------------------------------------
-
             entity = {
-
                 "index": index,
-
                 "guid": str(att.Id),
-
                 "geometry": geometry
-
             }
-
             components[name]["entities"].append(entity)
 
         # ------------------------------------------------------
         # Sort Components
         # ------------------------------------------------------
-
         component_list = sorted(
             components.values(),
             key=lambda c: c["name"].lower()
@@ -466,25 +448,19 @@ class RhinoExtractor:
         # ------------------------------------------------------
         # Reassign IDs after sorting
         # ------------------------------------------------------
-
         for new_id, component in enumerate(component_list, start=1):
-
-            component["id"] = new_id
+            component["component_id"] = new_id
 
         # ------------------------------------------------------
         # Statistics
         # ------------------------------------------------------
-
         self.database["statistics"]["components"] = len(component_list)
-
         self.database["statistics"]["entities"] = len(self.model.Objects)
-
         self.database["components"] = component_list
 
         # ------------------------------------------------------
         # Log
         # ------------------------------------------------------
-
         self.logger.info("Components : %d", len(component_list))
         self.logger.info("Entities   : %d", len(self.model.Objects))
 
@@ -496,12 +472,127 @@ class RhinoExtractor:
 
             self.logger.info(
                 "[%03d] %-35s (%3d entities)",
-                component["id"],
+                component["component_id"],
                 component["name"],
                 len(component["entities"])
             )
 
         self.logger.info("--------------------------------------------------------")
+
+    # ------------------------------------------------------
+    # Build Geometry Database
+    # ------------------------------------------------------
+    def build_geometry_database(self):
+
+        self.logger.info("")
+        self.logger.info("========================================================")
+        self.logger.info(" Building Geometry Database")
+        self.logger.info("========================================================")
+
+        for component in self.database["components"]:
+
+            xmin = ymin = zmin = float("inf")
+            xmax = ymax = zmax = float("-inf")
+
+            valid_bbox = False
+
+            # --------------------------------------------------
+            # Compute Bounding Box
+            # --------------------------------------------------
+
+            for entity in component["entities"]:
+
+                obj = self.model.Objects[entity["index"]]
+
+                bbox = obj.Geometry.GetBoundingBox()
+
+                if not bbox.IsValid:
+
+                    self.logger.warning(
+                        "Invalid BoundingBox in component '%s'",
+                        component["name"]
+                    )
+
+                    continue
+
+                valid_bbox = True
+
+                xmin = min(xmin, bbox.Min.X)
+                ymin = min(ymin, bbox.Min.Y)
+                zmin = min(zmin, bbox.Min.Z)
+
+                xmax = max(xmax, bbox.Max.X)
+                ymax = max(ymax, bbox.Max.Y)
+                zmax = max(zmax, bbox.Max.Z)
+
+            # --------------------------------------------------
+            # Default Bounding Box
+            # --------------------------------------------------
+
+            if not valid_bbox:
+
+                xmin = ymin = zmin = 0.0
+                xmax = ymax = zmax = 0.0
+
+            # --------------------------------------------------
+            # Center
+            # --------------------------------------------------
+
+            center = [
+
+                round((xmin + xmax) / 2.0, 6),
+                round((ymin + ymax) / 2.0, 6),
+                round((zmin + zmax) / 2.0, 6)
+
+            ]
+
+            # --------------------------------------------------
+            # Bounding Box
+            # --------------------------------------------------
+
+            component["bounding_box"] = {
+
+                "min": [
+                    round(xmin, 6),
+                    round(ymin, 6),
+                    round(zmin, 6)
+                ],
+
+                "max": [
+                    round(xmax, 6),
+                    round(ymax, 6),
+                    round(zmax, 6)
+                ],
+
+                "center": center,
+
+                "size": [
+                    round(xmax - xmin, 6),
+                    round(ymax - ymin, 6),
+                    round(zmax - zmin, 6)
+                ]
+
+            }
+
+            # --------------------------------------------------
+            # Component Frame
+            # --------------------------------------------------
+
+            component["frame"] = {
+                "name": "Component Frame",
+                "in_respect_of": "parent",
+                "position": center,
+                "orientation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }
+
+        self.logger.info(
+            "Geometry computed for %d components.",
+            len(self.database["components"])
+        )
 
     # ------------------------------------------------------
     # Save Database
@@ -572,292 +663,201 @@ class RhinoExtractor:
         self.logger.info(" Generating Assembly Template")
         self.logger.info("========================================================")
 
-        # --------------------------------------------------
-        # Create Assembly Structure
-        # --------------------------------------------------
+        now = datetime.now()
 
+        # --------------------------------------------------
+        # Assembly Header
+        # --------------------------------------------------
         assembly = {
-
-            "format_version": "1.0",
-
+            "format_version": "1.1",
             "generated_by": "GSPL-01_Rhino_Extractor",
-
             "generator_version": self.cfg["project"]["version"],
-
+            "generated": {
+                "date": now.strftime("%Y-%m-%d"),
+                "time": now.strftime("%H:%M:%S")
+            },
             "project": self.cfg["project"]["name"],
-
-            # Root component (defined later by the engineer)
-            "root": None,
-
+            "root_component_id": None,
+            "statistics": {},
             "components": []
-
         }
 
         # --------------------------------------------------
-        # Process Components
+        # Root Component
         # --------------------------------------------------
+        root = None
 
-        for component in self.database["components"]:
+        # --------------------------------------------------
+         # Object ID Generator
+         # --------------------------------------------------
+        next_object_id = 1
 
-            xmin = ymin = zmin = float("inf")
-            xmax = ymax = zmax = float("-inf")
-
-            valid_bbox = False
-
+        # --------------------------------------------------
+        # Components
+        # --------------------------------------------------
+        for source in self.database["components"]:
+            if root is None:
+                root = source["component_id"]
             # ----------------------------------------------
-            # Compute Component Bounding Box
+            # Assign the object number.
             # ----------------------------------------------
-
-            for entity in component["entities"]:
-
-                obj = self.model.Objects[entity["index"]]
-
-                bbox = obj.Geometry.GetBoundingBox()
-
-                if not bbox.IsValid:
-
-                    self.logger.warning(
-                        "Invalid BoundingBox in component '%s'",
-                        component["name"]
-                    )
-
-                    continue
-
-                valid_bbox = True
-
-                xmin = min(xmin, bbox.Min.X)
-                ymin = min(ymin, bbox.Min.Y)
-                zmin = min(zmin, bbox.Min.Z)
-
-                xmax = max(xmax, bbox.Max.X)
-                ymax = max(ymax, bbox.Max.Y)
-                zmax = max(zmax, bbox.Max.Z)
-
+            object_id = next_object_id
             # ----------------------------------------------
-            # Default values if BoundingBox failed
+            # Object counter increment
             # ----------------------------------------------
-
-            if not valid_bbox:
-
-                xmin = ymin = zmin = 0.0
-                xmax = ymax = zmax = 0.0
-
+            next_object_id += 1
             # ----------------------------------------------
-            # Bounding Box Center
+            # Default Shape
             # ----------------------------------------------
-
-            center = [
-
-                round((xmin + xmax) / 2.0, 6),
-                round((ymin + ymax) / 2.0, 6),
-                round((zmin + zmax) / 2.0, 6)
-
-            ]
-
-            # ----------------------------------------------
-            # Bounding Box Information
-            # ----------------------------------------------
-
-            bounding_box = {
-
-                "min": [
-
-                    round(xmin, 6),
-                    round(ymin, 6),
-                    round(zmin, 6)
-
-                ],
-
-                "max": [
-
-                    round(xmax, 6),
-                    round(ymax, 6),
-                    round(zmax, 6)
-
-                ],
-
-                "center": center,
-
-                "size": [
-
-                    round(xmax - xmin, 6),
-                    round(ymax - ymin, 6),
-                    round(zmax - zmin, 6)
-
-                ]
-
-            }
-
-            # ----------------------------------------------
-            # Update Component Database
-            # ----------------------------------------------
-
-            component["transform"] = {
-
-                "position": center,
-
-                "orientation": [
-
-                    0.0,
-                    0.0,
-                    0.0
-
-                ]
-
-            }
-
-            component["bounding_box"] = bounding_box
-
-            # ----------------------------------------------
-            # Default Scene Object (Shape)
-            # ----------------------------------------------
-
             default_shape = {
-
-                "type": "shape",
-
-                "name": component["name"],
-
-                "position": [
-
-                    0.0,
-                    0.0,
-                    0.0
-
-                ],
-
-                "orientation": [
-
-                    0.0,
-                    0.0,
-                    0.0
-
-                ],
-
+                # Unique identifier of the simulation object.
+                # One component may contain one or more simulation objects.
+                "object_id": object_id,   
+                "component_id": source["component_id"],
+                "type": "Shape",
+                "name": f'{source["name"]}_Shape',
+                "position": [0.0,0.0,0.0],
+                "orientation": [0.0,0.0,0.0],
                 "properties": {
-
                     "dynamic": False,
-
                     "respondable": False,
-
-                    "visible": True
-
+                    "visible": True,
+                    "collidable": False,
+                    "detectable": False,
+                    "measurable": False
                 }
-
             }
-
+  
             # ----------------------------------------------
             # Assembly Component
             # ----------------------------------------------
-
-            assembly["components"].append({
-
-                "id": component["id"],
-
-                "name": component["name"],
-
+            component = {
+                "component_id": source["component_id"],
+                "name": source["name"],
                 "description": "",
-
                 "notes": "",
-
                 "enabled": True,
-
                 "parent": None,
-
-                "frame": {
-
-                    "position": center,
-
-                    "orientation": [
-
-                        0.0,
-                        0.0,
-                        0.0
-
-                    ]
-
+                "frame": copy.deepcopy(
+                    source["frame"]
+                ),
+                "bounding_box": copy.deepcopy(
+                    source["bounding_box"]
+                ),
+                "models": {
+                    "visual":True,
+                    "simulation":False
                 },
-
-                "bounding_box": bounding_box,
-
-                "models": [
-
-                    "visual"
-
-                ],
-
                 "objects": [
-
                     default_shape
-
                 ]
+            }
 
-            })
+            assembly["components"].append(component)
 
         # --------------------------------------------------
-        # Sort Components by ID
+        # Root
         # --------------------------------------------------
+        assembly["root_component_id"] = root
 
-        assembly["components"] = sorted(
-
-            assembly["components"],
-
-            key=lambda c: c["id"]
-
-        )
+        # --------------------------------------------------
+        # Statistics
+        # --------------------------------------------------
+        statistics = {
+            "components": len(assembly["components"]),
+            "objects": 0,
+            "visual_models": 0,
+            "simulation_models": 0
+        }
+        for component in assembly["components"]:
+            statistics["objects"] += len(component["objects"])
+            if component["models"]["visual"]:
+                statistics["visual_models"] += 1
+            if component["models"]["simulation"]:
+                statistics["simulation_models"] += 1
+        assembly["statistics"] = statistics
 
         # --------------------------------------------------
         # Output File
         # --------------------------------------------------
-
         output_file = (
-
             Path(self.cfg["paths"]["database_directory"])
-
             /
-
             self.cfg["files"]["assembly"]
-
         )
 
         # --------------------------------------------------
         # Save JSON
         # --------------------------------------------------
+        with open(
+            output_file,
+            "w",
+            encoding="utf-8"
+        ) as f:
+            json.dump(
+                assembly,
+                f,
+                indent=4,
+                ensure_ascii=False
+            )
 
-        try:
-
-            with open(output_file, "w", encoding="utf-8") as f:
-
-                json.dump(
-
-                    assembly,
-
-                    f,
-
-                    indent=4,
-
-                    ensure_ascii=False
-
-                )
-
-            self.logger.info("")
-            self.logger.info("Assembly template successfully saved.")
-            self.logger.info("File       : %s", output_file)
-            self.logger.info("Components : %d", len(assembly["components"]))
-
-        except Exception as e:
-
-            self.logger.error("")
-            self.logger.error("Unable to save assembly template.")
-            self.logger.error(str(e))
-            raise
-
+        # --------------------------------------------------
+        # Log
+        # --------------------------------------------------
+        self.logger.info("Assembly Components : %d", statistics["components"])
+        self.logger.info("Objects             : %d", statistics["objects"])
+        self.logger.info("Output File         : %s", output_file)
         self.logger.info("========================================================")
-
  
     # ------------------------------------------------------
     # Generate Assembly Excel Table
     # ------------------------------------------------------
+    def protect_worksheet(self, worksheet, editable_columns):
+
+        self.logger.info(
+            "Protecting worksheet: %s",
+            worksheet.title
+        )
+
+        editable = set(editable_columns)
+
+        # ----------------------------------------------
+        # Lock / Unlock Cells
+        # ----------------------------------------------
+
+        for row in worksheet.iter_rows():
+
+            for cell in row:
+
+                column = cell.column_letter
+
+                if column in editable:
+
+                    cell.protection = Protection(
+                        locked=False
+                    )
+
+                else:
+
+                    cell.protection = Protection(
+                        locked=True
+                    )
+
+        # ----------------------------------------------
+        # Enable Sheet Protection
+        # ----------------------------------------------
+
+        #worksheet.protection.sheet = True
+        #worksheet.protection.password = "UTN"
+        #worksheet.protection.insertRows = True
+       
+        #worksheet.protection.enable()
+
+        self.logger.info(
+            "Worksheet '%s' prepared.",
+            worksheet.title
+        )
+        
     def update_parent_ids(self, workbook):
 
         self.logger.info("Updating Parent IDs...")
@@ -875,7 +875,7 @@ class RhinoExtractor:
             component_id = ws[f"A{row}"].value
             component_name = ws[f"B{row}"].value
 
-            component_map[component_name] = component_id
+            component_map[str(component_name).strip()] = component_id
 
         # --------------------------------------------
         # Update Parent IDs
@@ -890,6 +890,8 @@ class RhinoExtractor:
                 ws[f"G{row}"].value = ""
 
                 continue
+
+            parent_name = str(parent_name).strip()
 
             if parent_name not in component_map:
 
@@ -909,16 +911,13 @@ class RhinoExtractor:
     def create_components_sheet(self, workbook):
 
         self.logger.info("Creating worksheet: Components")
-
         ws = workbook.create_sheet("Components")
 
         # --------------------------------------------------
         # Header
         # --------------------------------------------------
-
         headers = [
-
-            "ID",
+            "Component ID",
             "Name",
             "Type",
             "Description",
@@ -927,10 +926,8 @@ class RhinoExtractor:
             "Parent ID",
             "Visual",
             "Simulation",
-            "Reviewed",
             "Status",
             "Notes"
-
         ]
 
         for col, header in enumerate(headers, start=1):
@@ -946,7 +943,7 @@ class RhinoExtractor:
         for component in self.database["components"]:
 
             # ID
-            ws.cell(row=row, column=1).value = component["id"]
+            ws.cell(row=row, column=1).value = component["component_id"]
 
             # Name
             ws.cell(row=row, column=2).value = component["name"]
@@ -958,12 +955,15 @@ class RhinoExtractor:
             ws.cell(row=row, column=4).value = ""
 
             # Enabled
-            ws.cell(row=row, column=5).value = True
+            ws.cell(
+                row=row,
+                column=5
+            ).value = f"=OR(H{row},I{row})"
 
             # Parent Name (Engineer)
             ws.cell(row=row, column=6).value = ""
 
-            # Parent ID (Filled automatically by GSPL-02)
+            # Parent ID (Automatically generated)
             ws.cell(row=row, column=7).value = ""
 
             # Visual
@@ -972,14 +972,11 @@ class RhinoExtractor:
             # Simulation
             ws.cell(row=row, column=9).value = False
 
-            # Reviewed
-            ws.cell(row=row, column=10).value = False
-
             # Status
-            ws.cell(row=row, column=11).value = "NEW"
+            ws.cell(row=row, column=10).value = "NEW"
 
             # Notes
-            ws.cell(row=row, column=12).value = ""
+            ws.cell(row=row, column=11).value = ""
 
             row += 1
 
@@ -993,7 +990,7 @@ class RhinoExtractor:
         # Auto Filter
         # --------------------------------------------------
 
-        ws.auto_filter.ref = f"A1:L{row-1}"
+        ws.auto_filter.ref = f"A1:K{row-1}"
 
         # --------------------------------------------------
         # Column Widths
@@ -1002,29 +999,72 @@ class RhinoExtractor:
         widths = {
 
             "A": 8,
-            "B": 35,
+            "B": 30,
             "C": 18,
             "D": 35,
             "E": 12,
-            "F": 35,
+            "F": 30,
             "G": 12,
             "H": 12,
             "I": 14,
-            "J": 12,
-            "K": 15,
-            "L": 40
-
+            "J": 15,
+            "K": 40
         }
 
         for col, width in widths.items():
 
             ws.column_dimensions[col].width = width
 
+        # --------------------------------------------------
+        # Protect Worksheet
+        # --------------------------------------------------
+        self.protect_worksheet( 
+            ws,
+            editable_columns=[
+
+                "C",   # Type
+                "D",   # Description
+                "F",   # Parent Name
+                "H",   # Visual
+                "I",   # Simulation
+                "J",   # Status
+                "K"    # Notes
+            ]
+        )
+
+
         self.logger.info(
             "Components worksheet created (%d components).",
             len(self.database["components"])
         )
     def create_objects_sheet(self, workbook):
+
+        """
+        ----------------------------------------------------------
+        Objects Worksheet
+
+        One row represents one CoppeliaSim object belonging to a
+        mechanical component.
+
+        Editable fields
+            -Object ID
+            - Object Name
+            - Object Type
+            - Enabled
+            - Reference Frame
+            - Shape Properties
+            - Position / Orientation
+            - Joint Parameters
+            - Notes
+
+        Protected fields
+            - Component ID
+            - Component Name
+
+        Automatically generated
+            - Bounding Box
+        ----------------------------------------------------------
+        """
 
         self.logger.info("Creating worksheet: Objects")
 
@@ -1039,10 +1079,20 @@ class RhinoExtractor:
             "Component ID",
             "Component Name",
 
+            "Object ID",
             "Object Name",
             "Object Type",
 
             "Enabled",
+
+            "Reference Frame",
+
+            "Dynamic",
+            "Respondable",
+            "Visible",
+            "Collidable",
+            "Detectable",
+            "Measurable",
 
             "Pos X",
             "Pos Y",
@@ -1076,23 +1126,25 @@ class RhinoExtractor:
         # --------------------------------------------------
         # Default Shape
         # --------------------------------------------------
-
         row = 2
 
         for component in self.database["components"]:
-
             # ----------------------------------------------
-            # Frame
+            # Component Frame
             # ----------------------------------------------
+            frame = component.get("frame", {})
 
-            transform = component.get("transform") or {}
+            reference_frame = frame.get(
+                "in_respect_of",
+                "parent"
+            )
 
-            position = transform.get(
+            position = frame.get(
                 "position",
                 [0.0, 0.0, 0.0]
             )
 
-            orientation = transform.get(
+            orientation = frame.get(
                 "orientation",
                 [0.0, 0.0, 0.0]
             )
@@ -1100,67 +1152,128 @@ class RhinoExtractor:
             # ----------------------------------------------
             # Bounding Box
             # ----------------------------------------------
-
-            bbox = component.get("bounding_box") or {}
-
-            bbox_min = bbox.get("min", [0.0, 0.0, 0.0])
-            bbox_size = bbox.get("size", [0.0, 0.0, 0.0])
+            bbox = component.get("bounding_box", {})
+            bbox_min = bbox.get(
+                "min",
+                [0.0, 0.0, 0.0]
+            )
+            bbox_size = bbox.get(
+                "size",
+                [0.0, 0.0, 0.0]
+            )
 
             # ----------------------------------------------
-            # General Information
+            # Default Properties
+            # ----------------------------------------------
+            properties = component.get("properties", {})
+            dynamic = properties.get(
+                "dynamic",
+                False
+            )
+            respondable = properties.get(
+                "respondable",
+                False
+            )
+            visible = properties.get(
+                "visible",
+                True
+            )
+            collidable = properties.get(
+                "collidable",
+                False
+            )
+            detectable = properties.get(
+                "detectable",
+                False
+            )
+            measurable = properties.get(
+                "measurable",
+                False
+            )
+
+            # ----------------------------------------------
+            # Identification
             # ----------------------------------------------
 
-            ws.cell(row=row, column=1).value = component["id"]
+            ws.cell(row=row, column=1).value = component["component_id"]
             ws.cell(row=row, column=2).value = component["name"]
 
-            ws.cell(row=row, column=3).value = component["name"]
-            ws.cell(row=row, column=4).value = "shape"
+            # ----------------------------------------------
+            # Default Object
+            # ----------------------------------------------
+            object_type = "Shape"
+            ws.cell(
+                row=row,
+                column=3
+            ).value = component["component_id"]
+            # Object Name (calculated by Excel)
+            ws.cell(
+                row=row,
+                column=4
+            ).value = f"=B{row}&\"_\"&E{row}"
+            # Object Type
+            ws.cell(
+                row=row,
+                column=5
+            ).value = object_type
+            ws.cell(
+                row=row,
+                column=6
+            ).value = f"=OR(H{row},I{row},J{row},K{row},L{row},M{row})"
+            ws.cell(row=row, column=7).value = reference_frame
 
-            ws.cell(row=row, column=5).value = True
+            # ----------------------------------------------
+            # Object Properties
+            # ----------------------------------------------
+            ws.cell(row=row, column=8).value = dynamic
+            ws.cell(row=row, column=9).value = respondable
+            ws.cell(row=row, column=10).value = visible
+            ws.cell(row=row, column=11).value = collidable
+            ws.cell(row=row, column=12).value = detectable
+            ws.cell(row=row, column=13).value = measurable
 
             # ----------------------------------------------
             # Position
             # ----------------------------------------------
 
-            ws.cell(row=row, column=6).value = position[0]
-            ws.cell(row=row, column=7).value = position[1]
-            ws.cell(row=row, column=8).value = position[2]
+            ws.cell(row=row, column=14).value = position[0]
+            ws.cell(row=row, column=15).value = position[1]
+            ws.cell(row=row, column=16).value = position[2]
 
             # ----------------------------------------------
             # Orientation
             # ----------------------------------------------
 
-            ws.cell(row=row, column=9).value = orientation[0]
-            ws.cell(row=row, column=10).value = orientation[1]
-            ws.cell(row=row, column=11).value = orientation[2]
+            ws.cell(row=row, column=17).value = orientation[0]
+            ws.cell(row=row, column=18).value = orientation[1]
+            ws.cell(row=row, column=19).value = orientation[2]
 
             # ----------------------------------------------
             # Bounding Box
             # ----------------------------------------------
 
-            ws.cell(row=row, column=12).value = bbox_min[0]
-            ws.cell(row=row, column=13).value = bbox_min[1]
-            ws.cell(row=row, column=14).value = bbox_min[2]
-
-            ws.cell(row=row, column=15).value = bbox_size[0]
-            ws.cell(row=row, column=16).value = bbox_size[1]
-            ws.cell(row=row, column=17).value = bbox_size[2]
+            ws.cell(row=row, column=20).value = bbox_min[0]
+            ws.cell(row=row, column=21).value = bbox_min[1]
+            ws.cell(row=row, column=22).value = bbox_min[2]
+            ws.cell(row=row, column=23).value = bbox_size[0]
+            ws.cell(row=row, column=24).value = bbox_size[1]
+            ws.cell(row=row, column=25).value = bbox_size[2]
 
             # ----------------------------------------------
-            # Joint Properties
+            # Joint Parameters
             # ----------------------------------------------
 
-            ws.cell(row=row, column=18).value = ""
-            ws.cell(row=row, column=19).value = ""
-            ws.cell(row=row, column=20).value = ""
-            ws.cell(row=row, column=21).value = ""
-            ws.cell(row=row, column=22).value = ""
+            ws.cell(row=row, column=26).value = ""
+            ws.cell(row=row, column=27).value = ""
+            ws.cell(row=row, column=28).value = ""
+            ws.cell(row=row, column=29).value = ""
+            ws.cell(row=row, column=30).value = ""
 
             # ----------------------------------------------
             # Notes
             # ----------------------------------------------
 
-            ws.cell(row=row, column=23).value = ""
+            ws.cell(row=row, column=31).value = ""
 
             row += 1
 
@@ -1174,53 +1287,127 @@ class RhinoExtractor:
         # Auto Filter
         # --------------------------------------------------
 
-        ws.auto_filter.ref = f"A1:W{row-1}"
-
+        ws.auto_filter.ref = f"A1:AE{row-1}"
         # --------------------------------------------------
         # Column Widths
         # --------------------------------------------------
-
         widths = {
 
-            "A": 15,
-            "B": 30,
-            "C": 30,
-            "D": 18,
-            "E": 12,
+            # Identification
+            "A": 15,   # Component ID
+            "B": 30,   # Component Name
+            "C": 12,   # Object ID
 
-            "F": 10,
-            "G": 10,
-            "H": 10,
+            # Object
+            "D": 30,   # Object Name
+            "E": 18,   # Object Type
+            "F": 12,   # Enabled
 
-            "I": 10,
-            "J": 10,
-            "K": 10,
+            # Reference
+            "G": 20,   # Reference Frame
 
-            "L": 12,
-            "M": 12,
-            "N": 12,
+            # Properties
+            "H": 14,   # Dynamic
+            "I": 14,   # Respondable
+            "J": 16,   # Visible
+            "K": 14,   # Collidable
+            "L": 14,   # Detectable
+            "M": 14,   # Measurable
 
-            "O": 12,
-            "P": 12,
-            "Q": 12,
+            # Position
+            "N": 10,   # Pos X
+            "O": 10,   # Pos Y
+            "P": 10,   # Pos Z
 
-            "R": 18,
-            "S": 10,
-            "T": 14,
-            "U": 14,
-            "V": 10,
+            # Orientation
+            "Q": 10,   # Rot X
+            "R": 10,   # Rot Y
+            "S": 10,   # Rot Z
 
-            "W": 40
+            # Bounding Box
+            "T": 12,   # BBox Min X
+            "U": 12,   # BBox Min Y
+            "V": 12,   # BBox Min Z
+
+            "W": 12,   # BBox Size X
+            "X": 12,   # BBox Size Y
+            "Y": 12,   # BBox Size Z
+
+            # Joint
+            "Z": 18,   # Joint Type
+            "AA": 10,  # Cyclic
+            "AB": 14,  # Lower Limit
+            "AC": 14,  # Upper Limit
+            "AD": 12,  # Motor
+
+            # Notes
+            "AE": 40
 
         }
 
-        for col, width in widths.items():
-            ws.column_dimensions[col].width = width
+        for column, width in widths.items():
+            ws.column_dimensions[column].width = width
+
+        for column, width in widths.items():
+            ws.column_dimensions[column].width = width
+
+        # --------------------------------------------------
+        # Protect Worksheet
+        # --------------------------------------------------
+        self.protect_worksheet(
+            ws,
+            editable_columns=[
+                # Object
+                "D",   # Object Name
+                "E",   # Object Type
+                "F",   # Enabled
+
+                # Reference
+                "G",   # Reference Frame
+
+                # Properties
+                "H",   # Dynamic
+                "I",   # Respondable
+                "J",   # Visible
+                "K",   # Collidable
+                "L",   # Detectable
+                "M",   # Measurable
+
+                # Position
+                "N",   # Pos X
+                "O",   # Pos Y
+                "P",   # Pos Z
+
+                # Orientation
+                "Q",   # Rot X
+                "R",   # Rot Y
+                "S",   # Rot Z
+
+                # Bounding Box
+                "T",   # BBox Min X
+                "U",   # BBox Min Y
+                "V",   # BBox Min Z
+                "W",   # BBox Size X
+                "X",   # BBox Size Y
+                "Y",   # BBox Size Z
+
+                # Joint
+                "Z",   # Joint Type
+                "AA",  # Cyclic
+                "AB",  # Lower Limit
+                "AC",  # Upper Limit
+                "AD",  # Motor
+
+                # Notes
+                "AE"
+            ]
+        )
 
         self.logger.info(
-            "Objects worksheet created (%d default shapes).",
-            len(self.database["components"])
+            "Objects worksheet created (%d objects).",
+            row - 2
         )
+ 
     def create_lists_sheet(self, workbook):
 
         self.logger.info("Creating worksheet: Lists")
@@ -1231,107 +1418,32 @@ class RhinoExtractor:
         # Components
         # ==================================================
 
-        ws["A1"] = "Component ID"
-        ws["B1"] = "Component Name"
+        ws["A1"] = "Component Name"
 
         row = 2
 
         for component in self.database["components"]:
 
-            ws.cell(row=row, column=1).value = component["id"]
-            ws.cell(row=row, column=2).value = component["name"]
-
+            ws.cell(row=row, column=1).value = component["name"]
             row += 1
+
+        last_component = row - 1
 
         # ==================================================
         # Boolean
         # ==================================================
 
-        ws["C1"] = "Boolean"
-
-        ws["C2"] = True
-        ws["C3"] = False
-
-        # ==================================================
-        # Object Types
-        # ==================================================
-
-        ws["D1"] = "Object Type"
-
-        object_types = [
-
-            "shape",
-            "joint",
-            "dummy",
-            "camera",
-            "light",
-            "vision_sensor",
-            "proximity_sensor",
-            "force_sensor",
-            "path",
-            "point_cloud",
-            "octree"
-
-        ]
-
-        row = 2
-
-        for value in object_types:
-
-            ws.cell(row=row, column=4).value = value
-            row += 1
-
-        # ==================================================
-        # Joint Types
-        # ==================================================
-
-        ws["E1"] = "Joint Type"
-
-        joint_types = [
-
-            "revolute",
-            "prismatic",
-            "spherical"
-
-        ]
-
-        row = 2
-
-        for value in joint_types:
-
-            ws.cell(row=row, column=5).value = value
-            row += 1
-
-        # ==================================================
-        # Project Status
-        # ==================================================
-
-        ws["F1"] = "Status"
-
-        status = [
-
-            "NEW",
-            "IN_PROGRESS",
-            "REVIEWED",
-            "VERIFIED",
-            "DONE"
-
-        ]
-
-        row = 2
-
-        for value in status:
-
-            ws.cell(row=row, column=6).value = value
-            row += 1
+        ws["B1"] = "Boolean"
+        ws["B2"] = True
+        ws["B3"] = False
 
         # ==================================================
         # Component Types
         # ==================================================
 
-        ws["G1"] = "Component Type"
+        ws["C1"] = "Component Type"
 
-        component_types = [
+        values = [
 
             "Mechanical",
             "Electrical",
@@ -1346,10 +1458,100 @@ class RhinoExtractor:
 
         row = 2
 
-        for value in component_types:
+        for value in values:
+
+            ws.cell(row=row, column=3).value = value
+            row += 1
+
+        last_component_type = row - 1
+
+        # ==================================================
+        # Object Types
+        # ==================================================
+
+        ws["D1"] = "Object Type"
+
+        values = [
+
+            "Shape",
+            "Joint",
+            "Dummy",
+            "Camera",
+            "Light",
+            "Vision Sensor",
+            "Proximity Sensor",
+            "Force Sensor",
+            "Path",
+            "Point Cloud",
+            "Octree"
+
+        ]
+
+        row = 2
+
+        for value in values:
+
+            ws.cell(row=row, column=4).value = value
+            row += 1
+
+        last_object_type = row - 1
+
+        # ==================================================
+        # Reference Frame
+        # ==================================================
+
+        ws["E1"] = "Reference Frame"
+
+        ws["E2"] = "parent"
+        ws["E3"] = "world"
+
+        # ==================================================
+        # Joint Types
+        # ==================================================
+
+        ws["F1"] = "Joint Type"
+
+        values = [
+
+            "Revolute",
+            "Prismatic",
+            "Spherical"
+
+        ]
+
+        row = 2
+
+        for value in values:
+
+            ws.cell(row=row, column=6).value = value
+            row += 1
+
+        last_joint_type = row - 1
+
+        # ==================================================
+        # Status
+        # ==================================================
+
+        ws["G1"] = "Status"
+
+        values = [
+
+            "NEW",
+            "IN_PROGRESS",
+            "REVIEWED",
+            "VERIFIED",
+            "DONE"
+
+        ]
+
+        row = 2
+
+        for value in values:
 
             ws.cell(row=row, column=7).value = value
             row += 1
+
+        last_status = row - 1
 
         # ==================================================
         # Motor Mode
@@ -1357,7 +1559,7 @@ class RhinoExtractor:
 
         ws["H1"] = "Motor Mode"
 
-        motor_modes = [
+        values = [
 
             "Position",
             "Velocity",
@@ -1367,102 +1569,93 @@ class RhinoExtractor:
 
         row = 2
 
-        for value in motor_modes:
+        for value in values:
 
             ws.cell(row=row, column=8).value = value
             row += 1
 
-        # ==================================================
-        # Sensor Types
-        # ==================================================
-
-        ws["I1"] = "Sensor Type"
-
-        sensor_types = [
-
-            "Vision",
-            "Proximity",
-            "Force",
-            "Hall",
-            "Lidar",
-            "IMU",
-            "GPS",
-            "Other"
-
-        ]
-
-        row = 2
-
-        for value in sensor_types:
-
-            ws.cell(row=row, column=9).value = value
-            row += 1
+        last_motor = row - 1
 
         # ==================================================
-        # Light Types
+        # Column Widths
         # ==================================================
 
-        ws["J1"] = "Light Type"
+        widths = {
 
-        light_types = [
+            "A": 30,
+            "B": 12,
+            "C": 22,
+            "D": 22,
+            "E": 18,
+            "F": 18,
+            "G": 18,
+            "H": 18
 
-            "Omnidirectional",
-            "Spot",
-            "Directional"
+        }
 
-        ]
+        for col, width in widths.items():
 
-        row = 2
-
-        for value in light_types:
-
-            ws.cell(row=row, column=10).value = value
-            row += 1
-
-        # ==================================================
-        # Dynamic
-        # ==================================================
-
-        ws["K1"] = "Dynamic"
-
-        ws["K2"] = True
-        ws["K3"] = False
+            ws.column_dimensions[col].width = width
 
         # ==================================================
-        # Respondable
+        # Named Ranges
         # ==================================================
 
-        ws["L1"] = "Respondable"
+        workbook.defined_names.add(
+            DefinedName(
+                "ComponentNames",
+                attr_text=f"Lists!$A$2:$A${last_component}"
+            )
+        )
 
-        ws["L2"] = True
-        ws["L3"] = False
+        workbook.defined_names.add(
+            DefinedName(
+                "Boolean",
+                attr_text="Lists!$B$2:$B$3"
+            )
+        )
 
-        # ==================================================
-        # Visible
-        # ==================================================
+        workbook.defined_names.add(
+            DefinedName(
+                "ComponentType",
+                attr_text=f"Lists!$C$2:$C${last_component_type}"
+            )
+        )
 
-        ws["M1"] = "Visible"
+        workbook.defined_names.add(
+            DefinedName(
+                "ObjectType",
+                attr_text=f"Lists!$D$2:$D${last_object_type}"
+            )
+        )
 
-        ws["M2"] = True
-        ws["M3"] = False
+        workbook.defined_names.add(
+            DefinedName(
+                "ReferenceFrame",
+                attr_text="Lists!$E$2:$E$3"
+            )
+        )
 
-        # ==================================================
-        # Control Loop
-        # ==================================================
+        workbook.defined_names.add(
+            DefinedName(
+                "JointType",
+                attr_text=f"Lists!$F$2:$F${last_joint_type}"
+            )
+        )
 
-        ws["N1"] = "Control Loop"
+        workbook.defined_names.add(
+            DefinedName(
+                "Status",
+                attr_text=f"Lists!$G$2:$G${last_status}"
+            )
+        )
 
-        ws["N2"] = True
-        ws["N3"] = False
-
-        # ==================================================
-        # Cyclic
-        # ==================================================
-
-        ws["O1"] = "Cyclic"
-
-        ws["O2"] = True
-        ws["O3"] = False
+        workbook.defined_names.add(
+            DefinedName(
+                "MotorMode",
+                attr_text=f"Lists!$H$2:$H${last_motor}"
+            )
+        )
 
         # ==================================================
         # Hide Worksheet
@@ -1471,6 +1664,7 @@ class RhinoExtractor:
         ws.sheet_state = "veryHidden"
 
         self.logger.info("Lists worksheet created.")
+ 
     def apply_excel_styles(self, workbook):
 
         self.logger.info("Applying Excel styles")
@@ -1494,11 +1688,6 @@ class RhinoExtractor:
             fgColor="FFF2CC"
         )
 
-        CALC_FILL = PatternFill(
-            fill_type="solid",
-            fgColor="E7E6E6"
-        )
-
         HEADER_FONT = Font(
             bold=True,
             color="FFFFFF"
@@ -1518,12 +1707,8 @@ class RhinoExtractor:
 
         CENTER = Alignment(
             horizontal="center",
-            vertical="center"
-        )
-
-        LEFT = Alignment(
-            horizontal="left",
-            vertical="center"
+            vertical="center",
+            wrap_text=True
         )
 
         # ==================================================
@@ -1532,27 +1717,24 @@ class RhinoExtractor:
 
         ws = workbook["Components"]
 
-        # Header
-
         for cell in ws[1]:
-
             cell.fill = HEADER_FILL
             cell.font = HEADER_FONT
             cell.border = BORDER
             cell.alignment = CENTER
 
-        # Automatic Columns
+        # Automatic columns
 
-        for col in ["A", "B", "G"]:
+        for col in ["A", "B", "E", "G"]:
 
             for cell in ws[col][1:]:
 
                 cell.fill = AUTO_FILL
                 cell.border = BORDER
 
-        # Editable Columns
+        # Editable columns
 
-        for col in ["C","D","E","F","H","I","J","K","L"]:
+        for col in ["C", "D", "F", "H", "I", "J", "K"]:
 
             for cell in ws[col][1:]:
 
@@ -1572,28 +1754,52 @@ class RhinoExtractor:
             cell.border = BORDER
             cell.alignment = CENTER
 
-        # Automatic
+        # Automatically generated columns
 
-        for col in ["A","B"]:
+        for col in ["A", "B", "C","D", "F"]:
 
             for cell in ws[col][1:]:
 
                 cell.fill = AUTO_FILL
                 cell.border = BORDER
 
-        # Editable
+        # Editable columns
 
         for col in [
 
-            "C","D","E",
+            "E",  # Object Type
+            "G",  # Reference Frame
 
-            "F","G","H",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
 
-            "I","J","K",
+            "N",
+            "O",
+            "P",
 
-            "L","M","N","O","P",
+            "Q",
+            "R",
+            "S",
 
-            "Q"
+            "T",
+            "U",
+            "V",
+
+            "W",
+            "X",
+            "Y",
+
+            "Z",
+            "AA",
+            "AB",
+            "AC",
+            "AD",
+
+            "AE"
 
         ]:
 
@@ -1602,101 +1808,100 @@ class RhinoExtractor:
                 cell.fill = EDIT_FILL
                 cell.border = BORDER
 
+        # ==================================================
+        # Center all cells
+        # ==================================================
+
+        for worksheet in workbook.worksheets:
+
+            for row in worksheet.iter_rows():
+
+                for cell in row:
+
+                    cell.alignment = CENTER
+
+
         self.logger.info("Excel styles applied.")
+
     def apply_excel_validations(self, workbook):
 
         self.logger.info("Applying Excel validations")
 
-        # ==================================================
-        # Worksheets
-        # ==================================================
-
         ws_components = workbook["Components"]
         ws_objects = workbook["Objects"]
 
-        component_count = len(self.database["components"])
-
         # ==================================================
-        # Data Validations
+        # Components
         # ==================================================
-
-        dv_boolean = DataValidation(
-            type="list",
-            formula1="=Lists!$C$2:$C$3",
-            allow_blank=False
-        )
-
-        dv_parent = DataValidation(
-            type="list",
-            formula1=f"=Lists!$B$2:$B${component_count+1}",
-            allow_blank=True
-        )
 
         dv_component_type = DataValidation(
             type="list",
-            formula1="=Lists!$G$2:$G$100",
+            formula1="=ComponentType",
             allow_blank=True
         )
 
-        dv_status = DataValidation(
+        dv_component_parent = DataValidation(
             type="list",
-            formula1="=Lists!$F$2:$F$100",
+            formula1="=ComponentNames",
             allow_blank=True
         )
+
+        dv_component_boolean = DataValidation(
+            type="list",
+            formula1="=Boolean",
+            allow_blank=False
+        )
+
+        dv_component_status = DataValidation(
+            type="list",
+            formula1="=Status",
+            allow_blank=False
+        )
+
+        ws_components.add_data_validation(dv_component_type)
+        ws_components.add_data_validation(dv_component_parent)
+        ws_components.add_data_validation(dv_component_boolean)
+        ws_components.add_data_validation(dv_component_status)
+
+        # ==================================================
+        # Objects
+        # ==================================================
 
         dv_object_type = DataValidation(
             type="list",
-            formula1="=Lists!$D$2:$D$100",
+            formula1="=ObjectType",
+            allow_blank=False
+        )
+
+        dv_reference_frame = DataValidation(
+            type="list",
+            formula1="=ReferenceFrame",
+            allow_blank=False
+        )
+
+        dv_boolean = DataValidation(
+            type="list",
+            formula1="=Boolean",
             allow_blank=False
         )
 
         dv_joint_type = DataValidation(
             type="list",
-            formula1="=Lists!$E$2:$E$100",
+            formula1="=JointType",
             allow_blank=True
         )
 
         dv_motor_mode = DataValidation(
             type="list",
-            formula1="=Lists!$H$2:$H$100",
+            formula1="=MotorMode",
             allow_blank=True
         )
 
-        dv_sensor_type = DataValidation(
-            type="list",
-            formula1="=Lists!$I$2:$I$100",
-            allow_blank=True
-        )
-
-        dv_light_type = DataValidation(
-            type="list",
-            formula1="=Lists!$J$2:$J$100",
-            allow_blank=True
-        )
-
-        # ==================================================
-        # Register Validations
-        # ==================================================
-
-        validations = [
-
-            dv_boolean,
-            dv_parent,
-            dv_component_type,
-            dv_status,
-
-            dv_object_type,
-            dv_joint_type,
-            dv_motor_mode,
-            dv_sensor_type,
-            dv_light_type
-
-        ]
-
-        for dv in validations:
-
-            ws_components.add_data_validation(dv)
-            ws_objects.add_data_validation(dv)
+        ws_objects.add_data_validation(dv_object_type)
+        ws_objects.add_data_validation(dv_reference_frame)
+        ws_objects.add_data_validation(dv_boolean)
+        ws_objects.add_data_validation(dv_joint_type)
+        ws_objects.add_data_validation(dv_motor_mode)
 
         # ==================================================
         # Components Sheet
@@ -1704,26 +1909,11 @@ class RhinoExtractor:
 
         for row in range(2, ws_components.max_row + 1):
 
-            # Component Type
-            dv_component_type.add(f"C{row}")
-
-            # Enabled
-            dv_boolean.add(f"E{row}")
-
-            # Parent Name
-            dv_parent.add(f"F{row}")
-
-            # Visual
-            dv_boolean.add(f"H{row}")
-
-            # Simulation
-            dv_boolean.add(f"I{row}")
-
-            # Reviewed
-            dv_boolean.add(f"J{row}")
-
-            # Status
-            dv_status.add(f"K{row}")
+            dv_component_type.add(ws_components[f"C{row}"])
+            dv_component_parent.add(ws_components[f"F{row}"])
+            dv_component_boolean.add(ws_components[f"H{row}"])
+            dv_component_boolean.add(ws_components[f"I{row}"])
+            dv_component_status.add(ws_components[f"J{row}"])
 
         # ==================================================
         # Objects Sheet
@@ -1732,37 +1922,44 @@ class RhinoExtractor:
         for row in range(2, ws_objects.max_row + 1):
 
             # Object Type
-            dv_object_type.add(f"D{row}")
+            dv_object_type.add(ws_objects[f"E{row}"])
 
             # Enabled
-            dv_boolean.add(f"E{row}")
+            dv_boolean.add(ws_objects[f"F{row}"])
+
+            # Reference Frame
+            dv_reference_frame.add(ws_objects[f"G{row}"])
+
+            # Dynamic
+            dv_boolean.add(ws_objects[f"H{row}"])
+
+            # Respondable
+            dv_boolean.add(ws_objects[f"I{row}"])
+
+            # Visible
+            dv_boolean.add(ws_objects[f"J{row}"])
+
+            # Collidable
+            dv_boolean.add(ws_objects[f"K{row}"])
+
+            # Detectable
+            dv_boolean.add(ws_objects[f"L{row}"])
+
+            # Measurable
+            dv_boolean.add(ws_objects[f"M{row}"])
 
             # Joint Type
-            dv_joint_type.add(f"L{row}")
+            dv_joint_type.add(ws_objects[f"Z{row}"])
 
             # Cyclic
-            dv_boolean.add(f"M{row}")
+            dv_boolean.add(ws_objects[f"AA{row}"])
 
             # Motor
-            dv_boolean.add(f"P{row}")
+            dv_motor_mode.add(ws_objects[f"AD{row}"])
 
-            # --------------------------------------------------
-            # Reserved for future versions
-            # --------------------------------------------------
-            #
-            # When new columns are added:
-            #
-            # Motor Mode  -> dv_motor_mode
-            # Sensor Type -> dv_sensor_type
-            # Light Type  -> dv_light_type
-            #
-            # The semantic validation (e.g. requiring Joint Type
-            # only when Object Type == "joint") will be performed
-            # by GSPL-02_Assembly_Builder.py.
-            #
-            # --------------------------------------------------
-
-        self.logger.info("Excel validations successfully applied.")
+        self.logger.info(
+            "Excel validations successfully applied."
+        )
     def save_assembly_table(self, workbook):
 
         self.logger.info("Saving Assembly Table")
@@ -1822,7 +2019,6 @@ class RhinoExtractor:
             self.logger.error("Unable to save assembly table.")
             self.logger.error(str(e))
             raise
-
     def generate_assembly_table(self):
 
         self.logger.info("")
@@ -1834,17 +2030,12 @@ class RhinoExtractor:
 
         # Remove default sheet
         workbook.remove(workbook.active)
-
         self.create_components_sheet(workbook)
-
         self.create_objects_sheet(workbook)
-
         self.create_lists_sheet(workbook)
-
+        self.update_parent_ids(workbook)
         self.apply_excel_styles(workbook)
-
         self.apply_excel_validations(workbook)
-
         self.save_assembly_table(workbook)
 
         self.logger.info("Assembly table successfully generated.")
@@ -1863,7 +2054,9 @@ class RhinoExtractor:
         self.audit_geometry()
         self.print_model_information()
         self.inspect_objects()
+ 
         self.build_database()
+        self.build_geometry_database()
         self.save_database()
         self.generate_assembly_template()
         self.generate_assembly_table()
@@ -1876,7 +2069,6 @@ class RhinoExtractor:
 # ==========================================================
 # Main
 # ==========================================================
-
 def main():
 
     extractor = RhinoExtractor()
