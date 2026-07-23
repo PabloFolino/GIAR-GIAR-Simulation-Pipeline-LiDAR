@@ -6,7 +6,7 @@
       {
         "id": "b1c07fb8c4fd5983",
         "type": "tabs",
-        "dimension": 52.460984393757506,
+        "dimension": 55.40216086434574,
         "children": [
           {
             "id": "1154f4c7f0175a23",
@@ -27,7 +27,7 @@
       {
         "id": "5d8b6e8d85ea32f8",
         "type": "tabs",
-        "dimension": 47.539015606242494,
+        "dimension": 44.59783913565426,
         "children": [
           {
             "id": "8067cc5e2e6e7f43",
@@ -207,14 +207,16 @@
   },
   "active": "8067cc5e2e6e7f43",
   "lastOpenFiles": [
-    "Documentation/GSPL-SPEC-003 — Simulation Database Specification.md",
+    "Documentation/GSPL-SPEC-003.md",
     "README.md",
+    "Documentation/GSPL-SPEC-002.md",
+    "Documentation/GSPL-SPEC-001.md",
+    "Documentation/GSPL-SPEC-003 — Simulation Database Specification.md",
     "Documentation/GSPL-SPEC-CPP-001_CoppeliaSim_Object_Survey.md",
     "Documentation/Nuevo Documento de texto.txt",
     "Sin título.canvas",
     "Software/GSPL-02_Simulation_Compiler_ver1_2.py",
     "Software/GSPL-02_Simulation_Compiler_ver1_1 copy.py",
-    "Documentation/GSPL-SPEC-002.md",
     "Software/Database/1_assembly_table _backup.xlsx",
     "Software/GSPL-01_Rhino_Extractor_ver1_1.py",
     "Software/GSPL-01_Rhino_Extractor_ver1 copy.py",
@@ -224,7 +226,6 @@
     "Software/Database/lu323402mp1tb.tmp",
     "Software/Logs/2_simulation_report.md",
     "Software/Database/2_simulation_report.md",
-    "Documentation/GSPL-SPEC-001.md",
     "Software/Logs/2_assembly_report.md",
     "Software/Database/2_assembly_report.md",
     "Sin título.md",
